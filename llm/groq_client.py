@@ -6,6 +6,23 @@ from llm.cache import load_cache, save_cache
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
+async def groq_complete(messages: list[dict], max_tokens: int = 1000) -> str:
+    """Call GROQ chat completions and return the assistant text."""
+    headers = {
+        "Authorization": f"Bearer {settings.groq_api_key}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": settings.groq_model,
+        "max_tokens": max_tokens,
+        "messages": messages,
+    }
+
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        resp = await client.post(GROQ_URL, headers=headers, json=payload)
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"]
+
 async def groq_analyze(event: dict, mode: str = "log") -> dict:
     """
     Call GROQ LLaMA 3.1. Return structured finding dict.
