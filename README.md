@@ -4,7 +4,7 @@
 
 **AI Antivirus for Code. AI Doctor for Applications. AI Guardian for Developers.**
 
-*Autonomous AI debugging platform — watches your stack, finds root causes, teaches your team.*
+*Autonomous AI debugging ecosystem — watches your stack, finds root causes, teaches your team.*
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-Python-009688?logo=fastapi)](https://fastapi.tiangolo.com)
