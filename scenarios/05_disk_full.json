@@ -1,0 +1,18 @@
+{
+  "scenario_id": "05_disk_full",
+  "title": "Disk Full Blocks Writes",
+  "category": "logs",
+  "severity": "WARNING",
+  "endpoint": "/analyze/log",
+  "payload": {
+    "log_text": "May 13 04:12:02 ubuntu-prod kernel: EXT4-fs warning: mounting fs with errors\nMay 13 04:12:05 ubuntu-prod app[4410]: OSError: [Errno 28] No space left on device: '/var/log/app/events.log'\nMay 13 04:12:07 ubuntu-prod postgres[881]: could not write to file \"pg_wal/xlogtemp\": No space left on device\nMay 13 04:12:09 ubuntu-prod systemd-journald[311]: Failed to write entry, ignoring: No space left on device",
+    "mode": "plain",
+    "redact_pii": true
+  },
+  "expected": {
+    "platform": "linux",
+    "event_count_min": 4,
+    "contains": ["No space left on device"]
+  },
+  "chat_prompt": "Summarize the disk-full incident and suggest what to clean first."
+}

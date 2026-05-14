@@ -1,16 +1,20 @@
 {
   "scenario_id": "01_ssh_bruteforce",
   "title": "SSH Brute-Force Attack",
-  "log_input": "May 13 02:14:03 server sshd[1234]: Failed password for root from 203.0.113.42 port 54321 ssh2\nMay 13 02:14:04 server sshd[1235]: Failed password for root from 203.0.113.42 port 54322 ssh2\n... (847 lines)",
-  "expected_findings": [
-    { "agent": "security", "severity": "CRITICAL", "confidence": 0.94, "message": "SSH brute-force: 847 attempts from 203.0.113.42" },
-    { "agent": "log", "severity": "WARNING", "confidence": 0.88, "message": "sshd spawning excessive child processes" },
-    { "agent": "log", "severity": "CRITICAL", "confidence": 0.91, "message": "OOM killer terminated nginx" },
-    { "agent": "api", "severity": "CRITICAL", "confidence": 0.89, "message": "POST /api/* returning 503" }
-  ],
-  "expected_chain": [
-    "SSH brute-force -> sshd overload -> RAM spike -> OOM kill nginx -> API 503"
-  ],
-  "expected_fix": "sudo ufw deny from 203.0.113.42 && sudo systemctl restart nginx",
-  "groq_cache_key": "scenario_01_ssh_bruteforce"
+  "category": "logs",
+  "severity": "CRITICAL",
+  "endpoint": "/analyze/log",
+  "payload": {
+    "log_text": "May 13 02:14:03 ubuntu-prod sshd[1234]: Failed password for root from 203.0.113.42 port 54321 ssh2\nMay 13 02:14:05 ubuntu-prod sshd[1235]: Invalid user admin from 203.0.113.42 port 54322\nMay 13 02:14:08 ubuntu-prod sshd[1236]: Failed password for invalid user oracle from 203.0.113.42 port 54323 ssh2\nMay 13 02:14:11 ubuntu-prod sshd[1237]: authentication failure; rhost=203.0.113.42 user=root\nMay 13 02:14:14 ubuntu-prod sshd[1238]: Failed password for root from 203.0.113.42 port 54324 ssh2\nMay 13 02:14:17 ubuntu-prod sshd[1239]: Failed password for root from 203.0.113.42 port 54325 ssh2",
+    "mode": "plain",
+    "redact_pii": true
+  },
+  "expected": {
+    "platform": "linux",
+    "distro": "ubuntu",
+    "security_findings_min": 1,
+    "fixes_min": 1,
+    "contains": ["SSH brute-force", "203.0.113.42"]
+  },
+  "chat_prompt": "Explain this SSH brute-force finding in plain English and tell me the safest next step."
 }

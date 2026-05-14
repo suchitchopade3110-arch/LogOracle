@@ -48,10 +48,37 @@ async def analyze_correlate(req: CorrelateRequest):
 
 @router.post("/code")
 async def analyze_code(req: CodeRequest):
-    return {"status": "stub", "issues": []}
+    from analysis.ast_engine.ast_engine import run_ast_pass, run_owasp_pass
+    from llm.passes.semantic_pass import run_semantic_pass
+
+    pass1 = await run_ast_pass(req.code, req.language)
+    pass2 = await run_semantic_pass(req.code, req.language, [i.model_dump() for i in pass1])
+    pass3 = await run_owasp_pass(req.code, req.language)
+
+    all_issues = (
+        [i.model_dump() for i in pass1] +
+        [i.model_dump() for i in pass2] +
+        [i.model_dump() for i in pass3]
+    )
+
+    order = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]
+    all_issues.sort(key=lambda x: order.index(x.get("severity", "INFO")))
+
+    return {
+        "pass1_count": len(pass1),
+        "pass2_count": len(pass2),
+        "pass3_count": len(pass3),
+        "issues": all_issues,
+    }
 
 
 @router.post("/intent")
 async def analyze_intent(req: dict):
-    return {"status": "stub", "gap_score": 0.0}
-
+    from llm.passes.intent_gap import detect_intent_gap
+    result = await detect_intent_gap(
+        code_diff=req.get("code_diff", ""),
+        pr_title=req.get("pr_title", ""),
+        pr_description=req.get("pr_description", ""),
+        language=req.get("language", "python"),
+    )
+    return result.model_dump()

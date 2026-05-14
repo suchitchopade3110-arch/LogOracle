@@ -1,0 +1,18 @@
+{
+  "scenario_id": "04_hallucinated_api",
+  "title": "Hallucinated Python Package",
+  "category": "hallucination",
+  "severity": "HIGH",
+  "endpoint": "/analyze/hallucination",
+  "payload": {
+    "language": "python",
+    "filename": "worker.py",
+    "code": "import requests\nimport definitely_not_a_real_logoracle_pkg_zzzx\n\nresponse = requests.get('https://example.com')\n"
+  },
+  "expected": {
+    "valid_count_min": 1,
+    "hallucinated_count_min": 1,
+    "contains": ["requests", "definitely_not_a_real_logoracle_pkg_zzzx"]
+  },
+  "chat_prompt": "Which import is hallucinated and what should I do before merging?"
+}

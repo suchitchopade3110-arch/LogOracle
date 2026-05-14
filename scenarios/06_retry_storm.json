@@ -1,0 +1,18 @@
+{
+  "scenario_id": "06_retry_storm",
+  "title": "Retry Storm After Upstream Timeout",
+  "category": "logs",
+  "severity": "WARNING",
+  "endpoint": "/analyze/log",
+  "payload": {
+    "log_text": "May 13 05:21:00 ubuntu-prod api[991]: upstream payment-service timeout after 30000ms\nMay 13 05:21:01 ubuntu-prod api[991]: retry attempt=1 route=/checkout status=504\nMay 13 05:21:02 ubuntu-prod api[991]: retry attempt=2 route=/checkout status=504\nMay 13 05:21:03 ubuntu-prod api[991]: retry attempt=3 route=/checkout status=504\nMay 13 05:21:04 ubuntu-prod api[991]: circuit breaker open for payment-service\nMay 13 05:21:05 ubuntu-prod nginx[222]: 503 Service Unavailable /api/checkout",
+    "mode": "plain",
+    "redact_pii": true
+  },
+  "expected": {
+    "platform": "linux",
+    "event_count_min": 6,
+    "contains": ["retry", "503"]
+  },
+  "chat_prompt": "Explain how the retry storm amplified the outage."
+}
