@@ -3,11 +3,17 @@ import httpx
 import json
 from core.config import settings
 from llm.cache import load_cache, save_cache
+from services.groq_cache import get_cached, get_demo_fallback, set_cached
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 async def groq_complete(messages: list[dict], max_tokens: int = 1000) -> str:
     """Call GROQ chat completions and return the assistant text."""
+    if settings.cache_enabled:
+        cached = get_cached(messages, settings.groq_model)
+        if cached:
+            return cached
+
     headers = {
         "Authorization": f"Bearer {settings.groq_api_key}",
         "Content-Type": "application/json",
@@ -18,10 +24,58 @@ async def groq_complete(messages: list[dict], max_tokens: int = 1000) -> str:
         "messages": messages,
     }
 
-    async with httpx.AsyncClient(timeout=15.0) as client:
+    try:
+        async with httpx.AsyncClient(timeout=15.0) as client:
+            resp = await client.post(GROQ_URL, headers=headers, json=payload)
+            resp.raise_for_status()
+            result = resp.json()["choices"][0]["message"]["content"]
+    except Exception:
+        hint = " ".join(m.get("content", "") for m in messages)
+        fallback = get_demo_fallback(hint)
+        if fallback:
+            return fallback["reply"]
+        raise
+
+    if settings.cache_enabled:
+        set_cached(messages, settings.groq_model, result)
+    return result
+
+async def groq_json(
+    messages: list[dict],
+    max_tokens: int = 1000,
+    temperature: float = 0.2,
+    cache_key: str | None = None,
+) -> dict:
+    if settings.cache_enabled and cache_key:
+        cached = load_cache(cache_key)
+        if cached:
+            return cached
+
+    headers = {
+        "Authorization": f"Bearer {settings.groq_api_key}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": settings.groq_model,
+        "max_tokens": max_tokens,
+        "temperature": temperature,
+        "response_format": {"type": "json_object"},
+        "messages": messages,
+    }
+
+    async with httpx.AsyncClient(timeout=20.0) as client:
         resp = await client.post(GROQ_URL, headers=headers, json=payload)
         resp.raise_for_status()
-        return resp.json()["choices"][0]["message"]["content"]
+        raw = resp.json()["choices"][0]["message"]["content"]
+
+    try:
+        result = json.loads(raw)
+    except json.JSONDecodeError:
+        result = {"issues": []}
+
+    if settings.cache_enabled and cache_key:
+        save_cache(cache_key, result)
+    return result
 
 async def groq_analyze(event: dict, mode: str = "log") -> dict:
     """

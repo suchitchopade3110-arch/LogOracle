@@ -1,12 +1,13 @@
 from analysis.log_parser.log_parser_core import parse_log
-from analysis.security_agent.security_agent import detect_brute_force, match_cves
+from analysis.log_parser.pii_redactor import redact_pii
+from analysis.security_agent import detect_brute_force, match_cves
 from agents.orchestrator import Finding, Severity, AgentName
 from typing import List
 
 
 class LogAgent:
     async def analyze(self, log_text: str) -> List[Finding]:
-        parsed = await parse_log(log_text, redact=True)
+        parsed = await parse_log(log_text, redact=False)
 
         findings = []
 
@@ -15,7 +16,7 @@ class LogAgent:
                 findings.append(Finding(
                     agent=AgentName.LOG,
                     severity=Severity[event.severity],
-                    message=event.message or event.raw[:200],
+                    message=redact_pii(event.message or event.raw[:200]),
                     confidence=0.85,
                     timestamp=event.timestamp,
                 ))

@@ -1,7 +1,13 @@
 import json
 import os
+import hashlib
 
 CACHE_DIR = "llm/response_cache/"
+
+
+def cache_key_for(namespace: str, value: str) -> str:
+    digest = hashlib.sha256(value.encode("utf-8")).hexdigest()
+    return f"{namespace}:{digest}"
 
 
 def load_cache(key: str) -> dict | None:

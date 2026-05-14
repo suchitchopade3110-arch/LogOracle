@@ -1,0 +1,16 @@
+{
+  "scenario_id": "09_xss_vuln",
+  "title": "DOM XSS via innerHTML",
+  "category": "code",
+  "severity": "HIGH",
+  "endpoint": "/analyze/code",
+  "payload": {
+    "language": "javascript",
+    "code": "function renderComment(comment) {\n  document.getElementById('preview').innerHTML = comment.body;\n}\n"
+  },
+  "expected": {
+    "pass3_count_min": 1,
+    "contains": ["XSS", "CWE-79"]
+  },
+  "chat_prompt": "Explain the XSS risk and give me a safer rendering pattern."
+}

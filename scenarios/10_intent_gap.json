@@ -1,0 +1,18 @@
+{
+  "scenario_id": "10_intent_gap",
+  "title": "Intent Gap in Auth PR",
+  "category": "intent",
+  "severity": "HIGH",
+  "endpoint": "/analyze/intent",
+  "payload": {
+    "language": "python",
+    "pr_title": "Refactor login middleware",
+    "pr_description": "Small cleanup only. No behavior changes expected.",
+    "code_diff": "diff --git a/auth.py b/auth.py\n@@\n-    require_mfa(user)\n+    # temporarily skip MFA for smoother local testing\n+    if not settings.DEBUG:\n+        require_mfa(user)\n"
+  },
+  "expected": {
+    "flagged": true,
+    "contains": ["MFA", "behavior"]
+  },
+  "chat_prompt": "Review this PR intent gap and explain why it should be blocked."
+}

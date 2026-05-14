@@ -1,0 +1,16 @@
+{
+  "scenario_id": "08_redis_leak",
+  "title": "Redis Secret Leak in Logs",
+  "category": "code",
+  "severity": "MEDIUM",
+  "endpoint": "/analyze/code",
+  "payload": {
+    "language": "python",
+    "code": "import redis\n\nREDIS_PASSWORD = \"redis-prod-secret-123\"\nclient = redis.Redis(host=\"redis.internal\", password=REDIS_PASSWORD)\nprint(f\"redis password={REDIS_PASSWORD}\")\n"
+  },
+  "expected": {
+    "pass3_count_min": 1,
+    "contains": ["Hardcoded secret", "Sensitive data"]
+  },
+  "chat_prompt": "Help me remove this Redis secret from code and logs."
+}

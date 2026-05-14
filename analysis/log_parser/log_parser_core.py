@@ -1,65 +1,60 @@
-from dataclasses import dataclass, field
-from typing import Any
-import re
-
-IP_RE = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
-SYSLOG_TS_RE = re.compile(r"^([A-Z][a-z]{2}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})")
-
-
-@dataclass
-class ParsedEvent:
-    raw: str
-    severity: str = "INFO"
-    message: str | None = None
-    timestamp: str | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-
-@dataclass
-class ParsedLog:
-    events: list[ParsedEvent]
-    platform: str = "linux"
+"""
+analysis/log_parser/log_parser_core.py
+Full parse pipeline entry point.
+"""
+from analysis.platform.detector import detect_platform, detect_distro, detect_log_format
+from analysis.log_parser.pii_redactor import redact_pii
+from analysis.log_parser.severity_tagger import tag_severity
+from analysis.models.analysis_models import ParsedLog
 
 
 async def parse_log(log_text: str, redact: bool = True) -> ParsedLog:
-    events = []
-    for line in [line.strip() for line in log_text.splitlines() if line.strip()]:
-        timestamp = _extract_timestamp(line)
-        source_ip = _extract_source_ip(line)
-        severity, message = _classify(line, source_ip)
-        raw = IP_RE.sub("<redacted_ip>", line) if redact else line
-        events.append(ParsedEvent(
-            raw=raw,
-            severity=severity,
-            message=message,
-            timestamp=timestamp,
-            metadata={"source_ip": source_ip} if source_ip else {},
-        ))
-    return ParsedLog(events=events)
+    """Full parse pipeline. Call this from Suchit's orchestrator."""
+    if redact:
+        log_text = redact_pii(log_text)
+
+    platform = detect_platform(log_text)
+    distro   = detect_distro(log_text, platform)
+    fmt      = detect_log_format(log_text, platform)
+
+    parser = _get_parser(fmt)
+    events = await parser(log_text)
+
+    return ParsedLog(
+        format_detected=fmt,
+        platform=platform,
+        distro=distro,
+        events=events,
+        pii_redacted=redact,
+        raw_line_count=len(log_text.splitlines()),
+    )
 
 
-def _extract_timestamp(line: str) -> str | None:
-    match = SYSLOG_TS_RE.match(line)
-    return match.group(1) if match else None
+def _get_parser(fmt: str):
+    from analysis.log_parser.parsers.syslog_parser     import parse as parse_syslog
+    from analysis.log_parser.parsers.dmesg_parser      import parse as parse_dmesg
+    from analysis.log_parser.parsers.auth_parser       import parse as parse_auth
+    from analysis.log_parser.parsers.kern_parser       import parse as parse_kern
+    from analysis.log_parser.parsers.journald_parser   import parse as parse_journald
+    from analysis.log_parser.parsers.winevt_parser     import parse as parse_winevt
+    from analysis.log_parser.parsers.iis_parser        import parse as parse_iis
+    from analysis.log_parser.parsers.powershell_parser import parse as parse_ps
+    from analysis.log_parser.parsers.unified_log_parser import parse as parse_unified
+    from analysis.log_parser.parsers.asl_parser        import parse as parse_asl
+    from analysis.log_parser.parsers.crashreport_parser import parse as parse_crash
+    from analysis.log_parser.parsers.generic_parser    import parse as parse_generic
 
-
-def _extract_source_ip(line: str) -> str | None:
-    match = re.search(r"\bfrom\s+((?:\d{1,3}\.){3}\d{1,3})\b", line)
-    if match:
-        return match.group(1)
-    match = IP_RE.search(line)
-    return match.group(0) if match else None
-
-
-def _classify(line: str, source_ip: str | None) -> tuple[str, str]:
-    lowered = line.lower()
-    if "failed password" in lowered and "sshd" in lowered:
-        ip_text = f" from {source_ip}" if source_ip else ""
-        return "WARNING", f"SSH failed login attempt{ip_text}"
-    if "oom killer" in lowered or "out of memory" in lowered:
-        return "CRITICAL", "Out-of-memory condition detected"
-    if " 503" in lowered or "status=503" in lowered:
-        return "CRITICAL", "HTTP 503 service failure detected"
-    if "error" in lowered or "failed" in lowered:
-        return "WARNING", line[:200]
-    return "INFO", line[:200]
+    return {
+        "syslog":      parse_syslog,
+        "dmesg":       parse_dmesg,
+        "auth":        parse_auth,
+        "kern":        parse_kern,
+        "journald":    parse_journald,
+        "winevt":      parse_winevt,
+        "iis":         parse_iis,
+        "powershell":  parse_ps,
+        "unified_log": parse_unified,
+        "asl":         parse_asl,
+        "crashreport": parse_crash,
+        "generic":     parse_generic,
+    }.get(fmt, parse_generic)
