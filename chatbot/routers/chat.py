@@ -148,3 +148,24 @@ def _format_dispute_reply(result: dict) -> str:
     if verdict == "retracted":
         return f"✓ Finding retracted. {explanation}\n\n+{xp} XP awarded for valid dispute."
     return f"Finding confirmed. {explanation}"
+
+@router.post("/chat/sync")
+async def chat_sync(req: ChatRequest):
+    """Non-streaming version for agent auto-query. Returns plain JSON."""
+    session = get_session(req.session_id)
+    system_prompt = assemble_system_prompt(
+        context=req.session_context,
+        persona=req.persona,
+        mode=req.mode,
+    )
+    history  = session.to_groq_messages()
+    messages = [
+        {"role": "system", "content": system_prompt},
+        *history,
+        {"role": "user", "content": req.message},
+    ]
+    from llm.groq_client import groq_complete
+    reply = await groq_complete(messages=messages, max_tokens=200, temperature=0.4)
+    session.add("user", req.message)
+    session.add("assistant", reply)
+    return {"reply": reply, "intent": "general"}
