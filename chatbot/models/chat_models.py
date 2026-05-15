@@ -43,6 +43,7 @@ class ChatRequest(BaseModel):
     persona: Persona = Persona.DEFAULT
     mode: Literal["plain", "tech"] = "tech"
     dispute_finding_id: Optional[str] = None   # set if user clicking Dispute button
+    session_id: str = "default"
 
 class ChatResponse(BaseModel):
     reply: str

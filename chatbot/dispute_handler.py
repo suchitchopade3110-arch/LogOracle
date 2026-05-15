@@ -1,16 +1,12 @@
 # chatbot/dispute_handler.py
 """
 Dispute flow:
-  User disputes a finding → re-evaluate with additional context
-  → verdict: retracted | confirmed
-  → if retracted: +60 XP awarded (per PRD)
+  User disputes a finding -> re-evaluate with additional context
+  -> verdict: retracted | confirmed
+  -> if retracted: +60 XP awarded (per PRD)
 """
-import httpx
-import json
 from chatbot.models.chat_models import Finding
-from core.config import settings
-
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+from llm.groq_client import groq_json
 
 DISPUTE_PROMPT = """
 A developer is disputing the following finding from LogOracle's analysis system.
@@ -60,38 +56,24 @@ async def evaluate_dispute(
         session_context=session_context_summary[:1000],  # cap context size
     )
 
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": 500,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.2,   # low temp → more consistent verdicts
-    }
+    result = await groq_json(
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=500,
+        temperature=0.2,
+    )
 
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        resp = await client.post(GROQ_URL, headers=headers, json=payload)
-        resp.raise_for_status()
-        raw = resp.json()["choices"][0]["message"]["content"]
-
-    result = _parse_verdict(raw)
+    if "verdict" not in result:
+        result = _fallback_verdict()
 
     # XP: +60 if retracted (per PRD spec)
     result["xp_awarded"] = 60 if result["verdict"] == "retracted" else 0
     return result
 
 
-def _parse_verdict(raw: str) -> dict:
-    """Parse GROQ JSON response. Fallback to confirmed on parse error."""
-    try:
-        clean = raw.strip().lstrip("```json").rstrip("```").strip()
-        return json.loads(clean)
-    except Exception:
-        return {
-            "verdict": "confirmed",
-            "new_severity": "MEDIUM",
-            "new_confidence": 0.5,
-            "explanation": "Could not re-evaluate. Original finding stands."
-        }
+def _fallback_verdict() -> dict:
+    return {
+        "verdict": "confirmed",
+        "new_severity": "MEDIUM",
+        "new_confidence": 0.5,
+        "explanation": "Could not re-evaluate. Original finding stands.",
+    }

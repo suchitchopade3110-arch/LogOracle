@@ -5,6 +5,8 @@ pydantic==2.7.0
 pydantic-settings==2.2.1
 python-dotenv==1.0.1
 psutil>=5.9.0
+redis>=5.0.0
+slowapi>=0.1.9
 sentence-transformers==3.0.0
 weasyprint==61.2
 tree-sitter==0.21.3
