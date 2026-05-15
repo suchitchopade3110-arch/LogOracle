@@ -1,190 +1,159 @@
-# LogOracle
+# 🔮 LogOracle
 
-**AI Antivirus for Code. AI Doctor for Applications.**
+> **AI Antivirus for Code. AI Doctor for Applications.**
 
-LogOracle is an autonomous debugging and security intelligence platform. It monitors your logs, analyzes your code, detects threats in real time, and explains everything in plain English — inside your browser, your editor, or your terminal.
+LogOracle watches your logs, reads your code, hunts down threats, and explains everything in plain English — autonomously, in real time, before your users notice anything is wrong.
 
----
+No more digging through 10,000 log lines at 3am. No more "works on my machine." No more security vulnerabilities shipping to production.
 
-## What It Does
-
-| Capability | Description |
-|---|---|
-| **Autonomous Log Monitoring** | Parses syslog, auth.log, dmesg, journald, Windows Event Log, macOS unified logs. Detects brute-force attacks, OOM kills, kernel panics, CVEs — automatically. |
-| **3-Pass Code Intelligence** | AST syntax check → LLM semantic analysis → OWASP A01-A08 security scan. Catches SQL injection, hardcoded secrets, command injection, insecure deserialization, and more. |
-| **Hallucination Detection** | Validates every import against PyPI, npm, NuGet, and Maven in parallel. Catches fake/hallucinated packages before they reach production. |
-| **Self-Heal Engine** | Generates distro-aware fix commands (Ubuntu, Arch, RHEL, Alpine, Windows, macOS). Dry-run preview before approval. Whitelisted execution only. |
-| **Developer Growth** | Context-aware MCQ quizzes generated from real bugs found in your code. SM-2 spaced repetition, XP system, streak tracking, badge unlocks, team leaderboard. |
+**LogOracle catches it first.** 🛡️
 
 ---
 
-## 5 Agents
+## ✨ What Makes It Special
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     LogOracle Agents                        │
-├──────────────────┬──────────────────────────────────────────┤
-│ Log Agent        │ Parses 12 log formats across Linux,      │
-│                  │ Windows, macOS. PII redaction built in.  │
-├──────────────────┼──────────────────────────────────────────┤
-│ Security Agent   │ SSH/RDP/NTLM brute-force detection.      │
-│                  │ CVE pattern matching. Smart popup gate.  │
-├──────────────────┼──────────────────────────────────────────┤
-│ Performance Agent│ Real-time CPU/RAM/disk via psutil.       │
-│                  │ OOM detection, load spike alerts.        │
-├──────────────────┼──────────────────────────────────────────┤
-│ Hallucination    │ Live PyPI/npm/NuGet/Maven registry check.│
-│ Agent            │ Flags fake packages before install.      │
-├──────────────────┼──────────────────────────────────────────┤
-│ API Agent        │ Retry storm detection, error rate spikes,│
-│                  │ P95 latency monitoring.                  │
-└──────────────────┴──────────────────────────────────────────┘
+🔍 Paste a log  →  Root cause identified in seconds
+🧬 Save a file  →  Security issues underlined instantly
+🚨 SSH attack   →  Detected, explained, fix command ready
+🎓 Bug found    →  Quiz generated so you never make it again
 ```
 
 ---
 
-## 3 Surfaces
+## 🤖 Meet the 5 Agents
 
-### 🌐 Web Dashboard
-Full-featured browser UI. Zero install required.
-- One-click demo scenarios
-- Live agent status bar
-- Root cause chain visualization (ReactFlow)
-- AI chat with 5 personas (Architect, Security, Performance, Mentor, Default)
-- Plain English / Technical mode toggle
-- PDF export + session share
+Every analysis runs through a team of specialized AI agents working in parallel:
 
-### 🧩 VS Code Extension
-Analyze code without leaving your editor.
-- Auto-analyze on save (Python, JS, TS, Java, C#)
-- Inline red/yellow squiggles on problematic lines with CWE IDs
-- Live log file monitoring with VS Code popup alerts
-- AI chat panel with SSE streaming
-- Status bar health badge (🟢/🟠/🔴)
+### 🪵 Log Agent
+Reads 12 log formats across every major platform. Drops the noise, surfaces what matters.
+- Linux: `syslog` `auth.log` `dmesg` `journald` `kern.log`
+- Windows: `Event Log (XML + plaintext)` `IIS` `PowerShell`
+- macOS: `Unified Log` `ASL` `Crash Reports (.ips)`
+- Auto-detects platform, distro, and format — zero config
+- PII redacted before anything touches the AI 🔒
 
-### 💻 Terminal Agent
-For servers, CI/CD, and DevOps workflows.
-- Tail any log file in real time
-- Streams findings to LogOracle backend
-- Live terminal dashboard (Rich UI)
-- System metrics monitoring (CPU/RAM/disk)
-- Works over SSH on remote servers
+### 🛡️ Security Agent
+Finds the threats your firewall missed.
+- SSH, RDP, NTLM, macOS brute-force detection
+- 11 CVE signatures (Log4Shell, PrintNightmare, EternalBlue, Zerologon + more)
+- Smart popup gate — only alerts when confidence ≥ 85% (no alert fatigue)
+- 5-minute cooldown between duplicate alerts
+
+### ⚡ Performance Agent
+Watches your system so you don't have to.
+- Real-time CPU, RAM, disk, load average via `psutil`
+- OOM kill detection, disk full warnings, load spikes
+- Live SSE stream — updates every 3 seconds
+
+### 👁️ Hallucination Agent
+Catches fake packages before they reach production.
+- Validates every import against PyPI, npm, NuGet, Maven — **in parallel**
+- Flags hallucinated, deprecated, and valid packages
+- Works on Python, JavaScript, TypeScript, C#
+
+### 🌐 API Agent
+Detects when your services are quietly dying.
+- Retry storm detection (same endpoint failing repeatedly)
+- Error rate spikes (>30% failure rate)
+- P95 latency monitoring (>2000ms threshold)
 
 ---
 
-## Quick Start
+## 🖥️ 3 Ways to Use It
 
-### Backend
+### 🌐 Web Dashboard — Zero install, instant results
+Open your browser, paste a log or click a demo scenario, and watch the agents work.
+
+```
+✅ One-click demo scenarios
+✅ Live agent status bar
+✅ Root cause chain (visual graph)
+✅ AI chat with 5 personas
+✅ Plain English / Technical toggle
+✅ Self-heal approve flow
+✅ PDF export + session share
+✅ Team leaderboard
+```
+
+### 🧩 VS Code Extension — Never leave your editor
+Findings appear inline as you code. No context switching.
+
+```
+✅ Auto-analyze on every save
+✅ Red/yellow squiggles with CWE IDs
+✅ AI chat panel with streaming responses
+✅ Live log monitoring with popup alerts
+✅ Status bar health badge 🟢/🟠/🔴
+✅ Keyboard shortcut: Ctrl+Shift+L
+```
+
+### 💻 Terminal Agent — For servers and DevOps
+Runs anywhere Python runs. Even over SSH.
+
+```bash
+logoracle-agent --watch /var/log/syslog --perf
+```
+
+```
+✅ Tails any log file in real time
+✅ Streams findings to dashboard automatically
+✅ Live terminal dashboard (Rich UI)
+✅ System metrics sidebar
+✅ Works headless, scriptable, CI/CD friendly
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1️⃣ Backend
 ```bash
 git clone https://github.com/your-org/logoracle
 cd logoracle-backend
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env         # add your GROQ_API_KEY
+cp .env.example .env        # add your GROQ_API_KEY
 uvicorn main:app --host 0.0.0.0 --port 8001 --reload
 ```
 
-### Web Dashboard
+### 2️⃣ Web Dashboard
 ```bash
 cd logoracle-frontend
-cp .env.example .env.local   # set NEXT_PUBLIC_API_URL=http://localhost:8001
-npm install
-npm run dev
-# → http://localhost:3000
+cp .env.example .env.local  # NEXT_PUBLIC_API_URL=http://localhost:8001
+npm install && npm run dev
+# → http://localhost:3000 ✨
 ```
 
-### Terminal Agent
+### 3️⃣ Terminal Agent
 ```bash
 pip install logoracle-agent
 logoracle-agent --watch /var/log/syslog --perf
 ```
 
-### VS Code Extension
+### 4️⃣ VS Code Extension
 ```
 Extensions → ⋯ → Install from VSIX → logoracle-0.1.0.vsix
 ```
 
 ---
 
-## API Endpoints
+## 🎭 10 Demo Scenarios
 
-### Core Analysis
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/analyze/log` | Full log parse + security findings + fix commands |
-| `POST` | `/analyze/code` | AST + LLM semantic + OWASP scan |
-| `POST` | `/analyze/hallucination` | Registry validation (PyPI/npm/NuGet/Maven) |
-| `POST` | `/analyze/correlate` | Cross-agent root cause chain |
-| `POST` | `/analyze/api` | HTTP event analysis (retry storms, latency) |
-| `POST` | `/analyze/performance` | System metrics analysis |
-| `GET`  | `/analyze/fix/config` | Auto-fix confidence gate settings |
+One click. Instant results. No setup.
 
-### Streaming (SSE)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/stream/agents` | Live agent status every 2s |
-| `GET` | `/stream/logs` | Real-time log line stream |
-| `GET` | `/stream/performance` | CPU/RAM/disk metrics every 3s |
-| `POST` | `/chat` | AI chat with SSE token streaming |
-
-### Self-Heal
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/heal/preview` | Dry-run fix command validation |
-| `POST` | `/heal/approve` | Execute approved fix (whitelisted only) |
-| `GET`  | `/heal/whitelist` | View approved command patterns |
-
-### Growth
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/quiz/generate` | MCQ from real bug finding |
-| `POST` | `/quiz/answer` | Submit answer + XP |
-| `POST` | `/quiz/schedule` | SM-2 spaced repetition update |
-| `GET`  | `/quiz/due/{id}` | Questions due for review |
-| `POST` | `/streak/check` | Daily streak update |
-| `GET`  | `/badges/events` | Badge unlock events |
-| `GET`  | `/leaderboard` | Team XP rankings |
-| `POST` | `/leaderboard/update` | Update XP + action |
-
-### Ingest
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/ingest/logs` | Push log lines to stream |
-| `POST` | `/ingest/api_events` | Push API events for analysis |
-
-### Demo
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET`  | `/demo/scenarios` | List all 10 demo scenarios |
-| `POST` | `/demo/run/{id}` | Execute demo scenario |
-
-### Export & Session
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/export/pdf` | Generate PDF debug report |
-| `GET`  | `/export/pdf/preview` | Preview PDF template |
-| `POST` | `/session/share` | Generate shareable session token |
-| `GET`  | `/session/restore/{token}` | Restore session from token |
-| `GET`  | `/health` | Health check |
-
----
-
-## Demo Scenarios
-
-10 pre-built scenarios covering the most common production incidents:
-
-| # | Scenario | Platform | Agents |
-|---|----------|----------|--------|
-| 01 | SSH Brute Force | Ubuntu | Security, Log |
-| 02 | OOM Kill | RHEL | Log, Performance |
-| 03 | SQL Injection | Python | Code, Security |
-| 04 | Hallucinated API Package | Python | Hallucination |
-| 05 | Disk Full | Alpine | Performance, Log |
-| 06 | Retry Storm | Any | API Agent |
-| 07 | Kernel Panic | Alpine | Log |
-| 08 | Redis Memory Leak | Linux | Performance, Security |
-| 09 | XSS Vulnerability | JavaScript | Code, Security |
-| 10 | Intent Gap | Python | Code, LLM |
+| # | 🎬 Scenario | 🖥️ Platform | 🤖 Agents Triggered |
+|---|-------------|-------------|---------------------|
+| 01 | 🔐 SSH Brute Force | Ubuntu | Security + Log |
+| 02 | 💥 OOM Kill (nginx dies) | RHEL | Log + Performance |
+| 03 | 💉 SQL Injection | Python | Code + Security |
+| 04 | 👻 Hallucinated Package | Python | Hallucination |
+| 05 | 💾 Disk Full | Alpine | Performance + Log |
+| 06 | 🌪️ Retry Storm | Any | API Agent |
+| 07 | 😱 Kernel Panic | Alpine | Log |
+| 08 | 🔴 Redis Memory Leak | Linux | Performance + Security |
+| 09 | 🕷️ XSS Vulnerability | JavaScript | Code + Security |
+| 10 | 🧠 Intent Gap Detection | Python | Code + LLM |
 
 ```bash
 # Run any scenario via API
@@ -193,105 +162,180 @@ curl -X POST http://localhost:8001/demo/run/01_ssh_bruteforce
 
 ---
 
-## Tech Stack
+## 🔌 API Reference
 
-### Backend
-- **FastAPI** (Python) — async REST + SSE
-- **Groq API** (LLaMA 3.1-8B) — LLM inference
-- **tree-sitter** — AST parsing
-- **sentence-transformers** — semantic embeddings
-- **psutil** — system metrics
-- **Redis** — session persistence (falls back to memory)
-- **WeasyPrint** — PDF export
-- **slowapi** — rate limiting
+### 🔬 Analysis
+| | Endpoint | What it does |
+|---|---|---|
+| `POST` | `/analyze/log` | Full log parse + security + fix commands |
+| `POST` | `/analyze/code` | AST → LLM → OWASP 3-pass scan |
+| `POST` | `/analyze/hallucination` | Registry validation |
+| `POST` | `/analyze/correlate` | Root cause chain builder |
+| `POST` | `/analyze/api` | HTTP event anomaly detection |
+| `GET`  | `/analyze/performance` | System snapshot + findings |
 
-### Frontend
-- **Next.js 14** — React framework
-- **Zustand** — global state
-- **ReactFlow** — root cause chain visualization
-- **Monaco Editor** — code input
-- **Framer Motion** — animations
-- **Recharts** — metrics charts
-- **Tailwind CSS** — styling
+### 📡 Live Streams (SSE)
+| | Endpoint | What it does |
+|---|---|---|
+| `GET` | `/stream/agents` | Agent heartbeat every 2s |
+| `GET` | `/stream/logs` | Real-time log lines |
+| `GET` | `/stream/performance` | CPU/RAM/disk every 3s |
+| `POST` | `/chat` | AI chat with token streaming |
 
-### Supported Log Formats
-`syslog` `auth.log` `kern.log` `dmesg` `journald` `Windows Event Log` `IIS` `PowerShell` `macOS Unified Log` `macOS ASL` `macOS Crash Report (.ips)` `Generic`
+### 🩹 Self-Heal
+| | Endpoint | What it does |
+|---|---|---|
+| `POST` | `/heal/preview` | Dry-run fix validation |
+| `POST` | `/heal/approve` | Execute whitelisted fix |
+| `GET`  | `/heal/whitelist` | View safe command patterns |
 
-### Supported Platforms
-`Linux (Ubuntu, Arch, RHEL, Alpine)` `Windows` `macOS`
+### 🎓 Growth
+| | Endpoint | What it does |
+|---|---|---|
+| `POST` | `/quiz/generate` | MCQ from real bug |
+| `POST` | `/quiz/answer` | Submit + earn XP |
+| `POST` | `/quiz/schedule` | SM-2 spaced repetition |
+| `GET`  | `/leaderboard` | Team XP rankings |
+| `GET`  | `/badges/events` | Badge unlocks |
 
-### Supported Languages (Code Analysis)
-`Python` `JavaScript` `TypeScript` `Java` `C#`
+### 📥 Ingest
+| | Endpoint | What it does |
+|---|---|---|
+| `POST` | `/ingest/logs` | Push log lines to stream |
+| `POST` | `/ingest/api_events` | Push API events |
 
----
+### 🎮 Demo
+| | Endpoint | What it does |
+|---|---|---|
+| `GET`  | `/demo/scenarios` | List all 10 scenarios |
+| `POST` | `/demo/run/{id}` | One-click scenario execution |
 
-## Architecture
-
-```
-                    ┌─────────────────────────┐
-                    │     LogOracle Backend   │
-                    │       FastAPI :8001     │
-                    │                         │
-                    │  ┌─────────────────┐   │
-                    │  │   5 AI Agents   │   │
-                    │  │  Log · Security │   │
-                    │  │  Perf · Halluc  │   │
-                    │  │  API Agent      │   │
-                    │  └────────┬────────┘   │
-                    │           │             │
-                    │  ┌────────▼────────┐   │
-                    │  │  Groq LLM API   │   │
-                    │  │  LLaMA 3.1-8B   │   │
-                    │  └─────────────────┘   │
-                    └────────────┬────────────┘
-                                 │
-          ┌──────────────────────┼──────────────────────┐
-          │                      │                      │
-   ┌──────▼──────┐      ┌────────▼───────┐    ┌────────▼───────┐
-   │  Web UI     │      │  VS Code Ext   │    │ Terminal Agent │
-   │  Next.js    │      │  TypeScript    │    │ Python CLI     │
-   │  :3000      │      │  .vsix         │    │ pip install    │
-   └─────────────┘      └────────────────┘    └────────────────┘
-```
+> Full interactive docs at `http://localhost:8001/docs` 📖
 
 ---
 
-## Environment Variables
+## 🧠 AI Chat Personas
+
+Talk to LogOracle in the voice that fits your situation:
+
+| Persona | 🎭 Style | Best for |
+|---------|----------|----------|
+| 🤖 **Default** | Helpful, concise | General debugging |
+| 🏛️ **Architect** | Direct, structural, no hand-holding | Design decisions |
+| 🔐 **Security** | Formal, risk-focused, CVSS scores | Security review |
+| ⚡ **Performance** | Data-driven, Big-O, metrics | Optimization |
+| 👨‍🏫 **Mentor** | Patient, analogies, explains WHY | Learning + growth |
+
+---
+
+## 🏆 XP & Growth System
+
+Every bug you find, fix, or learn from earns you XP:
+
+```
+🐛 Correct quiz answer      → +20 XP
+⚡ Answer in under 15s      → +10 XP bonus
+⚖️  Dispute a finding & win  → +60 XP
+🩹 Self-heal approved       → +80 XP
+🔥 30-day streak            → 🏅 Badge unlocked
+⭐ 1,000 XP total           → 🏅 Code Legend
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+                    ╔═════════════════════════════╗
+                    ║     LogOracle Backend       ║
+                    ║       FastAPI :8001         ║
+                    ║                             ║
+                    ║  🪵 Log      🛡️ Security    ║
+                    ║  ⚡ Perf     👁️ Hallucin.   ║
+                    ║  🌐 API Agent               ║
+                    ║          ↕ Groq LLM         ║
+                    ║      (LLaMA 3.1-8B)         ║
+                    ╚══════════════┬══════════════╝
+                                   │
+          ┌────────────────────────┼────────────────────────┐
+          │                        │                        │
+   ╔══════▼══════╗        ╔════════▼════════╗     ╔════════▼════════╗
+   ║  🌐 Web UI  ║        ║ 🧩 VS Code Ext ║     ║ 💻 Terminal     ║
+   ║  Next.js 14 ║        ║  TypeScript     ║     ║ Agent CLI       ║
+   ║  :3000      ║        ║  .vsix          ║     ║ pip install     ║
+   ╚═════════════╝        ╚═════════════════╝     ╚═════════════════╝
+```
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend**
+- 🐍 Python + FastAPI — async, SSE streaming
+- 🤖 Groq API (LLaMA 3.1-8B) — LLM inference
+- 🌳 tree-sitter — AST parsing
+- 🔢 sentence-transformers — semantic embeddings
+- 📊 psutil — system metrics
+- 🗄️ Redis — session persistence
+- 📄 WeasyPrint — PDF generation
+- 🚦 slowapi — rate limiting
+
+**Frontend**
+- ⚛️ Next.js 14 + React
+- 🐻 Zustand — state management
+- 🌊 ReactFlow — root cause visualization
+- 📝 Monaco Editor — code input
+- 🎞️ Framer Motion — animations
+- 📈 Recharts — metrics charts
+- 🎨 Tailwind CSS — styling
+
+**Supported Platforms**
+🐧 Linux (Ubuntu · Arch · RHEL · Alpine) &nbsp; 🪟 Windows &nbsp; 🍎 macOS
+
+**Supported Languages**
+🐍 Python &nbsp; 🟨 JavaScript &nbsp; 🔷 TypeScript &nbsp; ☕ Java &nbsp; 🔵 C#
+
+---
+
+## 🔒 Security & Privacy
+
+- 🔐 PII automatically redacted before AI processing (IPs, emails, usernames, paths)
+- 🛡️ Self-heal whitelist — only pre-approved commands can execute
+- 🔑 API key authentication (configurable)
+- 🚦 Rate limiting on all endpoints
+- 🌍 CORS restricted to configured origins in production
+- 🗑️ No log data persisted — stateless by design
+- ✅ Confidence gate — alerts only when ≥ 85% confident
+
+---
+
+## ⚙️ Environment Variables
 
 ```bash
 # Required
-GROQ_API_KEY=gsk_...              # Groq API key
+GROQ_API_KEY=gsk_...         # Get from console.groq.com
 
 # Optional
-API_KEY=                          # Backend API key (leave empty for dev)
-ALLOWED_ORIGINS=*                 # CORS origins (* for dev)
-REDIS_HOST=localhost              # Redis host (falls back to memory)
-REDIS_PORT=6379                   # Redis port
+API_KEY=                      # Backend API key (empty = dev mode, no auth)
+ALLOWED_ORIGINS=*             # CORS origins (* for dev, URL for prod)
+REDIS_HOST=localhost          # Redis for session persistence
+REDIS_PORT=6379
 ```
 
 ---
 
-## Security
+## 📄 License
 
-- PII automatically redacted from all log analysis (IPs, emails, usernames, paths)
-- Self-heal commands run against a strict whitelist — no arbitrary execution
-- API key authentication middleware (configurable)
-- Rate limiting on all endpoints
-- CORS restricted to configured origins in production
-- No log data persisted — stateless by design
+MIT License — free to use, modify, and distribute.
 
 ---
 
-## License
+<div align="center">
 
-MIT License — see [LICENSE](LICENSE)
+**Built with 🔥 by Team LogOracle**
 
----
+*"The best debugging tool is the one that fixes the bug before you know it exists."*
 
-## Built With
+[🌐 Live Demo](http://localhost:3000) &nbsp;·&nbsp; [📖 API Docs](http://localhost:8001/docs) &nbsp;·&nbsp; [🐛 Issues](https://github.com/your-org/logoracle/issues)
 
-- [Groq](https://groq.com) — LLM inference
-- [FastAPI](https://fastapi.tiangolo.com) — backend framework
-- [Next.js](https://nextjs.org) — frontend framework
-- [tree-sitter](https://tree-sitter.github.io) — AST parsing
-- [ReactFlow](https://reactflow.dev) — graph visualization
+</div>
