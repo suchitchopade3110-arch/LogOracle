@@ -1,44 +1,33 @@
-# llm/groq_client.py
-import httpx
 import json
 from core.config import settings
 from llm.cache import load_cache, save_cache
-from services.groq_cache import get_cached, get_demo_fallback, set_cached
+from services.groq_client import groq_complete as hardened_groq_complete
+from services.groq_client import groq_json as hardened_groq_json
+from services.groq_client import groq_stream as hardened_groq_stream
 
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-
-async def groq_complete(messages: list[dict], max_tokens: int = 1000) -> str:
+async def groq_complete(
+    messages: list[dict],
+    max_tokens: int = 1000,
+    temperature: float = 0.4,
+) -> str:
     """Call GROQ chat completions and return the assistant text."""
-    if settings.cache_enabled:
-        cached = get_cached(messages, settings.groq_model)
-        if cached:
-            return cached
+    return await hardened_groq_complete(
+        messages=messages,
+        max_tokens=max_tokens,
+        temperature=temperature,
+    )
 
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": max_tokens,
-        "messages": messages,
-    }
-
-    try:
-        async with httpx.AsyncClient(timeout=15.0) as client:
-            resp = await client.post(GROQ_URL, headers=headers, json=payload)
-            resp.raise_for_status()
-            result = resp.json()["choices"][0]["message"]["content"]
-    except Exception:
-        hint = " ".join(m.get("content", "") for m in messages)
-        fallback = get_demo_fallback(hint)
-        if fallback:
-            return fallback["reply"]
-        raise
-
-    if settings.cache_enabled:
-        set_cached(messages, settings.groq_model, result)
-    return result
+async def groq_stream(
+    messages: list[dict],
+    max_tokens: int = 1000,
+    temperature: float = 0.4,
+):
+    async for token in hardened_groq_stream(
+        messages=messages,
+        max_tokens=max_tokens,
+        temperature=temperature,
+    ):
+        yield token
 
 async def groq_json(
     messages: list[dict],
@@ -51,27 +40,11 @@ async def groq_json(
         if cached:
             return cached
 
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": max_tokens,
-        "temperature": temperature,
-        "response_format": {"type": "json_object"},
-        "messages": messages,
-    }
-
-    async with httpx.AsyncClient(timeout=20.0) as client:
-        resp = await client.post(GROQ_URL, headers=headers, json=payload)
-        resp.raise_for_status()
-        raw = resp.json()["choices"][0]["message"]["content"]
-
-    try:
-        result = json.loads(raw)
-    except json.JSONDecodeError:
-        result = {"issues": []}
+    result = await hardened_groq_json(
+        messages=messages,
+        max_tokens=max_tokens,
+        temperature=temperature,
+    )
 
     if settings.cache_enabled and cache_key:
         save_cache(cache_key, result)
@@ -90,20 +63,9 @@ async def groq_analyze(event: dict, mode: str = "log") -> dict:
             return cached
 
     prompt = _build_prompt(event, mode)
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": settings.groq_max_tokens,
-        "messages": [{"role": "user", "content": prompt}],
-    }
-
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        resp = await client.post(GROQ_URL, headers=headers, json=payload)
-        resp.raise_for_status()
-        raw = resp.json()["choices"][0]["message"]["content"]
+    raw = await hardened_groq_complete(
+        messages=[{"role": "user", "content": prompt}],
+    )
 
     result = _parse_response(raw)
     if settings.cache_enabled:

@@ -2,7 +2,7 @@
 import json
 from chatbot.models.chat_models import SessionContext, Persona
 from chatbot.persona import get_persona_prompt, get_persona_label
-from chatbot.session_history import SessionHistory
+from services.redis_sessions import SessionHistory
 
 LOG_LINE_LIMIT   = 500    # last N log lines injected
 CODE_TOKEN_LIMIT = 8000   # approximate — truncate diff if over

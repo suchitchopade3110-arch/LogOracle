@@ -4,10 +4,10 @@ Before session closes (or after each new finding), check if current
 error pattern matches historical patterns → inject proactive warning.
 
 Threshold: cosine similarity > 0.65 (per PRD spec)
-Uses: sentence-transformers (Subhiksha's embeddings module)
+Uses: shared llm.embeddings.similarity helpers.
 """
 from typing import Optional, List
-import numpy as np
+from llm.embeddings.similarity import embed, cosine_similarity
 
 SIMILARITY_THRESHOLD = 0.65
 
@@ -41,25 +41,11 @@ KNOWN_INCIDENTS: List[dict] = [
     },
 ]
 
-_embedder = None
-
-def _get_embedder():
-    global _embedder
-    if _embedder is None:
-        # Subhiksha's embeddings — sentence-transformers
-        from sentence_transformers import SentenceTransformer
-        _embedder = SentenceTransformer("all-MiniLM-L6-v2")
-    return _embedder
-
 def _ensure_embeddings():
     """Lazy-compute embeddings for known incidents on first call."""
-    embedder = _get_embedder()
     for incident in KNOWN_INCIDENTS:
         if incident["embedding"] is None:
-            incident["embedding"] = embedder.encode(incident["description"])
-
-def _cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-8))
+            incident["embedding"] = embed(incident["description"])
 
 def check_predictive_warning(current_finding_message: str) -> Optional[str]:
     """
@@ -68,14 +54,13 @@ def check_predictive_warning(current_finding_message: str) -> Optional[str]:
     """
     try:
         _ensure_embeddings()
-        embedder = _get_embedder()
-        current_embedding = embedder.encode(current_finding_message)
+        current_embedding = embed(current_finding_message)
 
         best_match = None
         best_score = 0.0
 
         for incident in KNOWN_INCIDENTS:
-            score = _cosine_similarity(current_embedding, incident["embedding"])
+            score = cosine_similarity(current_embedding, incident["embedding"])
             if score > best_score:
                 best_score = score
                 best_match = incident

@@ -6,7 +6,6 @@ Fixes:
   - xp_awarded=0 transmitted correctly (is not None check)
   - CORS headers for browser EventSource
 """
-import httpx
 import json
 from fastapi import APIRouter, Query
 from fastapi.responses import StreamingResponse
@@ -16,11 +15,10 @@ from chatbot.intent_detector import detect_intent, Intent
 from chatbot.dispute_handler import evaluate_dispute
 from chatbot.predictive_warning import check_predictive_warning
 from chatbot.plain_english import restate_plain
-from chatbot.session_history import get_session, clear_session
-from core.config import settings
+from services.redis_sessions import get_session, clear_session
+from llm.groq_client import groq_stream
 
 router = APIRouter()
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 SSE_HEADERS = {
     "Cache-Control": "no-cache",
@@ -34,7 +32,8 @@ async def chat(
     req: ChatRequest,
     session_id: str = Query(default="default"),
 ):
-    session = get_session(session_id)
+    active_session_id = req.session_id or session_id
+    session = get_session(active_session_id)
     intent = detect_intent(req.message)
 
     # ── PLAIN ENGLISH ────────────────────────────────────────────────────
@@ -96,35 +95,11 @@ async def reset_session(session_id: str = "default"):
 
 
 async def _stream_groq(messages, session, persona, predictive_warning, intent):
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": settings.groq_max_tokens,
-        "stream": True,
-        "messages": messages,
-        "temperature": 0.4,
-    }
-
     full_reply = []
     try:
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            async with client.stream("POST", GROQ_URL, headers=headers, json=payload) as resp:
-                resp.raise_for_status()
-                async for line in resp.aiter_lines():
-                    if line.startswith("data: "):
-                        chunk = line[6:]
-                        if chunk == "[DONE]":
-                            break
-                        try:
-                            token = json.loads(chunk)["choices"][0]["delta"].get("content", "")
-                            if token:
-                                full_reply.append(token)
-                                yield f"data: {json.dumps({'token': token, 'type': 'token'})}\n\n"
-                        except Exception:
-                            continue
+        async for token in groq_stream(messages, temperature=0.4):
+            full_reply.append(token)
+            yield f"data: {json.dumps({'token': token, 'type': 'token'})}\n\n"
 
         complete = "".join(full_reply)
         session.add("assistant", complete, persona=persona)

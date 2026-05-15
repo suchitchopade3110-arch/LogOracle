@@ -4,11 +4,7 @@ Plain English mode: restate any technical finding/message
 in jargon-free language a non-developer can understand.
 Triggered by: global mode toggle OR user asking 'explain simply'.
 """
-import httpx
-import json
-from core.config import settings
-
-GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+from llm.groq_client import groq_complete
 
 PLAIN_PROMPT = """
 Rewrite the following technical finding in plain English for a non-technical business owner.
@@ -33,22 +29,12 @@ async def restate_plain(technical_text: str) -> str:
     """
     prompt = PLAIN_PROMPT.format(finding=technical_text[:2000])
 
-    headers = {
-        "Authorization": f"Bearer {settings.groq_api_key}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "model": settings.groq_model,
-        "max_tokens": 200,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.3,
-    }
-
     try:
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            resp = await client.post(GROQ_URL, headers=headers, json=payload)
-            resp.raise_for_status()
-            return resp.json()["choices"][0]["message"]["content"].strip()
+        return (await groq_complete(
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=200,
+            temperature=0.3,
+        )).strip()
     except Exception:
         # Fallback: strip known technical patterns manually
         return _basic_simplify(technical_text)
