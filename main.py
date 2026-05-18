@@ -38,7 +38,7 @@ from services.heal_relay import router as heal_relay_router
 from services.redis_sessions import get_redis_status
 
 logging.basicConfig(
-    filename="app.log",
+    filename="/home/techpark-5/Documents/LogOracle/logoracle-backend/app.log",
     level=logging.DEBUG,
     format="%(asctime)s %(levelname)s %(message)s",
 )

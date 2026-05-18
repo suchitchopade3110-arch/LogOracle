@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-Mon May 18 11:59:44 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:44 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:46 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 11:59:46 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:08 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
-Mon May 18 12:23:58 PM IST 2026 ERROR SQL syntax error near '1=1 OR DROP TABLE users--' from 10.0.0.5
-Mon May 18 12:23:58 PM IST 2026 ERROR Injection attempt: admin' OR '1'='1
-Mon May 18 12:26:15 PM IST 2026 ERROR SQLi detected: cursor.execute with string format in get_user() - CWE-89
-Mon May 18 12:26:15 PM IST 2026 CRITICAL SQL Injection vulnerability: unsanitized user_id in query
-Mon May 18 12:26:15 PM IST 2026 ERROR DB query executed with raw input: SELECT * FROM users WHERE id = 
-=======
 2026-05-15 15:14:28,164 DEBUG logging smoke test
 2026-05-15 15:18:03,890 INFO Started server process [456827]
 2026-05-15 15:18:03,891 INFO Waiting for application startup.
@@ -1160,510 +1137,284 @@ Fri May 15 04:23:34 PM IST 2026 ERROR Failed password for root from 192.168.1.10
 2026-05-15 16:26:53,701 INFO request
 2026-05-15 16:26:53,704 INFO request
 2026-05-15 16:26:55,710 INFO request
-2026-05-16 19:41:26,599 INFO [startup] \u2713 Environment validated
-2026-05-16 19:41:26,767 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 19:43:25,047 INFO [startup] \u2713 Environment validated
-2026-05-16 19:43:25,052 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 19:51:39,684 DEBUG Using proactor: IocpProactor
-2026-05-16 19:51:39,944 INFO request
-2026-05-16 19:51:39,948 INFO HTTP Request: POST http://testserver/analyze/log "HTTP/1.1 200 OK"
-2026-05-16 19:56:09,029 INFO request
-2026-05-16 19:56:09,912 INFO request
-2026-05-16 19:56:35,139 INFO request
-2026-05-16 19:56:35,181 INFO request
-2026-05-16 19:58:26,359 DEBUG Using proactor: IocpProactor
-2026-05-16 19:58:26,377 INFO request
-2026-05-16 19:58:26,379 INFO HTTP Request: POST http://testserver/chat/sync "HTTP/1.1 422 Unprocessable Entity"
-2026-05-16 19:59:26,795 DEBUG Using proactor: IocpProactor
-2026-05-16 19:59:26,797 DEBUG Using proactor: IocpProactor
-2026-05-16 19:59:26,833 INFO request
-2026-05-16 19:59:26,836 INFO HTTP Request: POST http://testserver/analyze/log "HTTP/1.1 200 OK"
-2026-05-16 19:59:27,246 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
-2026-05-16 19:59:27,298 DEBUG connect_tcp.failed exception=ConnectError(OSError('All connection attempts failed'))
-2026-05-16 19:59:27,299 ERROR Groq error attempt 1: All connection attempts failed
-2026-05-16 19:59:29,706 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
-2026-05-16 19:59:29,752 DEBUG connect_tcp.failed exception=ConnectError(OSError('All connection attempts failed'))
-2026-05-16 19:59:29,753 ERROR Groq error attempt 2: All connection attempts failed
-2026-05-16 19:59:34,127 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
-2026-05-16 19:59:34,172 DEBUG connect_tcp.failed exception=ConnectError(OSError('All connection attempts failed'))
-2026-05-16 19:59:34,173 ERROR Groq error attempt 3: All connection attempts failed
-2026-05-16 20:04:18,910 INFO [startup] \u2713 Environment validated
-2026-05-16 20:04:18,915 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:04:39,477 INFO request
-2026-05-16 20:05:03,073 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
-2026-05-16 20:05:03,144 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000022AEBF2EE40>
-2026-05-16 20:05:03,145 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x0000022AEBF7D7F0> server_hostname='api.groq.com' timeout=45.0
-2026-05-16 20:05:03,211 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x0000022AEBF5E490>
-2026-05-16 20:05:03,212 DEBUG send_request_headers.started request=<Request [b'POST']>
-2026-05-16 20:05:03,213 DEBUG send_request_headers.complete
-2026-05-16 20:05:03,214 DEBUG send_request_body.started request=<Request [b'POST']>
-2026-05-16 20:05:03,214 DEBUG send_request_body.complete
-2026-05-16 20:05:03,214 DEBUG receive_response_headers.started request=<Request [b'POST']>
-2026-05-16 20:05:03,734 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 16 May 2026 14:35:09 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14399'), (b'x-ratelimit-remaining-tokens', b'5552'), (b'x-ratelimit-reset-requests', b'6s'), (b'x-ratelimit-reset-tokens', b'4.48s'), (b'x-request-id', b'req_01krrkcryaf198n43e0yhhdcsf'), (b'via', b'1.1 google'), (b'cf-cache-status', b'DYNAMIC'), (b'set-cookie', b'__cf_bm=k9GKpM1eEv2aJ2PpQBtt0Gy8jy6aNZb.Lol2khoxOus-1778942108.6006296-1.0.1.1-pr7MszK_790AwsrkP_0xAYrAzEOXUp06WT4Wmb0K.jxzI0dRJ2A6lKJZozrxJJc3Wzm.02.7jMAytyRL1GtM3mDYxVbYwUWaaCg_WKmVWjemdt2F8RjfIDLlbYE6ixbh; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Sat, 16 May 2026 15:05:09 GMT'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Content-Encoding', b'gzip'), (b'CF-RAY', b'9fcb1b72be4c7d39-CJB'), (b'alt-svc', b'h3=":443"; ma=86400')])
-2026-05-16 20:05:03,735 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
-2026-05-16 20:05:03,736 DEBUG receive_response_body.started request=<Request [b'POST']>
-2026-05-16 20:05:03,736 DEBUG receive_response_body.complete
-2026-05-16 20:05:03,736 DEBUG response_closed.started
-2026-05-16 20:05:03,737 DEBUG response_closed.complete
-2026-05-16 20:05:03,739 DEBUG close.started
-2026-05-16 20:05:03,740 DEBUG close.complete
-2026-05-16 20:05:03,740 INFO request
-2026-05-16 20:06:11,541 INFO request
-2026-05-16 20:06:11,542 INFO request
-2026-05-16 20:06:17,232 INFO request
-2026-05-16 20:06:17,913 INFO request
-2026-05-16 20:06:18,555 INFO request
-2026-05-16 20:06:22,973 INFO request
-2026-05-16 20:06:23,731 INFO request
-2026-05-16 20:06:23,967 INFO request
-2026-05-16 20:06:27,741 INFO request
-2026-05-16 20:06:28,434 INFO request
-2026-05-16 20:06:29,691 INFO request
-2026-05-16 20:06:32,581 INFO request
-2026-05-16 20:06:33,566 INFO request
-2026-05-16 20:06:35,668 INFO request
-2026-05-16 20:06:37,601 INFO request
-2026-05-16 20:06:38,588 INFO request
-2026-05-16 20:06:41,748 INFO request
-2026-05-16 20:06:42,763 INFO request
-2026-05-16 20:06:43,764 INFO request
-2026-05-16 20:06:49,373 INFO request
-2026-05-16 20:06:49,388 INFO request
-2026-05-16 20:06:50,385 INFO request
-2026-05-16 20:06:55,081 INFO request
-2026-05-16 20:06:55,816 INFO request
-2026-05-16 20:06:56,054 INFO request
-2026-05-16 20:07:00,128 INFO request
-2026-05-16 20:07:01,815 INFO request
-2026-05-16 20:07:01,828 INFO request
-2026-05-16 20:07:05,906 INFO request
-2026-05-16 20:07:07,550 INFO request
-2026-05-16 20:07:07,796 INFO request
-2026-05-16 20:07:11,603 INFO request
-2026-05-16 20:07:12,608 INFO request
-2026-05-16 20:07:13,752 INFO request
-2026-05-16 20:07:16,634 INFO request
-2026-05-16 20:07:17,633 INFO request
-2026-05-16 20:07:19,733 INFO request
-2026-05-16 20:07:21,685 INFO request
-2026-05-16 20:07:22,666 INFO request
-2026-05-16 20:07:25,706 INFO request
-2026-05-16 20:07:26,724 INFO request
-2026-05-16 20:07:27,708 INFO request
-2026-05-16 20:07:32,364 INFO request
-2026-05-16 20:07:32,368 INFO request
-2026-05-16 20:07:33,345 INFO request
-2026-05-16 20:07:38,038 INFO request
-2026-05-16 20:07:38,754 INFO request
-2026-05-16 20:07:39,005 INFO request
-2026-05-16 20:07:43,081 INFO request
-2026-05-16 20:07:44,773 INFO request
-2026-05-16 20:07:44,782 INFO request
-2026-05-16 20:07:49,067 INFO request
-2026-05-16 20:07:51,379 INFO request
-2026-05-16 20:07:51,408 INFO request
-2026-05-16 20:07:55,362 INFO request
-2026-05-16 20:07:56,254 INFO request
-2026-05-16 20:07:57,333 INFO request
-2026-05-16 20:08:00,467 INFO request
-2026-05-16 20:08:01,359 INFO request
-2026-05-16 20:08:03,263 INFO request
-2026-05-16 20:08:05,475 INFO request
-2026-05-16 20:08:06,427 INFO request
-2026-05-16 20:08:09,264 INFO request
-2026-05-16 20:08:10,730 INFO request
-2026-05-16 20:08:11,713 INFO request
-2026-05-16 20:08:15,929 INFO request
-2026-05-16 20:08:15,940 INFO request
-2026-05-16 20:08:17,284 INFO request
-2026-05-16 20:08:22,895 INFO request
-2026-05-16 20:08:24,033 INFO request
-2026-05-16 20:08:24,299 INFO request
-2026-05-16 20:08:28,334 INFO request
-2026-05-16 20:08:29,741 INFO request
-2026-05-16 20:08:29,997 INFO request
-2026-05-16 20:08:33,781 INFO request
-2026-05-16 20:08:34,720 INFO request
-2026-05-16 20:08:35,976 INFO request
-2026-05-16 20:08:38,843 INFO request
-2026-05-16 20:08:39,860 INFO request
-2026-05-16 20:08:42,127 INFO request
-2026-05-16 20:08:44,103 INFO request
-2026-05-16 20:08:45,063 INFO request
-2026-05-16 20:08:47,799 INFO request
-2026-05-16 20:08:48,819 INFO request
-2026-05-16 20:08:49,489 INFO request
-2026-05-16 20:08:53,631 INFO request
-2026-05-16 20:08:54,023 INFO request
-2026-05-16 20:08:54,272 INFO request
-2026-05-16 20:09:04,827 INFO [startup] \u2713 Environment validated
-2026-05-16 20:09:04,831 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:09:53,133 INFO request
-2026-05-16 20:09:53,134 INFO request
-2026-05-16 20:09:58,829 INFO request
-2026-05-16 20:09:59,488 INFO request
-2026-05-16 20:10:00,186 INFO request
-2026-05-16 20:10:04,634 INFO request
-2026-05-16 20:10:05,035 INFO request
-2026-05-16 20:10:05,287 INFO request
-2026-05-16 20:10:09,357 INFO request
-2026-05-16 20:10:10,999 INFO request
-2026-05-16 20:10:11,010 INFO request
-2026-05-16 20:10:15,076 INFO request
-2026-05-16 20:10:16,720 INFO request
-2026-05-16 20:10:16,981 INFO request
-2026-05-16 20:10:20,787 INFO request
-2026-05-16 20:10:21,790 INFO request
-2026-05-16 20:10:22,973 INFO request
-2026-05-16 20:10:26,346 INFO request
-2026-05-16 20:10:27,753 INFO request
-2026-05-16 20:10:29,404 INFO request
-2026-05-16 20:10:31,962 INFO request
-2026-05-16 20:10:32,933 INFO request
-2026-05-16 20:10:35,430 INFO request
-2026-05-16 20:10:37,033 INFO request
-2026-05-16 20:10:38,011 INFO request
-2026-05-16 20:10:42,318 INFO request
-2026-05-16 20:10:42,326 INFO request
-2026-05-16 20:10:43,401 INFO request
-2026-05-16 20:10:48,230 INFO request
-2026-05-16 20:10:49,600 INFO request
-2026-05-16 20:10:49,671 INFO request
-2026-05-16 20:10:54,251 INFO request
-2026-05-16 20:10:56,771 INFO request
-2026-05-16 20:10:56,786 INFO request
-2026-05-16 20:11:00,936 INFO request
-2026-05-16 20:11:02,494 INFO request
-2026-05-16 20:11:02,742 INFO request
-2026-05-16 20:11:06,517 INFO request
-2026-05-16 20:11:07,416 INFO request
-2026-05-16 20:11:08,649 INFO request
-2026-05-16 20:11:11,579 INFO request
-2026-05-16 20:11:12,496 INFO request
-2026-05-16 20:11:14,584 INFO request
-2026-05-16 20:11:16,500 INFO request
-2026-05-16 20:11:17,481 INFO request
-2026-05-16 20:11:20,487 INFO request
-2026-05-16 20:11:21,424 INFO request
-2026-05-16 20:11:22,329 INFO request
-2026-05-16 20:11:26,935 INFO request
-2026-05-16 20:11:26,936 INFO request
-2026-05-16 20:11:27,837 INFO request
-2026-05-16 20:11:31,833 INFO request
-2026-05-16 20:11:33,338 INFO request
-2026-05-16 20:11:33,353 INFO request
-2026-05-16 20:11:37,338 INFO request
-2026-05-16 20:11:38,228 INFO request
-2026-05-16 20:11:39,258 INFO request
-2026-05-16 20:11:42,370 INFO request
-2026-05-16 20:11:43,270 INFO request
-2026-05-16 20:11:45,141 INFO request
-2026-05-16 20:11:47,388 INFO request
-2026-05-16 20:11:48,279 INFO request
-2026-05-16 20:11:51,030 INFO request
-2026-05-16 20:11:52,294 INFO request
-2026-05-16 20:11:53,199 INFO request
-2026-05-16 20:11:57,534 INFO request
-2026-05-16 20:11:57,537 INFO request
-2026-05-16 20:11:58,434 INFO request
-2026-05-16 20:12:02,203 INFO request
-2026-05-16 20:12:03,229 INFO request
-2026-05-16 20:12:03,237 INFO request
-2026-05-16 20:12:11,890 INFO [startup] \u2713 Environment validated
-2026-05-16 20:12:11,895 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:12:36,430 INFO request
-2026-05-16 20:12:36,433 INFO request
-2026-05-16 20:12:42,059 INFO request
-2026-05-16 20:12:42,752 INFO request
-2026-05-16 20:12:43,486 INFO request
-2026-05-16 20:12:47,461 INFO request
-2026-05-16 20:12:47,883 INFO request
-2026-05-16 20:12:48,132 INFO request
-2026-05-16 20:12:52,180 INFO request
-2026-05-16 20:12:53,619 INFO request
-2026-05-16 20:12:53,647 INFO request
-2026-05-16 20:12:57,655 INFO request
-2026-05-16 20:12:58,572 INFO request
-2026-05-16 20:12:59,627 INFO request
-2026-05-16 20:13:02,820 INFO request
-2026-05-16 20:13:03,785 INFO request
-2026-05-16 20:13:05,621 INFO request
-2026-05-16 20:13:07,895 INFO request
-2026-05-16 20:13:08,892 INFO request
-2026-05-16 20:13:12,017 INFO request
-2026-05-16 20:13:13,479 INFO request
-2026-05-16 20:13:14,983 INFO request
-2026-05-16 20:13:19,522 INFO request
-2026-05-16 20:13:19,538 INFO request
-2026-05-16 20:13:20,897 INFO request
-2026-05-16 20:13:25,634 INFO request
-2026-05-16 20:13:26,332 INFO request
-2026-05-16 20:13:26,593 INFO request
-2026-05-16 20:13:30,601 INFO request
-2026-05-16 20:13:32,000 INFO request
-2026-05-16 20:13:32,252 INFO request
-2026-05-16 20:13:39,949 INFO [startup] \u2713 Environment validated
-2026-05-16 20:13:39,953 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:13:40,057 INFO request
-2026-05-16 20:13:40,060 INFO request
-2026-05-16 20:13:41,646 INFO request
-2026-05-16 20:13:52,755 INFO request
-2026-05-16 20:13:52,755 INFO request
-2026-05-16 20:13:58,837 INFO request
-2026-05-16 20:13:59,808 INFO request
-2026-05-16 20:14:00,720 INFO request
-2026-05-16 20:14:05,312 INFO request
-2026-05-16 20:14:05,315 INFO request
-2026-05-16 20:14:06,262 INFO request
-2026-05-16 20:14:11,085 INFO request
-2026-05-16 20:14:11,798 INFO request
-2026-05-16 20:14:12,045 INFO request
-2026-05-16 20:14:16,120 INFO request
-2026-05-16 20:14:17,480 INFO request
-2026-05-16 20:14:17,744 INFO request
-2026-05-16 20:14:21,544 INFO request
-2026-05-16 20:14:22,510 INFO request
-2026-05-16 20:14:23,660 INFO request
-2026-05-16 20:14:26,457 INFO request
-2026-05-16 20:14:27,342 INFO request
-2026-05-16 20:14:29,585 INFO request
-2026-05-16 20:14:31,441 INFO request
-2026-05-16 20:14:32,347 INFO request
-2026-05-16 20:14:34,543 INFO [startup] \u2713 Environment validated
-2026-05-16 20:14:34,548 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:14:35,253 INFO request
-2026-05-16 20:14:36,278 INFO request
-2026-05-16 20:14:37,000 INFO request
-2026-05-16 20:14:44,780 INFO request
-2026-05-16 20:14:44,781 INFO request
-2026-05-16 20:17:24,195 INFO [startup] \u2713 Environment validated
-2026-05-16 20:17:24,201 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:18:08,583 INFO request
-2026-05-16 20:18:08,584 INFO request
-2026-05-16 20:18:14,228 INFO request
-2026-05-16 20:18:14,922 INFO request
-2026-05-16 20:18:15,645 INFO request
-2026-05-16 20:18:20,380 INFO request
-2026-05-16 20:18:20,381 INFO request
-2026-05-16 20:18:21,331 INFO request
-2026-05-16 20:18:26,080 INFO request
-2026-05-16 20:18:26,764 INFO request
-2026-05-16 20:18:27,013 INFO request
-2026-05-16 20:18:31,102 INFO request
-2026-05-16 20:18:32,466 INFO request
-2026-05-16 20:18:32,724 INFO request
-2026-05-16 20:18:36,539 INFO request
-2026-05-16 20:18:37,492 INFO request
-2026-05-16 20:18:38,690 INFO request
-2026-05-16 20:18:41,598 INFO request
-2026-05-16 20:18:42,532 INFO request
-2026-05-16 20:18:44,636 INFO request
-2026-05-16 20:18:46,561 INFO request
-2026-05-16 20:18:47,496 INFO request
-2026-05-16 20:18:50,574 INFO request
-2026-05-16 20:18:51,574 INFO request
-2026-05-16 20:18:52,503 INFO request
-2026-05-16 20:18:57,197 INFO request
-2026-05-16 20:18:57,202 INFO request
-2026-05-16 20:18:58,238 INFO request
-2026-05-16 20:19:03,538 INFO request
-2026-05-16 20:19:03,541 INFO request
-2026-05-16 20:19:04,484 INFO request
-2026-05-16 20:19:08,540 INFO request
-2026-05-16 20:19:09,933 INFO request
-2026-05-16 20:19:10,195 INFO request
-2026-05-16 20:19:13,975 INFO request
-2026-05-16 20:19:14,914 INFO request
-2026-05-16 20:19:16,130 INFO request
-2026-05-16 20:19:18,936 INFO request
-2026-05-16 20:19:19,887 INFO request
-2026-05-16 20:19:22,192 INFO request
-2026-05-16 20:19:24,127 INFO request
-2026-05-16 20:19:25,101 INFO request
-2026-05-16 20:19:28,206 INFO request
-2026-05-16 20:19:29,268 INFO request
-2026-05-16 20:19:30,206 INFO request
-2026-05-16 20:19:34,859 INFO request
-2026-05-16 20:19:34,863 INFO request
-2026-05-16 20:19:35,809 INFO request
-2026-05-16 20:19:39,852 INFO request
-2026-05-16 20:19:41,524 INFO request
-2026-05-16 20:19:41,536 INFO request
-2026-05-16 20:19:45,611 INFO request
-2026-05-16 20:19:47,656 INFO request
-2026-05-16 20:19:47,891 INFO request
-2026-05-16 20:19:51,732 INFO request
-2026-05-16 20:19:52,685 INFO request
-2026-05-16 20:19:53,853 INFO request
-2026-05-16 20:19:56,704 INFO request
-2026-05-16 20:19:57,663 INFO request
-2026-05-16 20:19:59,840 INFO request
-2026-05-16 20:20:01,779 INFO request
-2026-05-16 20:20:02,734 INFO request
-2026-05-16 20:20:05,825 INFO request
-2026-05-16 20:20:06,733 INFO request
-2026-05-16 20:20:07,731 INFO request
-2026-05-16 20:20:12,576 INFO request
-2026-05-16 20:20:13,238 INFO request
-2026-05-16 20:20:13,496 INFO request
-2026-05-16 20:20:17,492 INFO request
-2026-05-16 20:20:20,364 INFO [startup] \u2713 Environment validated
-2026-05-16 20:20:20,370 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:20:20,502 INFO request
-2026-05-16 20:20:20,502 INFO request
-2026-05-16 20:20:26,186 INFO request
-2026-05-16 20:20:26,188 INFO request
-2026-05-16 20:20:31,864 INFO request
-2026-05-16 20:20:32,555 INFO request
-2026-05-16 20:20:33,197 INFO request
-2026-05-16 20:20:38,177 INFO request
-2026-05-16 20:20:38,180 INFO request
-2026-05-16 20:20:39,032 INFO request
-2026-05-16 20:20:43,544 INFO request
-2026-05-16 20:20:46,328 INFO request
-2026-05-16 20:20:46,356 INFO request
-2026-05-16 20:20:50,484 INFO request
-2026-05-16 20:20:52,569 INFO request
-2026-05-16 20:20:52,597 INFO request
-2026-05-16 20:20:56,823 INFO request
-2026-05-16 20:20:58,608 INFO request
-2026-05-16 20:20:58,857 INFO request
-2026-05-16 20:21:02,721 INFO request
-2026-05-16 20:21:03,695 INFO request
-2026-05-16 20:21:04,936 INFO request
-2026-05-16 20:21:07,912 INFO request
-2026-05-16 20:21:08,915 INFO request
-2026-05-16 20:21:11,486 INFO request
-2026-05-16 20:21:13,873 INFO request
-2026-05-16 20:21:15,662 INFO request
-2026-05-16 20:21:18,120 INFO request
-2026-05-16 20:21:20,415 INFO request
-2026-05-16 20:21:22,066 INFO request
-2026-05-16 20:21:24,726 INFO request
-2026-05-16 20:21:26,622 INFO request
-2026-05-16 20:21:28,199 INFO request
-2026-05-16 20:21:31,331 INFO request
-2026-05-16 20:21:33,028 INFO request
-2026-05-16 20:21:34,524 INFO request
-2026-05-16 20:21:39,088 INFO request
-2026-05-16 20:21:39,102 INFO request
-2026-05-16 20:21:40,615 INFO request
-2026-05-16 20:21:45,555 INFO request
-2026-05-16 20:21:46,337 INFO request
-2026-05-16 20:21:46,605 INFO request
-2026-05-16 20:21:50,683 INFO request
-2026-05-16 20:21:52,464 INFO request
-2026-05-16 20:21:52,470 INFO request
-2026-05-16 20:21:56,601 INFO request
-2026-05-16 20:21:58,337 INFO request
-2026-05-16 20:21:58,600 INFO request
-2026-05-16 20:22:02,398 INFO request
-2026-05-16 20:22:03,391 INFO request
-2026-05-16 20:22:04,532 INFO request
-2026-05-16 20:22:07,386 INFO request
-2026-05-16 20:22:08,315 INFO request
-2026-05-16 20:22:10,255 INFO request
-2026-05-16 20:22:12,125 INFO request
-2026-05-16 20:24:01,954 INFO [startup] \u2713 Environment validated
-2026-05-16 20:24:01,960 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:24:33,727 INFO [startup] \u2713 Environment validated
-2026-05-16 20:24:33,732 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:24:37,843 INFO [startup] \u2713 Environment validated
-2026-05-16 20:24:37,850 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:24:42,702 INFO request
-2026-05-16 20:24:42,703 INFO request
-2026-05-16 20:27:38,884 INFO [startup] \u2713 Environment validated
-2026-05-16 20:27:38,889 INFO startup_complete scenarios=10 session_backend=in-memory
-2026-05-16 20:29:13,773 INFO request
-2026-05-16 20:29:13,779 INFO request
-2026-05-16 20:29:19,482 INFO request
-2026-05-16 20:29:20,204 INFO request
-2026-05-16 20:29:20,988 INFO request
-2026-05-16 20:29:25,759 INFO request
-2026-05-16 20:29:26,451 INFO request
-2026-05-16 20:29:26,710 INFO request
-2026-05-16 20:29:30,755 INFO request
-2026-05-16 20:29:32,143 INFO request
-2026-05-16 20:29:32,406 INFO request
-2026-05-16 20:29:36,309 INFO request
-2026-05-16 20:29:37,309 INFO request
-2026-05-16 20:29:38,391 INFO request
-2026-05-16 20:29:41,125 INFO request
-2026-05-16 20:29:41,648 INFO request
-2026-05-16 20:29:44,069 INFO request
-2026-05-16 20:29:45,393 INFO request
-2026-05-16 20:29:46,060 INFO request
-2026-05-16 20:29:50,095 INFO request
-2026-05-16 20:29:50,100 INFO request
-2026-05-16 20:29:50,810 INFO request
-2026-05-16 20:29:54,918 INFO request
-2026-05-16 20:29:56,687 INFO request
-2026-05-16 20:29:56,717 INFO request
-2026-05-16 20:30:00,803 INFO request
-2026-05-16 20:30:02,519 INFO request
-2026-05-16 20:30:02,780 INFO request
-2026-05-16 20:30:06,666 INFO request
-2026-05-16 20:30:07,696 INFO request
-2026-05-16 20:30:08,781 INFO request
-2026-05-16 20:30:12,031 INFO request
-2026-05-16 20:30:13,132 INFO request
-2026-05-16 20:30:15,079 INFO request
-2026-05-16 20:30:17,862 INFO request
-2026-05-16 20:30:19,467 INFO request
-2026-05-16 20:30:21,618 INFO request
-2026-05-16 20:30:23,655 INFO request
-2026-05-16 20:30:24,726 INFO request
-2026-05-16 20:30:27,634 INFO request
-2026-05-16 20:30:28,974 INFO request
-2026-05-16 20:30:29,902 INFO request
-2026-05-16 20:30:34,328 INFO request
-2026-05-16 20:30:34,333 INFO request
-2026-05-16 20:30:35,311 INFO request
-2026-05-16 20:30:39,048 INFO request
-2026-05-16 20:30:40,163 INFO request
-2026-05-16 20:30:40,256 INFO request
-2026-05-16 20:30:44,322 INFO request
-2026-05-16 20:30:45,933 INFO request
-2026-05-16 20:30:46,184 INFO request
-2026-05-16 20:30:49,954 INFO request
-2026-05-16 20:30:50,845 INFO request
-2026-05-16 20:30:52,465 INFO request
-2026-05-16 20:30:54,953 INFO request
-2026-05-16 20:30:55,890 INFO request
-2026-05-16 20:30:58,412 INFO request
-2026-05-16 20:31:00,048 INFO request
-2026-05-16 20:31:00,908 INFO request
-2026-05-16 20:31:05,187 INFO request
-2026-05-16 20:31:05,190 INFO request
-2026-05-16 20:31:06,177 INFO request
-2026-05-16 20:31:10,974 INFO request
-2026-05-16 20:31:11,793 INFO request
-2026-05-16 20:31:12,023 INFO request
-2026-05-16 20:31:16,063 INFO request
-2026-05-16 20:31:17,326 INFO request
-2026-05-16 20:31:17,569 INFO request
-2026-05-16 20:31:21,327 INFO request
-2026-05-16 20:31:22,287 INFO request
-2026-05-16 20:31:23,573 INFO request
-2026-05-16 20:31:26,400 INFO request
-2026-05-16 20:31:27,356 INFO request
-2026-05-16 20:31:29,232 INFO request
-2026-05-16 20:31:31,150 INFO request
-2026-05-16 20:31:31,805 INFO request
-2026-05-16 20:31:36,015 INFO request
-2026-05-16 20:31:36,018 INFO request
-2026-05-16 20:31:37,143 INFO request
-2026-05-16 20:31:40,938 INFO request
-2026-05-16 20:31:42,006 INFO request
-2026-05-16 20:31:42,012 INFO request
-2026-05-16 20:31:46,246 INFO request
-2026-05-16 20:31:47,817 INFO request
-2026-05-16 20:31:48,075 INFO request
-2026-05-16 20:31:51,914 INFO request
-2026-05-16 20:31:52,952 INFO request
-2026-05-16 20:31:54,090 INFO request
-2026-05-16 20:31:56,973 INFO request
-2026-05-16 20:31:57,992 INFO request
-2026-05-16 20:32:00,143 INFO request
-2026-05-16 20:32:01,755 INFO request
->>>>>>> bfe1541de61c15da1f75a1176e512c28773f7703
+2026-05-18 11:22:20,772 INFO [startup] ✓ Environment validated
+2026-05-18 11:22:20,772 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:22:36,420 INFO request
+2026-05-18 11:26:56,319 INFO request
+2026-05-18 11:45:42,251 INFO request
+2026-05-18 11:46:48,836 INFO [startup] ✓ Environment validated
+2026-05-18 11:46:48,836 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:47:34,154 INFO request
+Mon May 18 11:55:59 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:55:59 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 11:57:39,580 INFO [startup] ✓ Environment validated
+2026-05-18 11:57:39,580 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:57:48,845 INFO request
+2026-05-18 11:57:48,846 INFO request
+2026-05-18 11:59:29,131 INFO request
+2026-05-18 11:59:29,132 INFO request
+2026-05-18 12:00:40,291 INFO request
+2026-05-18 12:00:40,292 INFO request
+Mon May 18 12:00:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:03:56,857 INFO request
+2026-05-18 12:07:32,918 INFO request
+2026-05-18 12:08:43,968 INFO request
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:10:12,749 INFO request
+2026-05-18 12:10:12,749 INFO request
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:11:13,142 INFO request
+2026-05-18 12:11:36,634 INFO request
+2026-05-18 12:11:36,636 INFO request
+2026-05-18 12:11:43,860 INFO request
+2026-05-18 12:12:04,498 INFO request
+Mon May 18 12:12:45 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22
+2026-05-18 12:13:43,455 INFO request
+2026-05-18 12:14:54,074 INFO request
+2026-05-18 12:16:27,344 INFO request
+2026-05-18 12:16:27,344 INFO request
+Mon May 18 12:16:36 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:36 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:18:45,914 INFO request
+2026-05-18 12:19:46,904 INFO request
+2026-05-18 12:20:19,529 INFO request
+2026-05-18 12:20:37,248 INFO [startup] ✓ Environment validated
+2026-05-18 12:20:37,248 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 12:20:42,327 INFO request
+2026-05-18 12:21:11,647 INFO request
+2026-05-18 12:21:11,648 INFO request
+2026-05-18 12:21:16,700 INFO request
+2026-05-18 12:21:21,732 INFO request
+Mon May 18 12:21:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:21:26,764 INFO request
+2026-05-18 12:21:31,797 INFO request
+2026-05-18 12:21:36,831 INFO request
+2026-05-18 12:21:41,864 INFO request
+2026-05-18 12:21:46,898 INFO request
+2026-05-18 12:21:51,931 INFO request
+2026-05-18 12:21:56,968 INFO request
+2026-05-18 12:22:02,006 INFO request
+2026-05-18 12:22:07,045 INFO request
+2026-05-18 12:22:08,900 INFO request
+2026-05-18 12:22:08,924 INFO request
+2026-05-18 12:22:08,934 INFO request
+2026-05-18 12:22:08,955 INFO request
+2026-05-18 12:22:11,972 INFO request
+2026-05-18 12:22:12,001 INFO request
+2026-05-18 12:22:12,003 INFO request
+2026-05-18 12:22:12,031 INFO request
+2026-05-18 12:22:12,035 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 12:22:12,035 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 12:22:12,063 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 12:22:12,064 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 12:22:12,064 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 12:22:12,086 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 12:22:12,087 INFO request
+2026-05-18 12:22:12,151 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c7055e950>
+2026-05-18 12:22:12,151 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061fd40> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 12:22:12,153 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3ac0>
+2026-05-18 12:22:12,153 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061fcc0> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 12:22:12,486 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c7055d3f0>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,488 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c2b60>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.complete
+2026-05-18 12:22:12,488 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_body.complete
+2026-05-18 12:22:12,489 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_headers.complete
+2026-05-18 12:22:12,489 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_body.complete
+2026-05-18 12:22:12,489 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:13,307 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 06:52:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14398'), (b'x-ratelimit-remaining-tokens', b'4542'), (b'x-ratelimit-reset-requests', b'12s'), (b'x-ratelimit-reset-tokens', b'14.58s'), (b'x-request-id', b'req_01krwxphw6esqbbypb7rxm278d'), (b'set-cookie', b'__cf_bm=voQDZkOvQBEsWtnz4j7SbV24wKdoziLWrFutyQN8v2g-1779087132.5274208-1.0.1.1-2aG75svrscdpvtuqQei1MvKC.Q2SMQph5bZ53eq5aJPFstgCzyPqPhVho79G3nDd1kWw67bSsMjg1rpjKuVEBOj8q7gnbceQ6uomwov2.y5y2H4D6PIXWz3ym9nrFym.; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 07:22:13 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd8f0124a43913f-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 12:22:13,308 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 12:22:13,308 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 12:22:13,309 DEBUG receive_response_body.complete
+2026-05-18 12:22:13,309 DEBUG response_closed.started
+2026-05-18 12:22:13,309 DEBUG response_closed.complete
+2026-05-18 12:22:13,309 DEBUG close.started
+2026-05-18 12:22:13,309 DEBUG close.complete
+2026-05-18 12:22:13,311 INFO request
+2026-05-18 12:22:13,323 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 06:52:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14399'), (b'x-ratelimit-remaining-tokens', b'5271'), (b'x-ratelimit-reset-requests', b'6s'), (b'x-ratelimit-reset-tokens', b'7.29s'), (b'x-request-id', b'req_01krwxphw6e3vscsfe4xt49g9w'), (b'set-cookie', b'__cf_bm=OBGGTNKUrxbUD73iUgvWMYb2PC2fceNaA0BTfp3Qpbg-1779087132.5261283-1.0.1.1-MZxDAbkstaqVf62GJ0uXKJzJh6yC.2_EFAuU9sDMYnotwT2wfWL.jF67N6ZkIA_Hj_4wEOSdmuoPQSWE8P2X7oTqwTOih3wXSeozGoM8Vz_y1eRr73uUhpm7UxRBpeMQ; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 07:22:13 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd8f01248ef7f1c-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 12:22:13,323 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 12:22:13,323 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 12:22:13,324 DEBUG receive_response_body.complete
+2026-05-18 12:22:13,324 DEBUG response_closed.started
+2026-05-18 12:22:13,324 DEBUG response_closed.complete
+2026-05-18 12:22:13,324 DEBUG close.started
+2026-05-18 12:22:13,324 DEBUG close.complete
+2026-05-18 12:22:13,325 INFO request
+2026-05-18 12:22:17,120 INFO request
+2026-05-18 12:22:22,154 INFO request
+2026-05-18 12:22:27,186 INFO request
+2026-05-18 12:22:32,222 INFO request
+2026-05-18 12:22:37,257 INFO request
+2026-05-18 12:22:42,291 INFO request
+2026-05-18 12:22:47,325 INFO request
+2026-05-18 12:22:52,360 INFO request
+2026-05-18 12:22:57,394 INFO request
+2026-05-18 12:23:02,428 INFO request
+2026-05-18 12:23:07,462 INFO request
+2026-05-18 12:23:12,495 INFO request
+2026-05-18 12:23:17,527 INFO request
+2026-05-18 12:23:22,561 INFO request
+2026-05-18 12:23:27,596 INFO request
+2026-05-18 12:23:32,633 INFO request
+2026-05-18 12:23:37,668 INFO request
+2026-05-18 12:23:42,702 INFO request
+2026-05-18 12:23:47,738 INFO request
+2026-05-18 12:23:52,774 INFO request
+2026-05-18 12:23:57,809 INFO request
+2026-05-18 12:23:58,544 INFO request
+2026-05-18 12:23:58,575 INFO request
+2026-05-18 12:23:58,740 INFO request
+2026-05-18 12:23:58,771 INFO request
+2026-05-18 12:24:01,614 INFO request
+2026-05-18 12:24:01,644 INFO request
+2026-05-18 12:24:01,810 INFO request
+2026-05-18 12:24:01,840 INFO request
+2026-05-18 12:24:02,850 INFO request
+2026-05-18 12:24:07,883 INFO request
+2026-05-18 12:24:12,917 INFO request
+2026-05-18 12:24:17,950 INFO request
+2026-05-18 12:24:22,986 INFO request
+2026-05-18 12:24:28,019 INFO request
+2026-05-18 12:24:33,055 INFO request
+2026-05-18 12:24:38,087 INFO request
+2026-05-18 12:24:43,118 INFO request
+2026-05-18 12:24:48,152 INFO request
+2026-05-18 12:24:53,184 INFO request
+2026-05-18 12:24:58,219 INFO request
+2026-05-18 12:25:03,258 INFO request
+2026-05-18 12:25:08,293 INFO request
+2026-05-18 12:25:13,333 INFO request
+2026-05-18 12:25:18,036 INFO request
+2026-05-18 12:25:18,367 INFO request
+2026-05-18 12:25:23,400 INFO request
+2026-05-18 12:25:28,440 INFO request
+2026-05-18 12:25:33,474 INFO request
+2026-05-18 12:25:38,512 INFO request
+2026-05-18 12:25:43,548 INFO request
+2026-05-18 12:25:43,707 INFO request
+2026-05-18 12:25:48,586 INFO request
+2026-05-18 12:25:53,621 INFO request
+2026-05-18 12:25:58,657 INFO request
+2026-05-18 12:26:03,699 INFO request
+2026-05-18 12:26:07,482 INFO request
+2026-05-18 12:26:08,738 INFO request
+2026-05-18 12:26:13,773 INFO request
+2026-05-18 12:26:15,422 INFO request
+2026-05-18 12:26:15,452 INFO request
+2026-05-18 12:26:15,567 INFO request
+2026-05-18 12:26:15,597 INFO request
+2026-05-18 12:26:18,487 INFO request
+2026-05-18 12:26:18,524 INFO request
+2026-05-18 12:26:18,637 INFO request
+2026-05-18 12:26:18,675 INFO request
+2026-05-18 12:26:18,808 INFO request
+2026-05-18 12:26:23,841 INFO request
+2026-05-18 12:26:28,874 INFO request
+2026-05-18 12:26:33,921 INFO request
+2026-05-18 12:26:38,956 INFO request
+2026-05-18 12:26:43,990 INFO request
+2026-05-18 12:26:49,023 INFO request
+2026-05-18 12:26:54,060 INFO request
+2026-05-18 12:26:59,092 INFO request
+2026-05-18 12:27:04,126 INFO request
+2026-05-18 12:27:09,160 INFO request
+2026-05-18 12:27:14,194 INFO request
+2026-05-18 12:27:19,227 INFO request
+2026-05-18 12:27:24,259 INFO request
+2026-05-18 12:27:29,293 INFO request
+2026-05-18 12:27:34,329 INFO request
+2026-05-18 12:27:39,364 INFO request
+2026-05-18 12:27:44,396 INFO request
+2026-05-18 12:27:49,432 INFO request
+2026-05-18 12:27:54,465 INFO request
+2026-05-18 12:27:59,503 INFO request
+2026-05-18 12:28:04,537 INFO request
+2026-05-18 12:28:09,571 INFO request
+2026-05-18 12:28:14,606 INFO request
+2026-05-18 12:28:19,642 INFO request
+2026-05-18 12:28:24,676 INFO request
+2026-05-18 12:28:29,716 INFO request
+2026-05-18 12:28:34,754 INFO request
+2026-05-18 12:28:39,786 INFO request
+2026-05-18 12:28:44,821 INFO request
+2026-05-18 13:24:31,203 INFO request
+2026-05-18 13:24:47,567 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 13:24:47,568 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 13:24:47,598 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 13:24:47,693 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3a00>
+2026-05-18 13:24:47,693 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061d040> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 13:24:47,713 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3040>
+2026-05-18 13:24:47,713 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 13:24:47,713 DEBUG send_request_headers.complete
+2026-05-18 13:24:47,713 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 13:24:47,713 DEBUG send_request_body.complete
+2026-05-18 13:24:47,713 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 13:24:47,809 INFO request
+2026-05-18 13:24:47,845 INFO request
+2026-05-18 13:24:48,147 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 07:54:48 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14399'), (b'x-ratelimit-remaining-tokens', b'5571'), (b'x-ratelimit-reset-requests', b'6s'), (b'x-ratelimit-reset-tokens', b'4.29s'), (b'x-request-id', b'req_01krx1951ffp68ymm7xecq0acg'), (b'set-cookie', b'__cf_bm=LuHfSF0MKy6k5_dnKuCdUn64Z9VQAr0ZsNP_4J1HPgE-1779090887.706524-1.0.1.1-zE2EpkxAetnPVXM8UFLgw9q8C8e7v6_jWzfYk48PvM1M6UBMtmu7oPhkx4OuIwLmaEGbIMi5qPEjYQK3uAEpDI7EVDPbd063ejCFNvUyB_a6oMAr9h8aiACSLhKWGewk; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 08:24:48 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd94bc029f93c4f-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 13:24:48,148 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 13:24:48,148 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 13:24:48,148 DEBUG receive_response_body.complete
+2026-05-18 13:24:48,148 DEBUG response_closed.started
+2026-05-18 13:24:48,148 DEBUG response_closed.complete
+2026-05-18 13:24:48,148 DEBUG close.started
+2026-05-18 13:24:48,148 DEBUG close.complete
+2026-05-18 13:24:48,149 INFO request
+2026-05-18 13:24:50,890 INFO request
+2026-05-18 13:24:50,921 INFO request
+2026-05-18 13:24:53,963 INFO request
+2026-05-18 13:24:54,000 INFO request
+2026-05-18 13:24:57,045 INFO request
+2026-05-18 13:24:57,078 INFO request
+2026-05-18 13:25:00,119 INFO request
+2026-05-18 13:25:00,150 INFO request
+2026-05-18 13:25:03,190 INFO request
+2026-05-18 13:25:03,226 INFO request
+2026-05-18 13:25:06,266 INFO request
+2026-05-18 13:25:06,301 INFO request
+2026-05-18 13:25:09,334 INFO request
+2026-05-18 13:25:09,364 INFO request
