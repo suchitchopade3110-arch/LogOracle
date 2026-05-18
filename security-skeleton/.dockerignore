@@ -1,0 +1,10 @@
+node_modules
+package-lock.json
+.env
+logs
+backups
+*.key
+*.pem
+*.crt
+infra/certs/server.key
+infra/certs/server.crt

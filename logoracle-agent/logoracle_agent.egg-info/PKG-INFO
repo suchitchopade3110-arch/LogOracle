@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: logoracle-agent
+Version: 0.1.0
+Summary: LogOracle local agent — tails logs and streams to LogOracle backend
+Home-page: UNKNOWN
+Author: LogOracle Team
+License: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.10
+
+UNKNOWN
+

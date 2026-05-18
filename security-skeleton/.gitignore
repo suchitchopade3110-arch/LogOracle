@@ -1,0 +1,17 @@
+.env
+*.env
+logs/
+coverage/
+node_modules/
+package-lock.json
+backups/
+*.key
+*.pem
+*.crt
+*.csr
+*.p12
+*.sql
+*.sql.enc
+*.sha256
+npm-debug.log*
+.DS_Store

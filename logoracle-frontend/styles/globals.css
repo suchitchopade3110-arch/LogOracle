@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --oracle-bg:      #0A0C10;
+  --oracle-surface: #0F1117;
+  --oracle-border:  #1C2030;
+  --oracle-accent:  #00E5FF;
+  --oracle-warn:    #FF6B35;
+  --oracle-danger:  #FF3B5C;
+  --oracle-success: #00D97E;
+  --oracle-text:    #E8EAF0;
+  --oracle-subtext: #6B7594;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--oracle-bg);
+  color: var(--oracle-text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--oracle-surface); }
+::-webkit-scrollbar-thumb { background: var(--oracle-border); border-radius: 2px; }
+
+/* Scan line overlay */
+.scan-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0, 229, 255, 0.015) 2px, rgba(0, 229, 255, 0.015) 4px
+  );
+}
+
+/* Agent status pulse */
+.agent-pulse { animation: agentPulse 2s ease-in-out infinite; }
+@keyframes agentPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(0, 229, 255, 0); }
+}
+
+/* Severity colors */
+.sev-critical { color: #FF3B5C; border-color: #FF3B5C; }
+.sev-warning  { color: #FF6B35; border-color: #FF6B35; }
+.sev-info     { color: #4D9FFF; border-color: #4D9FFF; }
+.sev-success  { color: #00D97E; border-color: #00D97E; }
+
+/* Token stream cursor */
+.stream-cursor::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  color: var(--oracle-accent);
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
