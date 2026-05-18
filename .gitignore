@@ -7,3 +7,5 @@ groq_cache/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+logoracle-frontend/node_modules/
+logoracle-frontend/.next/
