@@ -1,0 +1,3 @@
+[console_scripts]
+logoracle-agent = logoracle_agent.main:cli
+

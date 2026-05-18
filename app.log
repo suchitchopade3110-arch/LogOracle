@@ -1,0 +1,21 @@
+Mon May 18 11:59:44 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:44 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:45 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:46 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:59:46 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:08 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:09 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:22:10 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:23:58 PM IST 2026 ERROR SQL syntax error near '1=1 OR DROP TABLE users--' from 10.0.0.5
+Mon May 18 12:23:58 PM IST 2026 ERROR Injection attempt: admin' OR '1'='1
+Mon May 18 12:26:15 PM IST 2026 ERROR SQLi detected: cursor.execute with string format in get_user() - CWE-89
+Mon May 18 12:26:15 PM IST 2026 CRITICAL SQL Injection vulnerability: unsanitized user_id in query
+Mon May 18 12:26:15 PM IST 2026 ERROR DB query executed with raw input: SELECT * FROM users WHERE id = 

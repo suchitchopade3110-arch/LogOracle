@@ -1,0 +1,2 @@
+logoracle_agent
+logoracle_sdk

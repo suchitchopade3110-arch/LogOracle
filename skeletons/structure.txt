@@ -1,0 +1,62 @@
+logoracle-backend/
+├── main.py                          # FastAPI app entry, router registration, CORS
+├── requirements.txt
+├── .env.example
+│
+├── core/
+│   ├── config.py                    # env vars, GROQ key, settings
+│   ├── session.py                   # in-memory session store (stateless MVP)
+│   └── logger.py                    # internal logging setup
+│
+├── agents/
+│   ├── orchestrator.py              # coordinates all agents, severity classifier
+│   ├── log_agent.py                 # calls Shruthi's parser → classify → stream
+│   ├── api_agent.py                 # HTTP intercept, failure detect, retry storm
+│   ├── security_agent.py            # brute-force, CVE match, popup trigger
+│   ├── correlation_engine.py        # timestamp align, causal graph builder
+│   └── hallucination_agent.py       # PyPI/npm live registry check (Shruthi feeds)
+│
+├── llm/
+│   ├── groq_client.py               # GROQ API wrapper, retry, rate limit
+│   ├── cache.py                     # demo fallback: save/load JSON responses
+│   └── prompts/
+│       ├── log_analysis.txt
+│       ├── code_fix.txt
+│       └── quiz_generate.txt
+│
+├── routers/
+│   ├── stream.py                    # GET /stream/logs, GET /stream/agents (SSE)
+│   ├── analyze.py                   # POST /analyze/log|code|correlate|intent
+│   ├── heal.py                      # POST /heal/approve
+│   ├── quiz.py                      # POST /quiz/generate, POST /quiz/answer
+│   ├── leaderboard.py               # GET /leaderboard
+│   └── export.py                    # POST /export/pdf
+│
+├── models/
+│   ├── finding.py                   # Finding, Severity, Agent enum
+│   ├── session_state.py             # SessionState dataclass
+│   └── xp.py                        # XPEvent, Badge
+│
+├── services/
+│   ├── pdf_export.py                # WeasyPrint PDF builder
+│   ├── self_heal.py                 # command whitelist, dry-run, approve logic
+│   └── pii_redactor.py             # strip IPs/emails/usernames (Shruthi's module)
+│
+├── scenarios/
+│   ├── README.md
+│   ├── 01_ssh_bruteforce.json       # pre-built demo scenario
+│   ├── 02_oom_kill.json
+│   ├── 03_sql_injection.json
+│   ├── 04_hallucinated_api.json
+│   ├── 05_disk_full.json
+│   ├── 06_retry_storm.json
+│   ├── 07_kernel_panic.json
+│   ├── 08_redis_leak.json
+│   ├── 09_xss_vuln.json
+│   └── 10_intent_gap.json
+│
+└── tests/
+    ├── test_log_agent.py
+    ├── test_correlation.py
+    ├── test_self_heal.py
+    └── test_api_agent.py

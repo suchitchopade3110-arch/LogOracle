@@ -1,0 +1,143 @@
+{
+  "name": "logoracle",
+  "displayName": "LogOracle",
+  "description": "AI Antivirus for Code. Autonomous bug detection, security analysis, and developer growth inside VS Code.",
+  "version": "0.1.0",
+  "publisher": "logoracle",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters", "Other", "Education"],
+  "keywords": ["ai", "debugging", "security", "owasp", "code analysis"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "logoracle.analyzeFile",
+        "title": "LogOracle: Analyze Current File"
+      },
+      {
+        "command": "logoracle.analyzeLog",
+        "title": "LogOracle: Analyze Log File"
+      },
+      {
+        "command": "logoracle.openChat",
+        "title": "LogOracle: Open AI Chat"
+      },
+      {
+        "command": "logoracle.toggleMode",
+        "title": "LogOracle: Toggle Plain English / Technical Mode"
+      },
+      {
+        "command": "logoracle.watchLogs",
+        "title": "LogOracle: Start Live Log Monitoring"
+      },
+      {
+        "command": "logoracle.stopWatch",
+        "title": "LogOracle: Stop Log Monitoring"
+      },
+      {
+        "command": "logoracle.showLeaderboard",
+        "title": "LogOracle: Show Team Leaderboard"
+      }
+    ],
+    "configuration": {
+      "title": "LogOracle",
+      "properties": {
+        "logoracle.backendUrl": {
+          "type": "string",
+          "default": "http://localhost:8001",
+          "description": "LogOracle backend URL"
+        },
+        "logoracle.mode": {
+          "type": "string",
+          "enum": ["tech", "plain"],
+          "default": "tech",
+          "description": "Output mode: tech (full detail) or plain (simplified English)"
+        },
+        "logoracle.autoAnalyzeOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically analyze code files on save"
+        },
+        "logoracle.watchLogPaths": {
+          "type": "array",
+          "default": [],
+          "description": "Log file paths to monitor (e.g. /var/log/syslog)"
+        },
+        "logoracle.developerId": {
+          "type": "string",
+          "default": "",
+          "description": "Your developer ID for XP tracking and leaderboard"
+        },
+        "logoracle.showInlineHints": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show inline code issue hints in the editor"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "logoracle",
+          "title": "LogOracle",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "logoracle": [
+        { "id": "logoracle.findings",    "name": "Findings" },
+        { "id": "logoracle.agents",      "name": "Agents" },
+        { "id": "logoracle.chat",        "name": "AI Chat" },
+        { "id": "logoracle.growth",      "name": "Growth & XP" }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "logoracle.analyzeFile",
+          "group": "logoracle",
+          "when": "editorHasSelection || editorTextFocus"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "logoracle.analyzeLog",
+          "group": "logoracle",
+          "when": "resourceExtname == .log || resourceExtname == .txt"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "logoracle.analyzeFile",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "logoracle.openChat",
+        "key": "ctrl+shift+o",
+        "mac": "cmd+shift+o"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch":   "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node":   "^20.0.0",
+    "typescript":    "^5.0.0",
+    "@vscode/vsce":  "^2.22.0"
+  },
+  "dependencies": {
+    "eventsource": "^2.0.2"
+  }
+}
