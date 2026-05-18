@@ -1381,3 +1381,40 @@ Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.10
 2026-05-18 12:28:34,754 INFO request
 2026-05-18 12:28:39,786 INFO request
 2026-05-18 12:28:44,821 INFO request
+2026-05-18 13:24:31,203 INFO request
+2026-05-18 13:24:47,567 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 13:24:47,568 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 13:24:47,598 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 13:24:47,693 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3a00>
+2026-05-18 13:24:47,693 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061d040> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 13:24:47,713 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3040>
+2026-05-18 13:24:47,713 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 13:24:47,713 DEBUG send_request_headers.complete
+2026-05-18 13:24:47,713 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 13:24:47,713 DEBUG send_request_body.complete
+2026-05-18 13:24:47,713 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 13:24:47,809 INFO request
+2026-05-18 13:24:47,845 INFO request
+2026-05-18 13:24:48,147 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 07:54:48 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14399'), (b'x-ratelimit-remaining-tokens', b'5571'), (b'x-ratelimit-reset-requests', b'6s'), (b'x-ratelimit-reset-tokens', b'4.29s'), (b'x-request-id', b'req_01krx1951ffp68ymm7xecq0acg'), (b'set-cookie', b'__cf_bm=LuHfSF0MKy6k5_dnKuCdUn64Z9VQAr0ZsNP_4J1HPgE-1779090887.706524-1.0.1.1-zE2EpkxAetnPVXM8UFLgw9q8C8e7v6_jWzfYk48PvM1M6UBMtmu7oPhkx4OuIwLmaEGbIMi5qPEjYQK3uAEpDI7EVDPbd063ejCFNvUyB_a6oMAr9h8aiACSLhKWGewk; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 08:24:48 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd94bc029f93c4f-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 13:24:48,148 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 13:24:48,148 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 13:24:48,148 DEBUG receive_response_body.complete
+2026-05-18 13:24:48,148 DEBUG response_closed.started
+2026-05-18 13:24:48,148 DEBUG response_closed.complete
+2026-05-18 13:24:48,148 DEBUG close.started
+2026-05-18 13:24:48,148 DEBUG close.complete
+2026-05-18 13:24:48,149 INFO request
+2026-05-18 13:24:50,890 INFO request
+2026-05-18 13:24:50,921 INFO request
+2026-05-18 13:24:53,963 INFO request
+2026-05-18 13:24:54,000 INFO request
+2026-05-18 13:24:57,045 INFO request
+2026-05-18 13:24:57,078 INFO request
+2026-05-18 13:25:00,119 INFO request
+2026-05-18 13:25:00,150 INFO request
+2026-05-18 13:25:03,190 INFO request
+2026-05-18 13:25:03,226 INFO request
+2026-05-18 13:25:06,266 INFO request
+2026-05-18 13:25:06,301 INFO request
+2026-05-18 13:25:09,334 INFO request
+2026-05-18 13:25:09,364 INFO request
