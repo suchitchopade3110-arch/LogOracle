@@ -1137,3 +1137,247 @@ Fri May 15 04:23:34 PM IST 2026 ERROR Failed password for root from 192.168.1.10
 2026-05-15 16:26:53,701 INFO request
 2026-05-15 16:26:53,704 INFO request
 2026-05-15 16:26:55,710 INFO request
+2026-05-18 11:22:20,772 INFO [startup] ✓ Environment validated
+2026-05-18 11:22:20,772 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:22:36,420 INFO request
+2026-05-18 11:26:56,319 INFO request
+2026-05-18 11:45:42,251 INFO request
+2026-05-18 11:46:48,836 INFO [startup] ✓ Environment validated
+2026-05-18 11:46:48,836 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:47:34,154 INFO request
+Mon May 18 11:55:59 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:55:59 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:00 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 11:56:01 AM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 11:57:39,580 INFO [startup] ✓ Environment validated
+2026-05-18 11:57:39,580 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 11:57:48,845 INFO request
+2026-05-18 11:57:48,846 INFO request
+2026-05-18 11:59:29,131 INFO request
+2026-05-18 11:59:29,132 INFO request
+2026-05-18 12:00:40,291 INFO request
+2026-05-18 12:00:40,292 INFO request
+Mon May 18 12:00:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:00:51 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:03:56,857 INFO request
+2026-05-18 12:07:32,918 INFO request
+2026-05-18 12:08:43,968 INFO request
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:20 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:21 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:09:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:10:12,749 INFO request
+2026-05-18 12:10:12,749 INFO request
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:10:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:11:13,142 INFO request
+2026-05-18 12:11:36,634 INFO request
+2026-05-18 12:11:36,636 INFO request
+2026-05-18 12:11:43,860 INFO request
+2026-05-18 12:12:04,498 INFO request
+Mon May 18 12:12:45 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22
+2026-05-18 12:13:43,455 INFO request
+2026-05-18 12:14:54,074 INFO request
+2026-05-18 12:16:27,344 INFO request
+2026-05-18 12:16:27,344 INFO request
+Mon May 18 12:16:36 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:36 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:37 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:16:38 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:18:45,914 INFO request
+2026-05-18 12:19:46,904 INFO request
+2026-05-18 12:20:19,529 INFO request
+2026-05-18 12:20:37,248 INFO [startup] ✓ Environment validated
+2026-05-18 12:20:37,248 INFO startup_complete scenarios=10 session_backend=redis
+2026-05-18 12:20:42,327 INFO request
+2026-05-18 12:21:11,647 INFO request
+2026-05-18 12:21:11,648 INFO request
+2026-05-18 12:21:16,700 INFO request
+2026-05-18 12:21:21,732 INFO request
+Mon May 18 12:21:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:22 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:23 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+2026-05-18 12:21:26,764 INFO request
+2026-05-18 12:21:31,797 INFO request
+2026-05-18 12:21:36,831 INFO request
+2026-05-18 12:21:41,864 INFO request
+2026-05-18 12:21:46,898 INFO request
+2026-05-18 12:21:51,931 INFO request
+2026-05-18 12:21:56,968 INFO request
+2026-05-18 12:22:02,006 INFO request
+2026-05-18 12:22:07,045 INFO request
+2026-05-18 12:22:08,900 INFO request
+2026-05-18 12:22:08,924 INFO request
+2026-05-18 12:22:08,934 INFO request
+2026-05-18 12:22:08,955 INFO request
+2026-05-18 12:22:11,972 INFO request
+2026-05-18 12:22:12,001 INFO request
+2026-05-18 12:22:12,003 INFO request
+2026-05-18 12:22:12,031 INFO request
+2026-05-18 12:22:12,035 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 12:22:12,035 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 12:22:12,063 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 12:22:12,064 DEBUG load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-18 12:22:12,064 DEBUG load_verify_locations cafile='/home/techpark-5/Documents/LogOracle/logoracle-backend/venv/lib/python3.10/site-packages/certifi/cacert.pem'
+2026-05-18 12:22:12,086 DEBUG connect_tcp.started host='api.groq.com' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-18 12:22:12,087 INFO request
+2026-05-18 12:22:12,151 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c7055e950>
+2026-05-18 12:22:12,151 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061fd40> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 12:22:12,153 DEBUG connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c3ac0>
+2026-05-18 12:22:12,153 DEBUG start_tls.started ssl_context=<ssl.SSLContext object at 0x770c7061fcc0> server_hostname='api.groq.com' timeout=45.0
+2026-05-18 12:22:12,486 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c7055d3f0>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,488 DEBUG start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x770c705c2b60>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.complete
+2026-05-18 12:22:12,488 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 12:22:12,488 DEBUG send_request_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_body.complete
+2026-05-18 12:22:12,489 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_headers.complete
+2026-05-18 12:22:12,489 DEBUG send_request_body.started request=<Request [b'POST']>
+2026-05-18 12:22:12,489 DEBUG send_request_body.complete
+2026-05-18 12:22:12,489 DEBUG receive_response_headers.started request=<Request [b'POST']>
+2026-05-18 12:22:13,307 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 06:52:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14398'), (b'x-ratelimit-remaining-tokens', b'4542'), (b'x-ratelimit-reset-requests', b'12s'), (b'x-ratelimit-reset-tokens', b'14.58s'), (b'x-request-id', b'req_01krwxphw6esqbbypb7rxm278d'), (b'set-cookie', b'__cf_bm=voQDZkOvQBEsWtnz4j7SbV24wKdoziLWrFutyQN8v2g-1779087132.5274208-1.0.1.1-2aG75svrscdpvtuqQei1MvKC.Q2SMQph5bZ53eq5aJPFstgCzyPqPhVho79G3nDd1kWw67bSsMjg1rpjKuVEBOj8q7gnbceQ6uomwov2.y5y2H4D6PIXWz3ym9nrFym.; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 07:22:13 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd8f0124a43913f-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 12:22:13,308 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 12:22:13,308 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 12:22:13,309 DEBUG receive_response_body.complete
+2026-05-18 12:22:13,309 DEBUG response_closed.started
+2026-05-18 12:22:13,309 DEBUG response_closed.complete
+2026-05-18 12:22:13,309 DEBUG close.started
+2026-05-18 12:22:13,309 DEBUG close.complete
+2026-05-18 12:22:13,311 INFO request
+2026-05-18 12:22:13,323 DEBUG receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 18 May 2026 06:52:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'Cache-Control', b'private, max-age=0, no-store, no-cache, must-revalidate'), (b'Server', b'cloudflare'), (b'vary', b'Origin'), (b'x-groq-region', b'bom'), (b'x-ratelimit-limit-requests', b'14400'), (b'x-ratelimit-limit-tokens', b'6000'), (b'x-ratelimit-remaining-requests', b'14399'), (b'x-ratelimit-remaining-tokens', b'5271'), (b'x-ratelimit-reset-requests', b'6s'), (b'x-ratelimit-reset-tokens', b'7.29s'), (b'x-request-id', b'req_01krwxphw6e3vscsfe4xt49g9w'), (b'set-cookie', b'__cf_bm=OBGGTNKUrxbUD73iUgvWMYb2PC2fceNaA0BTfp3Qpbg-1779087132.5261283-1.0.1.1-MZxDAbkstaqVf62GJ0uXKJzJh6yC.2_EFAuU9sDMYnotwT2wfWL.jF67N6ZkIA_Hj_4wEOSdmuoPQSWE8P2X7oTqwTOih3wXSeozGoM8Vz_y1eRr73uUhpm7UxRBpeMQ; HttpOnly; SameSite=None; Secure; Path=/; Domain=groq.com; Expires=Mon, 18 May 2026 07:22:13 GMT'), (b'via', b'1.1 google'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'cf-cache-status', b'DYNAMIC'), (b'Content-Encoding', b'br'), (b'CF-RAY', b'9fd8f01248ef7f1c-MAA'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-05-18 12:22:13,323 INFO HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 12:22:13,323 DEBUG receive_response_body.started request=<Request [b'POST']>
+2026-05-18 12:22:13,324 DEBUG receive_response_body.complete
+2026-05-18 12:22:13,324 DEBUG response_closed.started
+2026-05-18 12:22:13,324 DEBUG response_closed.complete
+2026-05-18 12:22:13,324 DEBUG close.started
+2026-05-18 12:22:13,324 DEBUG close.complete
+2026-05-18 12:22:13,325 INFO request
+2026-05-18 12:22:17,120 INFO request
+2026-05-18 12:22:22,154 INFO request
+2026-05-18 12:22:27,186 INFO request
+2026-05-18 12:22:32,222 INFO request
+2026-05-18 12:22:37,257 INFO request
+2026-05-18 12:22:42,291 INFO request
+2026-05-18 12:22:47,325 INFO request
+2026-05-18 12:22:52,360 INFO request
+2026-05-18 12:22:57,394 INFO request
+2026-05-18 12:23:02,428 INFO request
+2026-05-18 12:23:07,462 INFO request
+2026-05-18 12:23:12,495 INFO request
+2026-05-18 12:23:17,527 INFO request
+2026-05-18 12:23:22,561 INFO request
+2026-05-18 12:23:27,596 INFO request
+2026-05-18 12:23:32,633 INFO request
+2026-05-18 12:23:37,668 INFO request
+2026-05-18 12:23:42,702 INFO request
+2026-05-18 12:23:47,738 INFO request
+2026-05-18 12:23:52,774 INFO request
+2026-05-18 12:23:57,809 INFO request
+2026-05-18 12:23:58,544 INFO request
+2026-05-18 12:23:58,575 INFO request
+2026-05-18 12:23:58,740 INFO request
+2026-05-18 12:23:58,771 INFO request
+2026-05-18 12:24:01,614 INFO request
+2026-05-18 12:24:01,644 INFO request
+2026-05-18 12:24:01,810 INFO request
+2026-05-18 12:24:01,840 INFO request
+2026-05-18 12:24:02,850 INFO request
+2026-05-18 12:24:07,883 INFO request
+2026-05-18 12:24:12,917 INFO request
+2026-05-18 12:24:17,950 INFO request
+2026-05-18 12:24:22,986 INFO request
+2026-05-18 12:24:28,019 INFO request
+2026-05-18 12:24:33,055 INFO request
+2026-05-18 12:24:38,087 INFO request
+2026-05-18 12:24:43,118 INFO request
+2026-05-18 12:24:48,152 INFO request
+2026-05-18 12:24:53,184 INFO request
+2026-05-18 12:24:58,219 INFO request
+2026-05-18 12:25:03,258 INFO request
+2026-05-18 12:25:08,293 INFO request
+2026-05-18 12:25:13,333 INFO request
+2026-05-18 12:25:18,036 INFO request
+2026-05-18 12:25:18,367 INFO request
+2026-05-18 12:25:23,400 INFO request
+2026-05-18 12:25:28,440 INFO request
+2026-05-18 12:25:33,474 INFO request
+2026-05-18 12:25:38,512 INFO request
+2026-05-18 12:25:43,548 INFO request
+2026-05-18 12:25:43,707 INFO request
+2026-05-18 12:25:48,586 INFO request
+2026-05-18 12:25:53,621 INFO request
+2026-05-18 12:25:58,657 INFO request
+2026-05-18 12:26:03,699 INFO request
+2026-05-18 12:26:07,482 INFO request
+2026-05-18 12:26:08,738 INFO request
+2026-05-18 12:26:13,773 INFO request
+2026-05-18 12:26:15,422 INFO request
+2026-05-18 12:26:15,452 INFO request
+2026-05-18 12:26:15,567 INFO request
+2026-05-18 12:26:15,597 INFO request
+2026-05-18 12:26:18,487 INFO request
+2026-05-18 12:26:18,524 INFO request
+2026-05-18 12:26:18,637 INFO request
+2026-05-18 12:26:18,675 INFO request
+2026-05-18 12:26:18,808 INFO request
+2026-05-18 12:26:23,841 INFO request
+2026-05-18 12:26:28,874 INFO request
+2026-05-18 12:26:33,921 INFO request
+2026-05-18 12:26:38,956 INFO request
+2026-05-18 12:26:43,990 INFO request
+2026-05-18 12:26:49,023 INFO request
+2026-05-18 12:26:54,060 INFO request
+2026-05-18 12:26:59,092 INFO request
+2026-05-18 12:27:04,126 INFO request
+2026-05-18 12:27:09,160 INFO request
+2026-05-18 12:27:14,194 INFO request
+2026-05-18 12:27:19,227 INFO request
+2026-05-18 12:27:24,259 INFO request
+2026-05-18 12:27:29,293 INFO request
+2026-05-18 12:27:34,329 INFO request
+2026-05-18 12:27:39,364 INFO request
+2026-05-18 12:27:44,396 INFO request
+2026-05-18 12:27:49,432 INFO request
+2026-05-18 12:27:54,465 INFO request
+2026-05-18 12:27:59,503 INFO request
+2026-05-18 12:28:04,537 INFO request
+2026-05-18 12:28:09,571 INFO request
+2026-05-18 12:28:14,606 INFO request
+2026-05-18 12:28:19,642 INFO request
+2026-05-18 12:28:24,676 INFO request
+2026-05-18 12:28:29,716 INFO request
+2026-05-18 12:28:34,754 INFO request
+2026-05-18 12:28:39,786 INFO request
+2026-05-18 12:28:44,821 INFO request
