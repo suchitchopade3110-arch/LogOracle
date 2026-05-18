@@ -1,0 +1,19 @@
+{
+  "scenario_id": "02_oom_kill",
+  "title": "OOM Kill Takes Down API",
+  "category": "logs",
+  "severity": "CRITICAL",
+  "endpoint": "/analyze/log",
+  "payload": {
+    "log_text": "May 13 03:01:20 ubuntu-prod kernel: Out of memory: Killed process 2817 (nginx) total-vm:824312kB, anon-rss:512000kB\nMay 13 03:01:21 ubuntu-prod systemd[1]: nginx.service: Main process exited, code=killed, status=9/KILL\nMay 13 03:01:22 ubuntu-prod nginx[2901]: connect() failed (111: Connection refused) while connecting to upstream\nMay 13 03:01:24 ubuntu-prod app[3010]: POST /api/orders returned 503 upstream unavailable",
+    "mode": "plain",
+    "redact_pii": true
+  },
+  "expected": {
+    "platform": "linux",
+    "security_findings_min": 0,
+    "event_count_min": 4,
+    "contains": ["Out of memory", "nginx"]
+  },
+  "chat_prompt": "Find the root cause chain from memory pressure to API 503."
+}

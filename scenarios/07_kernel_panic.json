@@ -1,0 +1,19 @@
+{
+  "scenario_id": "07_kernel_panic",
+  "title": "Kernel Panic",
+  "category": "logs",
+  "severity": "CRITICAL",
+  "endpoint": "/analyze/log",
+  "payload": {
+    "log_text": "[    0.123456] Linux dmesg: Linux version 5.15.0-92-generic\n[ 4210.991122] kernel: BUG: unable to handle kernel NULL pointer dereference at 0000000000000010\n[ 4210.991130] kernel: Kernel panic - not syncing: Fatal exception in interrupt\n[ 4210.991140] kernel: CPU: 2 PID: 0 Comm: swapper/2 Tainted: G        W",
+    "mode": "plain",
+    "redact_pii": true
+  },
+  "expected": {
+    "platform": "linux",
+    "format_detected": "dmesg",
+    "event_count_min": 4,
+    "contains": ["kernel panic"]
+  },
+  "chat_prompt": "Explain the kernel panic in incident-response language."
+}

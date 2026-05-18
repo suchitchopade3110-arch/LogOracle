@@ -1,0 +1,16 @@
+{
+  "scenario_id": "03_sql_injection",
+  "title": "SQL Injection in User Lookup",
+  "category": "code",
+  "severity": "CRITICAL",
+  "endpoint": "/analyze/code",
+  "payload": {
+    "language": "python",
+    "code": "def get_user(cursor, user_id):\n    return cursor.execute(\"SELECT * FROM users WHERE id = %s\" % user_id)\n"
+  },
+  "expected": {
+    "pass3_count_min": 1,
+    "contains": ["SQL Injection", "CWE-89"]
+  },
+  "chat_prompt": "Explain why this SQL query is dangerous and suggest a parameterized fix."
+}

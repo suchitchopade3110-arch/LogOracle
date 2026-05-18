@@ -1,0 +1,171 @@
+"""
+chatbot/routers/chat.py
+POST /chat  →  SSE stream of tokens
+Fixes:
+  - session_id query param (multi-session support)
+  - xp_awarded=0 transmitted correctly (is not None check)
+  - CORS headers for browser EventSource
+"""
+import json
+from fastapi import APIRouter, Query
+from fastapi.responses import StreamingResponse
+from chatbot.models.chat_models import ChatRequest, Persona
+from chatbot.context_assembler import assemble_system_prompt
+from chatbot.intent_detector import detect_intent, Intent
+from chatbot.dispute_handler import evaluate_dispute
+from chatbot.predictive_warning import check_predictive_warning
+from chatbot.plain_english import restate_plain
+from services.redis_sessions import get_session, clear_session
+from llm.groq_client import groq_stream
+
+router = APIRouter()
+
+SSE_HEADERS = {
+    "Cache-Control": "no-cache",
+    "X-Accel-Buffering": "no",
+    "Access-Control-Allow-Origin": "*",
+}
+
+
+@router.post("/chat")
+async def chat(
+    req: ChatRequest,
+    session_id: str = Query(default="default"),
+):
+    active_session_id = req.session_id or session_id
+    session = get_session(active_session_id)
+    intent = detect_intent(req.message)
+
+    # ── PLAIN ENGLISH ────────────────────────────────────────────────────
+    if intent == Intent.PLAIN_ENGLISH:
+        plain = await restate_plain(req.message)
+        session.add("user", req.message)
+        session.add("assistant", plain)
+        return _sse_single(plain, intent="plain_english", xp_awarded=10)
+
+    # ── DISPUTE FLOW ─────────────────────────────────────────────────────
+    if intent == Intent.DISPUTE or req.dispute_finding_id:
+        target = _find_by_id(req.session_context.findings, req.dispute_finding_id)
+        if target:
+            result = await evaluate_dispute(
+                finding=target,
+                user_argument=req.message,
+                session_context_summary=_summarize_context(req.session_context),
+            )
+            reply = _format_dispute_reply(result)
+            session.add("user", req.message)
+            session.add("assistant", reply)
+            # FIX: use is not None so xp=0 is transmitted
+            xp = result.get("xp_awarded")
+            xp = xp if xp is not None else 0
+            return _sse_single(reply, intent="dispute", dispute_result=result, xp_awarded=xp)
+
+    # ── PREDICTIVE WARNING CHECK ──────────────────────────────────────────
+    predictive_warning = None
+    for finding in req.session_context.findings:
+        w = check_predictive_warning(finding.message)
+        if w:
+            predictive_warning = w
+            break
+
+    # ── STANDARD PERSONA CHAT (SSE STREAM) ───────────────────────────────
+    system_prompt = assemble_system_prompt(
+        context=req.session_context,
+        persona=req.persona,
+        mode=req.mode,
+    )
+    messages = [
+        {"role": "system", "content": system_prompt},
+        *session.to_groq_messages(),
+        {"role": "user", "content": req.message},
+    ]
+    session.add("user", req.message, persona=req.persona)
+
+    return StreamingResponse(
+        _stream_groq(messages, session, req.persona, predictive_warning, intent),
+        media_type="text/event-stream",
+        headers=SSE_HEADERS,
+    )
+
+
+@router.delete("/session/{session_id}")
+async def reset_session(session_id: str = "default"):
+    clear_session(session_id)
+    return {"cleared": session_id}
+
+
+async def _stream_groq(messages, session, persona, predictive_warning, intent):
+    full_reply = []
+    try:
+        async for token in groq_stream(messages, temperature=0.4):
+            full_reply.append(token)
+            yield f"data: {json.dumps({'token': token, 'type': 'token'})}\n\n"
+
+        complete = "".join(full_reply)
+        session.add("assistant", complete, persona=persona)
+
+        if predictive_warning:
+            yield f"data: {json.dumps({'warning': predictive_warning, 'type': 'predictive_warning'})}\n\n"
+
+        yield f"data: {json.dumps({'type': 'done', 'intent': intent.value if hasattr(intent, 'value') else intent})}\n\n"
+
+    except Exception as e:
+        yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
+
+
+def _sse_single(reply: str, intent: str, dispute_result=None, xp_awarded=None):
+    async def gen():
+        payload = {"type": "complete", "reply": reply, "intent": intent}
+        if dispute_result:
+            payload["dispute_result"] = dispute_result
+        # FIX: is not None so 0 transmits
+        if xp_awarded is not None:
+            payload["xp_awarded"] = xp_awarded
+        yield f"data: {json.dumps(payload)}\n\n"
+
+    return StreamingResponse(gen(), media_type="text/event-stream", headers=SSE_HEADERS)
+
+
+def _find_by_id(findings, finding_id):
+    if not finding_id:
+        return findings[-1] if findings else None
+    return next((f for f in findings if f.finding_id == finding_id), None)
+
+
+def _summarize_context(ctx) -> str:
+    s = f"Findings: {len(ctx.findings)}. "
+    if ctx.findings:
+        s += f"Most severe: {ctx.findings[0].severity} — {ctx.findings[0].message[:100]}. "
+    if ctx.code_diff:
+        s += f"Code diff present ({len(ctx.code_diff)} chars)."
+    return s
+
+
+def _format_dispute_reply(result: dict) -> str:
+    verdict = result.get("verdict", "confirmed")
+    explanation = result.get("explanation", "")
+    xp = result.get("xp_awarded", 0)
+    if verdict == "retracted":
+        return f"✓ Finding retracted. {explanation}\n\n+{xp} XP awarded for valid dispute."
+    return f"Finding confirmed. {explanation}"
+
+@router.post("/chat/sync")
+async def chat_sync(req: ChatRequest):
+    """Non-streaming version for agent auto-query. Returns plain JSON."""
+    session = get_session(req.session_id)
+    system_prompt = assemble_system_prompt(
+        context=req.session_context,
+        persona=req.persona,
+        mode=req.mode,
+    )
+    history  = session.to_groq_messages()
+    messages = [
+        {"role": "system", "content": system_prompt},
+        *history,
+        {"role": "user", "content": req.message},
+    ]
+    from llm.groq_client import groq_complete
+    reply = await groq_complete(messages=messages, max_tokens=200, temperature=0.4)
+    session.add("user", req.message)
+    session.add("assistant", reply)
+    return {"reply": reply, "intent": "general"}
