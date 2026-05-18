@@ -24,7 +24,7 @@ from rich.style import Style
 from rich.text import Text
 from textual.app import App, ComposeResult
 from textual.containers import Container, Horizontal, Vertical
-from textual.widgets import DataTable, Footer, Header, Label, RichLog, Static
+from textual.widgets import Input, DataTable, Footer, Header, Label, RichLog, Static
 
 try:
     from dotenv import load_dotenv
@@ -340,6 +340,18 @@ class LogOracleApp(App[None]):
         background: #161b22;
         color: cyan;
     }
+    #chat-panel {
+        height: 0;
+        border: solid #238636;
+    }
+    #chat-panel.visible {
+        height: 3;
+    }
+    #chat-input {
+        background: #0d1117;
+        color: white;
+        border: none;
+    }
     Footer {
         background: #161b22;
     }
@@ -393,6 +405,7 @@ class LogOracleApp(App[None]):
         ("q", "quit_app", "Quit"),
         ("c", "clear_log", "Clear Log"),
         ("f", "clear_findings", "Clear Findings"),
+        ("t", "toggle_chat", "Chat"),
     ]
 
     def __init__(self, log_queue: asyncio.Queue, stop_event: asyncio.Event, **kwargs: Any) -> None:
@@ -420,6 +433,9 @@ class LogOracleApp(App[None]):
                 with Container(id="right-bottom"):
                     yield Label("  ▸ FINDINGS", id="findings-label")
                     yield FindingsWidget(id="findings-table")
+        with Container(id="chat-panel"):
+            yield Label("  ▸ CHAT  [t to hide]", id="chat-label")
+            yield Input(placeholder="Ask LogOracle...", id="chat-input")
         yield Footer()
 
     def on_mount(self) -> None:
@@ -453,6 +469,40 @@ class LogOracleApp(App[None]):
     def action_clear_findings(self) -> None:
         _findings.clear()
         self.query_one("#findings-table", FindingsWidget).sync_rows()
+
+    def action_toggle_chat(self) -> None:
+        panel = self.query_one("#chat-panel")
+        if "visible" in panel.classes:
+            panel.remove_class("visible")
+        else:
+            panel.add_class("visible")
+            self.query_one("#chat-input", Input).focus()
+
+    async def on_input_submitted(self, event: Input.Submitted) -> None:
+        msg = event.value.strip()
+        if not msg:
+            return
+        event.input.value = ""
+        panel = self.query_one("#chat-panel")
+        panel.remove_class("visible")
+        log_view = self.query_one("#log-view", RichLog)
+        log_view.write(Text(f"[YOU] {msg}", style="bold green"))
+        self.refresh()
+        import asyncio as _a
+        _a.create_task(self._chat_request(msg))
+
+    async def _chat_request(self, msg: str) -> None:
+        import httpx as _h
+        log_view = self.query_one("#log-view", RichLog)
+        log_view.write(Text("[CHATBOT] thinking...", style="dim magenta"))
+        try:
+            async with _h.AsyncClient(timeout=30) as c:
+                r = await c.post(f"{BASE_URL}/chat/sync", json={"message": msg, "session_id": "cli-chat", "persona": "security", "mode": "plain", "session_context": {"findings": [], "last_log_lines": "", "code_diff": "", "chat_history": [], "developer_profile": {"expertise_level": "intermediate", "past_quiz_scores": [], "badges": []}}})
+                data = r.json()
+                reply = data.get("reply") or data.get("response") or data.get("message") or str(data)
+                log_view.write(Text(f"[CHATBOT] {reply[:500]}", style="bold magenta"))
+        except Exception as e:
+            log_view.write(Text(f"[CHATBOT] Error: {e}", style="red"))
 
 
 async def health_monitor(log_queue: asyncio.Queue, stop_event: asyncio.Event) -> None:
