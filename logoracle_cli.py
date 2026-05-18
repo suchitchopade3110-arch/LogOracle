@@ -189,11 +189,7 @@ def enqueue_finding(log_queue: asyncio.Queue, finding: dict[str, Any]) -> None:
 async def wait_for_stop(stop_event: asyncio.Event, seconds: float) -> None:
     try:
         await asyncio.wait_for(stop_event.wait(), timeout=seconds)
-<<<<<<< HEAD
     except (TimeoutError, asyncio.TimeoutError, Exception):
-=======
-    except (TimeoutError, asyncio.TimeoutError, Exception):
->>>>>>> bfe1541de61c15da1f75a1176e512c28773f7703
         pass
 
 
