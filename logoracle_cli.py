@@ -706,7 +706,7 @@ def collect_paste_lines() -> list[str]:
     return lines
 
 
-async def run_tui(mode: str, target: str, pasted_lines: list[str] | None = None) -> None:
+async def run_tui(mode: str, target: str, pasted_lines: list[str] | None = None, relay: bool = False, agent_id: str = "cli-agent-01") -> None:
     stop_event = asyncio.Event()
     log_queue: asyncio.Queue = asyncio.Queue(maxsize=LOG_QUEUE_SIZE)
     app = LogOracleApp(log_queue=log_queue, stop_event=stop_event)
@@ -738,6 +738,7 @@ Examples:
     parser.add_argument("--ingest", metavar="FILE", help="Analyze an entire log file once")
     parser.add_argument("--paste", action="store_true", help="Paste log lines manually")
     parser.add_argument("--url", default="http://localhost:8001", help="Backend URL")
+    parser.add_argument("--relay", action="store_true", help="Register as heal relay agent and poll for block commands")
     parser.add_argument(
         "--api-key",
         default=None,
@@ -765,9 +766,58 @@ Examples:
         return
 
     try:
-        asyncio.run(run_tui(mode, target, pasted_lines))
+        print(f"relay={args.relay}")
+        asyncio.run(run_tui(mode, target, pasted_lines, relay=args.relay, agent_id="cli-agent-01"))
     except KeyboardInterrupt:
         print("\nStopped.")
+
+async def relay_loop(agent_id: str, log_queue: asyncio.Queue, stop_event: asyncio.Event):
+    """Register with heal relay and poll for block commands."""
+    def push(text):
+        try: log_queue.put_nowait({"kind": "log", "text": text})
+        except: pass
+
+    # Register
+    try:
+        async with httpx.AsyncClient(timeout=10) as c:
+            r = await c.post(f"{BASE_URL}/heal/relay/register", json={"agent_id": agent_id, "capabilities": ["fail2ban", "ufw"]})
+            push(f"[RELAY] Registered agent: {agent_id}")
+    except Exception as e:
+        push(f"[RELAY] Registration failed: {e}")
+        return
+
+    # Poll for pending commands
+    while not stop_event.is_set():
+        try:
+            async with httpx.AsyncClient(timeout=10) as c:
+                r = await c.get(f"{BASE_URL}/heal/relay/pending/{agent_id}")
+                if r.status_code == 200:
+                    data = r.json()
+                    commands = data.get("commands", [])
+                    for cmd in commands:
+                        token = cmd.get("token")
+                        action = cmd.get("action", "")
+                        target = cmd.get("target", "")
+                        push(f"[RELAY] ⚡ Executing: {action} → {target}")
+                        # Execute block command
+                        import subprocess
+                        if "ufw" in action.lower() or "block" in action.lower():
+                            result = subprocess.run(
+                                ["sudo", "ufw", "deny", "from", target],
+                                capture_output=True, text=True
+                            )
+                            success = result.returncode == 0
+                        else:
+                            success = True
+                        # Report result
+                        await c.post(f"{BASE_URL}/heal/relay/result/{token}", json={
+                            "success": success,
+                            "output": f"Blocked {target}" if success else "Failed"
+                        })
+                        push(f"[RELAY] {'✓ Blocked' if success else '✗ Failed'}: {target}")
+        except Exception:
+            pass
+        await asyncio.sleep(5)
 
 if __name__ == "__main__":
     main()
