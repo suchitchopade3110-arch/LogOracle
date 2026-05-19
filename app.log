@@ -1418,3 +1418,20 @@ Mon May 18 12:21:24 PM IST 2026 ERROR Failed password for root from 192.168.1.10
 2026-05-18 13:25:06,301 INFO request
 2026-05-18 13:25:09,334 INFO request
 2026-05-18 13:25:09,364 INFO request
+Mon May 18 03:23:48 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:49 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:50 PM IST 2026 ERROR Failed password for root from 192.168.1.100 port 22 ssh2
+Mon May 18 03:23:50 PM IST 2026 ERROR XSS attempt detected: <script>alert('xss')</script> in user input from 10.0.0.5
+Mon May 18 03:23:50 PM IST 2026 ERROR Path traversal attempt: ../../etc/passwd from 192.168.1.50
+Mon May 18 03:23:50 PM IST 2026 CRITICAL sudo: user www-data NOT in sudoers file from 192.168.1.100
+Mon May 18 03:23:50 PM IST 2026 WARNING nmap scan detected from 10.0.0.99 - multiple ports probed
+Mon May 18 03:23:50 PM IST 2026 CRITICAL CVE-2021-44228 Log4Shell exploit attempt from 185.220.101.5
+Mon May 18 03:23:50 PM IST 2026 ERROR Unauthorized Redis access attempt from 10.0.0.12 port 6379
+Mon May 18 03:25:15 PM IST 2026 ERROR XSS attempt detected: <script>alert('xss')</script> in user input from 10.0.0.5
+Mon May 18 03:25:15 PM IST 2026 WARNING Reflected XSS payload in URL param: ?q=<img src=x onerror=alert(1)> from 192.168.1.77
+Mon May 18 03:25:15 PM IST 2026 ERROR Stored XSS detected in comment field: <script>document.cookie</script> from 10.0.0.22

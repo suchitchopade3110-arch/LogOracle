@@ -19,6 +19,7 @@ from middleware.request_guard import (
     validate_env_on_startup,
 )
 from routers import stream, analyze, heal, quiz, leaderboard, export, demo
+from routers.pentest import router as pentest_router
 from analysis.routers.analysis_routes import router as analysis_router
 from chatbot.routers.chat import router as chat_router
 from llm.routers.llm_routes import router as llm_router
@@ -81,6 +82,7 @@ app.include_router(export.router,      prefix="/export",      tags=["export"])
 app.include_router(stream.router,      prefix="/stream",      tags=["stream"])
 app.include_router(session_router,                         tags=["session"])
 app.include_router(demo.router,                            tags=["demo"])
+app.include_router(pentest_router,                         tags=["pentest"])
 
 @app.on_event("startup")
 async def startup():
