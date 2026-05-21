@@ -1,0 +1,74 @@
+{
+  "title": "LogOracle Overview",
+  "uid": "logoracle-main",
+  "timezone": "browser",
+  "refresh": "10s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Total Requests",
+      "type": "stat",
+      "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+      "targets": [{"expr": "sum(logoracle_requests_total)", "legendFormat": "Total"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 2,
+      "title": "Request Rate (req/s)",
+      "type": "stat",
+      "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
+      "targets": [{"expr": "sum(rate(logoracle_requests_total[1m]))", "legendFormat": "req/s"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 3,
+      "title": "Error Rate",
+      "type": "stat",
+      "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4},
+      "targets": [{"expr": "sum(rate(logoracle_requests_total{status_code=~\"5..\"}[1m]))", "legendFormat": "errors/s"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 4,
+      "title": "Active Agents",
+      "type": "stat",
+      "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4},
+      "targets": [{"expr": "sum(logoracle_active_agents)", "legendFormat": "agents"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 5,
+      "title": "Request Latency p95",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8},
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(logoracle_request_duration_seconds_bucket[5m])) by (le, endpoint))", "legendFormat": "{{endpoint}}"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 6,
+      "title": "Requests by Endpoint",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8},
+      "targets": [{"expr": "sum(rate(logoracle_requests_total[1m])) by (endpoint)", "legendFormat": "{{endpoint}}"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 7,
+      "title": "Analyses Run",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8},
+      "targets": [{"expr": "sum(logoracle_analyses_total) by (status)", "legendFormat": "{{status}}"}],
+      "datasource": "Prometheus"
+    },
+    {
+      "id": 8,
+      "title": "Findings Detected",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8},
+      "targets": [{"expr": "sum(logoracle_findings_total) by (severity)", "legendFormat": "{{severity}}"}],
+      "datasource": "Prometheus"
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1
+}

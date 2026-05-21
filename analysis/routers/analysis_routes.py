@@ -9,7 +9,11 @@ Endpoints:
     POST /analyze/code          — Pass 1 (AST) + Pass 3 (OWASP)
     POST /analyze/hallucination — registry validation
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
+from auth.dependencies import get_current_user
+from db.database import get_db
+from db.crud import save_analysis
+from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
 from typing import Optional, List
 
@@ -48,7 +52,7 @@ class HallucinationRequest(BaseModel):
 
 
 @router.post("/analyze/log")
-async def analyze_log(req: LogRequest):
+async def analyze_log(req: LogRequest, user: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     pii_info = detect_pii_presence(req.log_text)
     chunks = chunk_log_text(req.log_text)
     chunk_info = chunk_summary(chunks)
@@ -97,6 +101,12 @@ async def analyze_log(req: LogRequest):
         f"Parsed {len(parsed.events)} events ({parsed.platform})",
     )
 
+    # Save to DB with user context
+    try:
+        result_data = {"event_count": len(parsed.events), "platform": str(parsed.platform)}
+        await save_analysis(db=db, user=user, log_text=req.log_text[:500], result=result_data, findings_count=len(security_findings), severity="CRITICAL" if security_findings else "INFO")
+    except Exception as e:
+        print(f"[DB SAVE ERROR] {e}")
     return {
         "platform":          parsed.platform,
         "distro":            parsed.distro,
@@ -114,6 +124,14 @@ async def analyze_log(req: LogRequest):
         "popups":             popups,
         "fixes":              fixes,
     }
+
+    # Save to DB with user context
+    try:
+        import asyncio
+        result_data = {"event_count": len(parsed.events), "platform": str(parsed.platform)}
+        await save_analysis(db=db, user=user, log_text=req.log_text[:500], result=result_data, findings_count=len(security_findings), severity="CRITICAL" if security_findings else "INFO")
+    except Exception as e:
+        print(f"[DB SAVE ERROR] {e}")
 
 
 @router.post("/analyze/code")

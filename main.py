@@ -3,6 +3,8 @@ import json
 import logging
 
 from dotenv import load_dotenv
+from prometheus_client import make_asgi_app
+from monitoring.middleware import PrometheusMiddleware
 
 load_dotenv()
 
@@ -48,6 +50,7 @@ logger = logging.getLogger("logoracle")
 app = FastAPI(title="LogOracle API", version="1.0.0")
 
 app.state.limiter = limiter
+app.add_middleware(PrometheusMiddleware)
 app.add_exception_handler(RateLimitExceeded, rate_limit_handler)
 app.add_middleware(RateLimitMiddleware)
 app.add_middleware(RequestLogMiddleware)
@@ -59,6 +62,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Prometheus metrics endpoint
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
 
 app.include_router(agent_stream_router,                    tags=["streaming"])
 app.include_router(log_stream_router,                      tags=["streaming"])
