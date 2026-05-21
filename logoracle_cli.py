@@ -72,18 +72,15 @@ SEVERITY_STYLE = {
 }
 
 LOGO = (
-    "                                                                          \n"
-    "  _                          ___                  _                       \n"
-    " | |    ___   __ _   ___    / _ \\  _ __ __ _  ___| | ___                  \n"
-    " | |   / _ \\ / _` | |___|  | | | || '__/ _` |/ __| |/ _ \\                 \n"
-    " | |__| (_) | (_| |  ___   | |_| || | | (_| | (__| |  __/                 \n"
-    " |_____\\___/ \\__, | |___|   \\___/ |_|  \\__,_|\\___|_|\\___|                 \n"
-    "             |___/                                                        \n"
-    "                                                                          \n"
-    "          AUTONOMOUS  DEBUG  INTELLIGENCE                                 \n"
-    "          v1.0   *   HACKATHON 2026                                       \n"
+    "    __                ____                  __   \n"
+    "   / /   ____  ____ _/ __ \\_________ ______/ /__ \n"
+    "  / /   / __ \\/ __ `/ / / / ___/ __ `/ ___/ / _ \\\n"
+    " / /___/ /_/ / /_/ / /_/ / /  / /_/ / /__/ /  __/\n"
+    "/_____/\\____/\\__, /\\____/_/   \\__,_/\\___/_/\\___/ \n"
+    "            /____/                               \n"
+    "                                                 \n"
+    "    AUTONOMOUS  *  DEBUG  *  INTELLIGENCE        \n"
 )
-
 def trim_text(text: str, limit: int = 300) -> str:
     text = " ".join(text.split())
     return text if len(text) <= limit else text[: limit - 3] + "..."
@@ -375,15 +372,19 @@ class LogOracleApp(App[None]):
     }
     #chat-panel {
         height: 0;
-        border: solid #238636;
+        display: none;
     }
     #chat-panel.visible {
-        height: 3;
+        height: 8;
+        display: block;
+        border: solid #238636;
+        padding: 0 1;
     }
     #chat-input {
-        background: #0d1117;
-        color: white;
-        border: none;
+        background: #1a1f2e;
+        color: #ffffff;
+        border: solid #238636;
+        height: 3;
     }
     Footer {
         background: #161b22;
@@ -479,6 +480,10 @@ class LogOracleApp(App[None]):
         self.set_interval(0.2, self._drain_queue)
 
     def _drain_queue(self) -> None:
+        # Pause log updates while chat is active
+        panel = self.query_one("#chat-panel")
+        if "visible" in panel.classes:
+            return
         log_view = self.query_one("#log-view", RichLog)
         findings_table = self.query_one("#findings-table", FindingsWidget)
 
@@ -532,10 +537,14 @@ class LogOracleApp(App[None]):
         log_view.write(Text("[CHATBOT] thinking...", style="dim magenta"))
         try:
             async with _h.AsyncClient(timeout=30) as c:
-                r = await c.post(f"{BASE_URL}/chat/sync", json={"message": msg, "session_id": "cli-chat", "persona": "security", "mode": "plain", "session_context": {"findings": [], "last_log_lines": "", "code_diff": "", "chat_history": [], "developer_profile": {"expertise_level": "intermediate", "past_quiz_scores": [], "badges": []}}})
+                r = await c.post(f"{BASE_URL}/chat/sync", headers=build_headers(), json={"message": msg, "session_id": "cli-chat", "persona": "security", "mode": "plain", "session_context": {"findings": [], "last_log_lines": "", "code_diff": "", "chat_history": [], "developer_profile": {"expertise_level": "intermediate", "past_quiz_scores": [], "badges": []}}})
                 data = r.json()
                 reply = data.get("reply") or data.get("response") or data.get("message") or str(data)
-                log_view.write(Text(f"[CHATBOT] {reply[:500]}", style="bold magenta"))
+                log_view.write(Text("[CHATBOT] ─────────────────────────", style="dim magenta"))
+                for line in reply.split("\n"):
+                    if line.strip():
+                        log_view.write(Text(line, style="bold magenta"))
+                log_view.write(Text("[CHATBOT] ─────────────────────────", style="dim magenta"))
         except Exception as e:
             log_view.write(Text(f"[CHATBOT] Error: {e}", style="red"))
 

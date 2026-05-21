@@ -1,5 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0A0C10"/>
-  <path d="M15 20h34v24H15z" fill="none" stroke="#00E5FF" stroke-width="4" rx="4"/>
-  <path d="M22 28l7 5-7 5M33 39h12" fill="none" stroke="#00D97E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" rx="15" fill="#0d1117"/>
+  
+  <g stroke="#00ffcc" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 50C25 50 40 35 50 35C60 35 75 50 75 50C75 50 60 65 50 65C40 65 25 50 25 50Z" stroke-width="5"/>
+    <circle cx="50" cy="50" r="8" fill="#00ffcc"/>
+    
+    <path d="M20 20L35 35"/>
+    <circle cx="20" cy="20" r="3" fill="#0d1117" stroke-width="3"/>
+    
+    <path d="M80 20L65 35"/>
+    <circle cx="80" cy="20" r="3" fill="#0d1117" stroke-width="3"/>
+    
+    <path d="M20 80L35 65"/>
+    <circle cx="20" cy="80" r="3" fill="#0d1117" stroke-width="3"/>
+    
+    <path d="M65 65L72 72L65 79M76 80H84" stroke-width="4"/>
+  </g>
 </svg>

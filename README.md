@@ -371,6 +371,39 @@ KEYCLOAK_CLIENT_ID=logoracle-api
 
 ---
 
+
+## 🌐 Run Agent on Any Machine
+
+Your friend can run the LogOracle terminal agent against your backend from any machine.
+
+### Prerequisites
+```bash
+pip install textual httpx psutil python-dotenv
+```
+
+### Connect to remote backend
+```bash
+# Download agent
+curl -O https://raw.githubusercontent.com/suchitchopade3110-arch/LogOracle/main/logoracle_cli.py
+
+# Set backend URL and API key
+export LOGORACLE_API_KEY=your-api-key
+export LOGORACLE_BASE_URL=http://your-server-ip:8001
+
+# Watch any log file on their machine
+python logoracle_cli.py --watch /var/log/syslog
+```
+
+All analysis runs on your backend — friend's logs are sent to your server for AI processing.
+
+### Expose backend publicly (ngrok)
+```bash
+# On your machine
+ngrok http 8001
+# Share the https://xxx.ngrok.io URL with friend
+```
+
+---
 ## 👥 Team
 
 Built at **Summer Code Hackathon 2026** by a 5-person team.
