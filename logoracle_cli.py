@@ -63,12 +63,12 @@ _stats = {
 }
 
 SEVERITY_STYLE = {
-    "CRITICAL": Style(color="red", bold=True),
-    "HIGH": Style(color="red"),
-    "WARNING": Style(color="yellow", bold=True),
-    "MEDIUM": Style(color="yellow"),
-    "LOW": Style(color="green"),
-    "INFO": Style(color="cyan"),
+    "CRITICAL": Style(color="#00aaff", bold=True),
+    "HIGH": Style(color="#00aaff"),
+    "WARNING": Style(color="#00aaff", bold=True),
+    "MEDIUM": Style(color="#00aaff"),
+    "LOW": Style(color="#00aaff"),
+    "INFO": Style(color="#00aaff"),
 }
 
 LOGO = (
@@ -78,8 +78,9 @@ LOGO = (
     " / /___/ /_/ / /_/ / /_/ / /  / /_/ / /__/ /  __/\n"
     "/_____/\\____/\\__, /\\____/_/   \\__,_/\\___/_/\\___/ \n"
     "            /____/                               \n"
-    "                                                 \n"
-    "    AUTONOMOUS  *  DEBUG  *  INTELLIGENCE        \n"
+    "\n"
+    "\n"
+    "   AUTONOMOUS  *  DEBUG  *  INTELLIGENCE\n"
 )
 def trim_text(text: str, limit: int = 300) -> str:
     text = " ".join(text.split())
@@ -269,25 +270,41 @@ def severity_to_text(severity: str) -> Text:
 def style_log_line(text: str) -> Text:
     upper = text.upper()
     if text.startswith("[CHATBOT]"):
-        return Text(text, style="bold magenta")
+        return Text(text, style="bold #00aaff")
     if text.startswith("[AUTO]"):
-        return Text(text, style="bold cyan")
+        return Text(text, style="bold #00aaff")
     if text.startswith("[OK]"):
-        return Text(text, style="green")
+        return Text(text, style="#00aaff")
     if "[CRITICAL]" in upper or " CRITICAL " in f" {upper} " or " ERROR" in f" {upper}" or " FAIL" in f" {upper}":
-        return Text(text, style="bold red")
+        return Text(text, style="bold #00aaff")
     if "[HIGH]" in upper:
-        return Text(text, style="red")
+        return Text(text, style="#00aaff")
     if "[WARNING]" in upper or "[WARN]" in upper or "[MEDIUM]" in upper:
-        return Text(text, style="yellow")
+        return Text(text, style="#00aaff")
     if "[LOW]" in upper:
-        return Text(text, style="green")
-    return Text(text, style="white")
+        return Text(text, style="#00aaff")
+    return Text(text, style="#f0e0ff")
 
 
 class LogoWidget(Static):
     def render(self) -> Text:
-        return Text(LOGO, style="bold cyan", no_wrap=True)
+        t = Text(no_wrap=True)
+        lines = LOGO.split("\n")
+        colors = [
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+            "bold #00aaff",
+        ]
+        for i, line in enumerate(lines):
+            color = colors[i] if i < len(colors) else "bold #00aaff"
+            t.append(line + "\n", style=color)
+        return t
 
 
 class StatsWidget(Static):
@@ -364,11 +381,11 @@ class FindingsWidget(DataTable):
 class LogOracleApp(App[None]):
     CSS = """
     Screen {
-        background: #0d1117;
+        background: #0d0818;
     }
     Header {
-        background: #161b22;
-        color: cyan;
+        background: #180d2a;
+        color: #00aaff;
     }
     #chat-panel {
         height: 0;
@@ -377,22 +394,22 @@ class LogOracleApp(App[None]):
     #chat-panel.visible {
         height: 8;
         display: block;
-        border: solid #238636;
+        border: solid #8844ff;
         padding: 0 1;
     }
     #chat-input {
         background: #1a1f2e;
         color: #ffffff;
-        border: solid #238636;
+        border: solid #8844ff;
         height: 3;
     }
     Footer {
-        background: #161b22;
+        background: #180d2a;
     }
     #left-panel {
         overflow-y: auto;
         width: 76;
-        border: solid #30363d;
+        border: solid #3a1a5a;
         padding: 1;
     }
     #right-panel {
@@ -400,28 +417,28 @@ class LogOracleApp(App[None]):
     }
     #right-top {
         height: 3fr;
-        border: solid #30363d;
+        border: solid #3a1a5a;
     }
     #right-bottom {
         height: 2fr;
-        border: solid #30363d;
+        border: solid #3a1a5a;
         margin-top: 1;
     }
     #log-label, #findings-label {
-        background: #161b22;
+        background: #180d2a;
         padding: 0 1;
     }
     #log-label {
-        color: cyan;
+        color: #00aaff;
     }
     #findings-label {
-        color: yellow;
+        color: #ff2d8a;
     }
     LogoWidget {
         height: 8;
         width: 70;
         content-align: left top;
-        color: cyan;
+        color: #00aaff;
         padding: 0;
     }
     StatsWidget {
@@ -526,7 +543,7 @@ class LogOracleApp(App[None]):
         panel = self.query_one("#chat-panel")
         panel.remove_class("visible")
         log_view = self.query_one("#log-view", RichLog)
-        log_view.write(Text(f"[YOU] {msg}", style="bold green"))
+        log_view.write(Text(f" > {msg}", style="bold #00aaff"))
         self.refresh()
         import asyncio as _a
         _a.create_task(self._chat_request(msg))
@@ -534,19 +551,28 @@ class LogOracleApp(App[None]):
     async def _chat_request(self, msg: str) -> None:
         import httpx as _h
         log_view = self.query_one("#log-view", RichLog)
-        log_view.write(Text("[CHATBOT] thinking...", style="dim magenta"))
+        log_view.write(Text(" ~ Oracle thinking...", style="dim cyan"))
         try:
             async with _h.AsyncClient(timeout=30) as c:
                 r = await c.post(f"{BASE_URL}/chat/sync", headers=build_headers(), json={"message": msg, "session_id": "cli-chat", "persona": "security", "mode": "plain", "session_context": {"findings": [], "last_log_lines": "", "code_diff": "", "chat_history": [], "developer_profile": {"expertise_level": "intermediate", "past_quiz_scores": [], "badges": []}}})
                 data = r.json()
                 reply = data.get("reply") or data.get("response") or data.get("message") or str(data)
-                log_view.write(Text("[CHATBOT] ─────────────────────────", style="dim magenta"))
+                log_view.write(Text(" ─────────────── Oracle ───────────────", style="dim green"))
                 for line in reply.split("\n"):
                     if line.strip():
-                        log_view.write(Text(line, style="bold magenta"))
-                log_view.write(Text("[CHATBOT] ─────────────────────────", style="dim magenta"))
+                        import re
+                        # Highlight **bold** markdown
+                        parts = re.split(r'\*\*(.*?)\*\*', line)
+                        t = Text()
+                        for j, part in enumerate(parts):
+                            if j % 2 == 1:
+                                t.append(part, style="bold #00aaff")
+                            else:
+                                t.append(part, style="#f0e0ff")
+                        log_view.write(t)
+                log_view.write(Text(" ─────────────── Oracle ───────────────", style="dim green"))
         except Exception as e:
-            log_view.write(Text(f"[CHATBOT] Error: {e}", style="red"))
+            log_view.write(Text(f"[CHATBOT] Error: {e}", style="#00aaff"))
 
 
 async def health_monitor(log_queue: asyncio.Queue, stop_event: asyncio.Event) -> None:
@@ -618,6 +644,13 @@ async def run_agent(
 
             _stats["analyses_done"] += 1
 
+            # Show auto-heal results
+            heal_results = data.get("auto_healed", [])
+            for heal in heal_results:
+                if heal.get("status") == "healed":
+                    enqueue_log(log_queue, f"[AUTO-HEALED] {heal.get('command')} (IP: {heal.get('source_ip')})")
+                elif heal.get("status") == "skipped":
+                    enqueue_log(log_queue, f"[HEAL-SKIPPED] {heal.get('reason')}")
             pii_banner = data.get("pii_banner")
             if pii_banner:
                 enqueue_log(log_queue, f"[AUTO] {trim_text(pii_banner, 180)}")
