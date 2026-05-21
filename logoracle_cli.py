@@ -20,6 +20,11 @@ from datetime import datetime
 from typing import Any
 
 import httpx
+try:
+    import psutil
+    PSUTIL_OK = True
+except ImportError:
+    PSUTIL_OK = False
 from rich.style import Style
 from rich.text import Text
 from textual.app import App, ComposeResult
@@ -290,6 +295,8 @@ class LogoWidget(Static):
 
 class StatsWidget(Static):
     def on_mount(self) -> None:
+        if PSUTIL_OK:
+            psutil.cpu_percent(interval=None)  # prime the counter
         self.set_interval(1.0, self.refresh)
 
     def render(self) -> Text:
@@ -312,6 +319,32 @@ class StatsWidget(Static):
             f"  Warnings   [yellow]{_stats['warnings']}[/yellow]\n"
         )
         return Text.from_markup(body)
+
+
+class SystemWidget(Static):
+    def on_mount(self) -> None:
+        if PSUTIL_OK:
+            psutil.cpu_percent(interval=None)
+        self.set_interval(2.0, self.refresh)
+
+    def render(self) -> Text:
+        if not PSUTIL_OK:
+            return Text('psutil not available')
+        cpu = psutil.cpu_percent(interval=None)
+        ram = psutil.virtual_memory().percent
+        disk = psutil.disk_usage('/').percent
+        def make_bar(pct, width=14):
+            filled = int(pct / 100 * width)
+            c = 'green' if pct < 60 else 'yellow' if pct < 85 else 'red'
+            return 'X' * filled + '.' * (width - filled), c
+        t = Text()
+        t.append('-- SYSTEM --\n', style='bold cyan')
+        for label, pct in [('CPU ', cpu), ('RAM ', ram), ('Disk', disk)]:
+            bar_str, color = make_bar(pct)
+            t.append(f'  {label} ')
+            t.append(bar_str, style=color)
+            t.append(f' {pct:.0f}%\n')
+        return t
 
 
 class FindingsWidget(DataTable):
@@ -356,6 +389,7 @@ class LogOracleApp(App[None]):
         background: #161b22;
     }
     #left-panel {
+        overflow-y: auto;
         width: 76;
         border: solid #30363d;
         padding: 1;
@@ -383,7 +417,7 @@ class LogOracleApp(App[None]):
         color: yellow;
     }
     LogoWidget {
-        height: 11;
+        height: 8;
         width: 70;
         content-align: left top;
         color: cyan;
@@ -419,6 +453,7 @@ class LogOracleApp(App[None]):
             with Vertical(id="left-panel"):
                 yield LogoWidget()
                 yield StatsWidget()
+                yield SystemWidget()
             with Vertical(id="right-panel"):
                 with Container(id="right-top"):
                     yield Label("  ▸ LIVE LOG TAIL", id="log-label")
