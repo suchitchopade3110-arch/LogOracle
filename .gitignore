@@ -15,3 +15,5 @@ logoracle-vscode/node_modules/
 node_modules/
 *.key
 *.pem
+app.log
+*.log
