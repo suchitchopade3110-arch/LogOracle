@@ -7,10 +7,10 @@ LogOracle watches your logs, reads your code, hunts supply-chain threats, builds
 
 No more digging through 10,000 log lines at 3am. No more "works on my machine." No more security vulnerabilities shipping to production.
 
-**LogOracle catches it first.**
+**LogOracle catches it first. Right in your terminal and your editor.**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Next.js](https://img.shields.io/badge/Next.js_14-black?logo=next.js)](https://nextjs.org)
+
 [![GROQ](https://img.shields.io/badge/GROQ-LLaMA_3.1--8B-orange)](https://groq.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)](https://postgresql.org)
 [![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)](https://redis.io)
@@ -30,7 +30,7 @@ No more digging through 10,000 log lines at 3am. No more "works on my machine." 
 | 3-pass code intelligence (AST + LLM + OWASP) | ✅ All three | ❌ Partial |
 | Self-heal relay (remote command execution) | ✅ Whitelisted | ❌ Not supported |
 | Developer growth + quiz/XP system | ✅ Built-in | ❌ Not supported |
-| Works in browser, VS Code, and terminal | ✅ All three | ❌ One surface |
+| Works in VS Code and terminal | ✅ Both surfaces | ❌ One surface |
 
 ---
 
@@ -50,8 +50,7 @@ The moment LogOracle starts, five agents activate in the background — no user 
 
 ## 🖥️ Three Surfaces
 
-### 1. Web Dashboard (Next.js 14 · port 3000)
-Six screens: Dashboard · Log Analysis · Code Intelligence · AI Chat · Developer Growth · Settings
+
 
 ### 2. VS Code Extension (`.vsix`)
 Code intelligence and chatbot inline inside your editor. No context switching.
