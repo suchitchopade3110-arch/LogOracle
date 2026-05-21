@@ -4,9 +4,21 @@
   "description": "AI Antivirus for Code. Autonomous bug detection, security analysis, and developer growth inside VS Code.",
   "version": "0.1.0",
   "publisher": "logoracle",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Linters", "Other", "Education"],
-  "keywords": ["ai", "debugging", "security", "owasp", "code analysis"],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Other",
+    "Education"
+  ],
+  "keywords": [
+    "ai",
+    "debugging",
+    "security",
+    "owasp",
+    "code analysis"
+  ],
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -52,7 +64,10 @@
         },
         "logoracle.mode": {
           "type": "string",
-          "enum": ["tech", "plain"],
+          "enum": [
+            "tech",
+            "plain"
+          ],
           "default": "tech",
           "description": "Output mode: tech (full detail) or plain (simplified English)"
         },
@@ -75,6 +90,11 @@
           "type": "boolean",
           "default": true,
           "description": "Show inline code issue hints in the editor"
+        },
+        "logoracle.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for LogOracle backend authentication (X-API-Key header)"
         }
       }
     },
@@ -89,10 +109,22 @@
     },
     "views": {
       "logoracle": [
-        { "id": "logoracle.findings",    "name": "Findings" },
-        { "id": "logoracle.agents",      "name": "Agents" },
-        { "id": "logoracle.chat",        "name": "AI Chat" },
-        { "id": "logoracle.growth",      "name": "Growth & XP" }
+        {
+          "id": "logoracle.findings",
+          "name": "Findings"
+        },
+        {
+          "id": "logoracle.agents",
+          "name": "Agents"
+        },
+        {
+          "id": "logoracle.chat",
+          "name": "AI Chat"
+        },
+        {
+          "id": "logoracle.growth",
+          "name": "Growth & XP"
+        }
       ]
     },
     "menus": {
@@ -127,15 +159,15 @@
   },
   "scripts": {
     "compile": "tsc -p ./",
-    "watch":   "tsc -watch -p ./",
+    "watch": "tsc -watch -p ./",
     "package": "vsce package",
     "publish": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",
-    "@types/node":   "^20.0.0",
-    "typescript":    "^5.0.0",
-    "@vscode/vsce":  "^2.22.0"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.22.0"
   },
   "dependencies": {
     "eventsource": "^2.0.2"

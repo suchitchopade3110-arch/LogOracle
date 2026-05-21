@@ -20,6 +20,11 @@ from datetime import datetime
 from typing import Any
 
 import httpx
+try:
+    import psutil
+    PSUTIL_OK = True
+except ImportError:
+    PSUTIL_OK = False
 from rich.style import Style
 from rich.text import Text
 from textual.app import App, ComposeResult
@@ -290,6 +295,8 @@ class LogoWidget(Static):
 
 class StatsWidget(Static):
     def on_mount(self) -> None:
+        if PSUTIL_OK:
+            psutil.cpu_percent(interval=None)  # prime the counter
         self.set_interval(1.0, self.refresh)
 
     def render(self) -> Text:
@@ -312,6 +319,32 @@ class StatsWidget(Static):
             f"  Warnings   [yellow]{_stats['warnings']}[/yellow]\n"
         )
         return Text.from_markup(body)
+
+
+class SystemWidget(Static):
+    def on_mount(self) -> None:
+        if PSUTIL_OK:
+            psutil.cpu_percent(interval=None)
+        self.set_interval(2.0, self.refresh)
+
+    def render(self) -> Text:
+        if not PSUTIL_OK:
+            return Text('psutil not available')
+        cpu = psutil.cpu_percent(interval=None)
+        ram = psutil.virtual_memory().percent
+        disk = psutil.disk_usage('/').percent
+        def make_bar(pct, width=14):
+            filled = int(pct / 100 * width)
+            c = 'green' if pct < 60 else 'yellow' if pct < 85 else 'red'
+            return 'X' * filled + '.' * (width - filled), c
+        t = Text()
+        t.append('-- SYSTEM --\n', style='bold cyan')
+        for label, pct in [('CPU ', cpu), ('RAM ', ram), ('Disk', disk)]:
+            bar_str, color = make_bar(pct)
+            t.append(f'  {label} ')
+            t.append(bar_str, style=color)
+            t.append(f' {pct:.0f}%\n')
+        return t
 
 
 class FindingsWidget(DataTable):
@@ -356,6 +389,7 @@ class LogOracleApp(App[None]):
         background: #161b22;
     }
     #left-panel {
+        overflow-y: auto;
         width: 76;
         border: solid #30363d;
         padding: 1;
@@ -383,7 +417,7 @@ class LogOracleApp(App[None]):
         color: yellow;
     }
     LogoWidget {
-        height: 11;
+        height: 8;
         width: 70;
         content-align: left top;
         color: cyan;
@@ -419,6 +453,7 @@ class LogOracleApp(App[None]):
             with Vertical(id="left-panel"):
                 yield LogoWidget()
                 yield StatsWidget()
+                yield SystemWidget()
             with Vertical(id="right-panel"):
                 with Container(id="right-top"):
                     yield Label("  ▸ LIVE LOG TAIL", id="log-label")
@@ -483,34 +518,26 @@ class LogOracleApp(App[None]):
         if not msg:
             return
         event.input.value = ""
+        panel = self.query_one("#chat-panel")
+        panel.remove_class("visible")
         log_view = self.query_one("#log-view", RichLog)
         log_view.write(Text(f"[YOU] {msg}", style="bold green"))
-        asyncio.create_task(self._chat_request(msg))
+        self.refresh()
+        import asyncio as _a
+        _a.create_task(self._chat_request(msg))
 
     async def _chat_request(self, msg: str) -> None:
+        import httpx as _h
         log_view = self.query_one("#log-view", RichLog)
         log_view.write(Text("[CHATBOT] thinking...", style="dim magenta"))
         try:
-            async with httpx.AsyncClient(timeout=30, headers=build_headers()) as client:
-                response = await client.post(
-                    f"{BASE_URL}/chat/sync",
-                    json={
-                        "message": msg,
-                        "session_id": "cli-chat",
-                        "persona": "security",
-                        "mode": "plain",
-                        "session_context": build_chat_context(),
-                    },
-                )
-                if response.status_code == 401:
-                    log_view.write(Text("[CHATBOT] Backend requires X-API-Key for /chat/sync.", style="red"))
-                    return
-                response.raise_for_status()
-                data = response.json()
+            async with _h.AsyncClient(timeout=30) as c:
+                r = await c.post(f"{BASE_URL}/chat/sync", json={"message": msg, "session_id": "cli-chat", "persona": "security", "mode": "plain", "session_context": {"findings": [], "last_log_lines": "", "code_diff": "", "chat_history": [], "developer_profile": {"expertise_level": "intermediate", "past_quiz_scores": [], "badges": []}}})
+                data = r.json()
                 reply = data.get("reply") or data.get("response") or data.get("message") or str(data)
                 log_view.write(Text(f"[CHATBOT] {reply[:500]}", style="bold magenta"))
-        except Exception as exc:
-            log_view.write(Text(f"[CHATBOT] Error: {trim_text(str(exc), 220)}", style="red"))
+        except Exception as e:
+            log_view.write(Text(f"[CHATBOT] Error: {e}", style="red"))
 
 
 async def health_monitor(log_queue: asyncio.Queue, stop_event: asyncio.Event) -> None:
@@ -706,7 +733,7 @@ def collect_paste_lines() -> list[str]:
     return lines
 
 
-async def run_tui(mode: str, target: str, pasted_lines: list[str] | None = None, relay: bool = False, agent_id: str = "cli-agent-01") -> None:
+async def run_tui(mode: str, target: str, pasted_lines: list[str] | None = None) -> None:
     stop_event = asyncio.Event()
     log_queue: asyncio.Queue = asyncio.Queue(maxsize=LOG_QUEUE_SIZE)
     app = LogOracleApp(log_queue=log_queue, stop_event=stop_event)
@@ -738,7 +765,6 @@ Examples:
     parser.add_argument("--ingest", metavar="FILE", help="Analyze an entire log file once")
     parser.add_argument("--paste", action="store_true", help="Paste log lines manually")
     parser.add_argument("--url", default="http://localhost:8001", help="Backend URL")
-    parser.add_argument("--relay", action="store_true", help="Register as heal relay agent and poll for block commands")
     parser.add_argument(
         "--api-key",
         default=None,
@@ -766,58 +792,10 @@ Examples:
         return
 
     try:
-        print(f"relay={args.relay}")
-        asyncio.run(run_tui(mode, target, pasted_lines, relay=args.relay, agent_id="cli-agent-01"))
+        asyncio.run(run_tui(mode, target, pasted_lines))
     except KeyboardInterrupt:
         print("\nStopped.")
 
-async def relay_loop(agent_id: str, log_queue: asyncio.Queue, stop_event: asyncio.Event):
-    """Register with heal relay and poll for block commands."""
-    def push(text):
-        try: log_queue.put_nowait({"kind": "log", "text": text})
-        except: pass
-
-    # Register
-    try:
-        async with httpx.AsyncClient(timeout=10) as c:
-            r = await c.post(f"{BASE_URL}/heal/relay/register", json={"agent_id": agent_id, "capabilities": ["fail2ban", "ufw"]})
-            push(f"[RELAY] Registered agent: {agent_id}")
-    except Exception as e:
-        push(f"[RELAY] Registration failed: {e}")
-        return
-
-    # Poll for pending commands
-    while not stop_event.is_set():
-        try:
-            async with httpx.AsyncClient(timeout=10) as c:
-                r = await c.get(f"{BASE_URL}/heal/relay/pending/{agent_id}")
-                if r.status_code == 200:
-                    data = r.json()
-                    commands = data.get("commands", [])
-                    for cmd in commands:
-                        token = cmd.get("token")
-                        action = cmd.get("action", "")
-                        target = cmd.get("target", "")
-                        push(f"[RELAY] ⚡ Executing: {action} → {target}")
-                        # Execute block command
-                        import subprocess
-                        if "ufw" in action.lower() or "block" in action.lower():
-                            result = subprocess.run(
-                                ["sudo", "ufw", "deny", "from", target],
-                                capture_output=True, text=True
-                            )
-                            success = result.returncode == 0
-                        else:
-                            success = True
-                        # Report result
-                        await c.post(f"{BASE_URL}/heal/relay/result/{token}", json={
-                            "success": success,
-                            "output": f"Blocked {target}" if success else "Failed"
-                        })
-                        push(f"[RELAY] {'✓ Blocked' if success else '✗ Failed'}: {target}")
-        except Exception:
-            pass
-        await asyncio.sleep(5)
 
 if __name__ == "__main__":
     main()

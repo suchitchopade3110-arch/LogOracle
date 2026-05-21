@@ -1,6 +1,23 @@
 // src/client.ts
+import * as vscode from "vscode";
+
 export class LogOracleClient {
-    constructor(private baseUrl: string) {}
+    private apiKey: string;
+
+    constructor(private baseUrl: string) {
+        const config = vscode.workspace.getConfiguration("logoracle");
+        this.apiKey = config.get<string>("apiKey", "");
+    }
+
+    private get authHeaders(): Record<string, string> {
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+        };
+        if (this.apiKey) {
+            headers["X-API-Key"] = this.apiKey;
+        }
+        return headers;
+    }
 
     async analyzeCode(code: string, language: string, mode = "tech") {
         return this._post("/analyze/code", { code, language, mode });
@@ -15,9 +32,9 @@ export class LogOracleClient {
     }
 
     async chat(payload: object, sessionId: string): Promise<Response> {
-        return fetch(`${this.baseUrl}/chat?session_id=${sessionId}`, {
+        return fetch(`${this.baseUrl}/chat/sync?session_id=${sessionId}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: this.authHeaders,
             body: JSON.stringify(payload),
         });
     }
@@ -27,7 +44,7 @@ export class LogOracleClient {
     }
 
     async getAgentStatus() {
-        return this._get("/stream/agents");
+        return this._get("/agents/status");
     }
 
     async getLeaderboard() {
@@ -44,7 +61,9 @@ export class LogOracleClient {
 
     async health(): Promise<boolean> {
         try {
-            const r = await fetch(`${this.baseUrl}/health`, { signal: AbortSignal.timeout(3000) });
+            const r = await fetch(`${this.baseUrl}/health`, {
+                signal: AbortSignal.timeout(3000)
+            });
             return r.ok;
         } catch { return false; }
     }
@@ -52,7 +71,7 @@ export class LogOracleClient {
     private async _post(path: string, body: object): Promise<any> {
         const r = await fetch(`${this.baseUrl}${path}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: this.authHeaders,
             body: JSON.stringify(body),
         });
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
@@ -60,7 +79,9 @@ export class LogOracleClient {
     }
 
     private async _get(path: string): Promise<any> {
-        const r = await fetch(`${this.baseUrl}${path}`);
+        const r = await fetch(`${this.baseUrl}${path}`, {
+            headers: this.authHeaders,
+        });
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
         return r.json();
     }

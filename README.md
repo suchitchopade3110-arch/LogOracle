@@ -7,15 +7,17 @@ LogOracle watches your logs, reads your code, hunts supply-chain threats, builds
 
 No more digging through 10,000 log lines at 3am. No more "works on my machine." No more security vulnerabilities shipping to production.
 
-**LogOracle catches it first.**
+**LogOracle catches it first. Right in your terminal and your editor.**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Next.js](https://img.shields.io/badge/Next.js_14-black?logo=next.js)](https://nextjs.org)
 [![GROQ](https://img.shields.io/badge/GROQ-LLaMA_3.1--8B-orange)](https://groq.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)](https://postgresql.org)
 [![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)](https://redis.io)
 [![Vault](https://img.shields.io/badge/HashiCorp_Vault-black?logo=vault)](https://vaultproject.io)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docker.com)
+[![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&logoColor=white)](https://prometheus.io)
+[![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)](https://grafana.com)
+[![Keycloak](https://img.shields.io/badge/Keycloak-4D4D4D?logo=keycloak)](https://keycloak.org)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ---
@@ -26,11 +28,13 @@ No more digging through 10,000 log lines at 3am. No more "works on my machine." 
 |---|---|---|
 | Autonomous log monitoring | ✅ Zero config | ❌ Manual setup |
 | Root-cause causal chaining | ✅ Full chain | ❌ Single alert |
-| Supply-chain / hallucination detection | ✅ Built-in | ❌ Not supported |
+| Supply-chain hallucination detection | ✅ Built-in | ❌ Not supported |
 | 3-pass code intelligence (AST + LLM + OWASP) | ✅ All three | ❌ Partial |
 | Self-heal relay (remote command execution) | ✅ Whitelisted | ❌ Not supported |
 | Developer growth + quiz/XP system | ✅ Built-in | ❌ Not supported |
-| Works in browser, VS Code, and terminal | ✅ All three | ❌ One surface |
+| Works in VS Code and terminal | ✅ Both surfaces | ❌ One surface |
+| Hallucinated dependency detection | ✅ Industry first | ❌ Not supported |
+| Self-monitoring (Prometheus + Grafana) | ✅ Built-in | ⚠️ Extra setup |
 
 ---
 
@@ -48,250 +52,99 @@ The moment LogOracle starts, five agents activate in the background — no user 
 
 ---
 
-## 🖥️ Three Surfaces
+## 🖥️ Two Surfaces. Zero Context Switching.
 
-### 1. Web Dashboard (Next.js 14 · port 3000)
-Six screens: Dashboard · Log Analysis · Code Intelligence · AI Chat · Developer Growth · Settings
+LogOracle lives where developers work — the terminal and the editor. No browser tab required.
 
-### 2. VS Code Extension (`.vsix`)
-Code intelligence and chatbot inline inside your editor. No context switching.
-
-### 3. Terminal Agent (Python CLI · Textual TUI)
+### 1. Terminal Agent (Python CLI · Textual TUI)
 
 ```bash
 # Install
-pip install -r requirements.txt
+pip install textual httpx psutil python-dotenv
+
+# Set API key
+export LOGORACLE_API_KEY=your-api-key
 
 # Run
-python logoracle_cli.py --watch /var/log/auth.log --perf --api --agent-id demo-01
+python logoracle_cli.py --watch /var/log/auth.log
 ```
 
-**TUI layout:** ASCII logo + live stats panel (CPU/RAM/Disk bars, agent status) · color-coded log tail · findings panel
+**TUI layout:**
+- ASCII logo + live status panel
+- CPU / RAM / Disk bars (live, color-coded)
+- Backend health indicator
+- Color-coded live log tail
+- Findings panel (Sev · Time · Agent · Message)
+- AI chat panel (press `t` to toggle)
 
 **Flags:**
 
 | Flag | Description |
 |---|---|
-| `--watch <path>` | Log file(s) to monitor |
+| `--watch <path>` | Log file to monitor |
 | `--perf` | Enable system performance monitoring |
 | `--api` | Enable API traffic monitoring |
 | `--relay` | Register as a heal relay agent |
-| `--agent-id <id>` | Set agent identity (default: hostname + timestamp) |
+| `--agent-id <id>` | Set agent identity |
+| `--paste` | Paste log text directly |
+| `--ingest <path>` | One-shot ingest a log file |
 
-**Keybinds:** `q` quit · `c` clear log · `f` clear findings
-
----
-
-## ⚡ Quick Start
-
-### Prerequisites
-
-- Python 3.11+ with virtualenv (required — tree-sitter needs venv)
-- Node.js 18+
-- Docker + Docker Compose
-- Redis
-- PostgreSQL
-
-### 1. Backend
-
-```bash
-# Clone and enter project
-git clone https://github.com/your-org/logoracle.git
-cd logoracle
-
-# Create and activate virtualenv (required for tree-sitter)
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env — set GROQ_API_KEY and DB credentials
-
-# ⚠️ Important: unset shell-exported GROQ_API_KEY if set
-# Shell exports override .env — this will cause silent auth failures
-unset GROQ_API_KEY
-
-# Start backend
-uvicorn main:app --host 0.0.0.0 --port 8001
-```
-
-### 2. Frontend
-
-```bash
-cd logoracle-frontend
-npm install
-npm run dev
-# → http://localhost:3000
-```
-
-### 3. Full Stack (Docker)
-
-```bash
-docker compose up -d
-```
-
-Five containers: `nginx` · `fastapi` · `postgres` · `redis` · `vault`
+**Keybinds:** `q` quit · `c` clear log · `f` clear findings · `t` toggle chat
 
 ---
 
-## 🔌 API Endpoints (54 total · port 8001)
+### 2. VS Code Extension (`.vsix`)
 
-### Core
+**Install:** VS Code → Extensions → `···` → Install from VSIX → select `logoracle-vscode/logoracle-0.1.0.vsix`
 
-| Method | Endpoint | Description |
+**Features:**
+- Inline code diagnostics (underlines issues as you code)
+- Auto-analyze on save (Python, JS, TS, Java, Go, C#)
+- Findings sidebar (tree view)
+- Agent status sidebar
+- Developer growth / XP sidebar
+- AI chat panel (webview)
+- Live log file watcher
+- Leaderboard panel
+- One-click self-heal preview + approve
+
+**Configuration:**
+
+| Setting | Default | Description |
 |---|---|---|
-| `GET` | `/health` | Health check |
-| `GET` | `/` | Root |
-
-### Streaming (SSE)
-
-> ⚠️ SSE endpoints are exempt from API key auth — browsers cannot set custom headers on `EventSource`.
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/stream/agents` | Agent status stream |
-| `GET` | `/stream/logs` | Live log stream |
-| `GET` | `/stream/performance` | Live performance metrics |
-
-### Ingest
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/ingest/logs` | Ingest raw log lines |
-| `POST` | `/ingest/api_events` | Ingest API traffic events |
-
-### Analysis
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/analyze/log` | Log analysis (brute-force, root-cause chain) |
-| `POST` | `/analyze/code` | 3-pass code intelligence |
-| `POST` | `/analyze/semantic` | Semantic LLM analysis |
-| `POST` | `/analyze/hallucination` | Supply-chain / hallucinated dependency detection |
-| `POST` | `/analyze/correlate` | Cross-signal correlation |
-| `GET/POST` | `/analyze/performance` | Performance analysis |
-| `POST` | `/analyze/api` | API traffic analysis |
-| `POST` | `/analyze/intent` | Intent gap detection |
-| `POST` | `/analyze/fix` | Fix suggestion generation |
-| `GET/POST` | `/analyze/fix/config` | Fix configuration |
-
-### Chat
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/chat` | SSE streaming chat (use from browser) |
-| `POST` | `/chat/sync` | Plain JSON chat (use from backend/agent — avoids SSE threading issue) |
-| `POST` | `/assistant/chat` | Assistant chat variant |
-| `DELETE` | `/session/{session_id}` | Clear chat session |
-
-### Self-Heal
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/heal/preview` | Preview fix command before execution |
-| `POST` | `/heal/approve` | Approve and execute fix |
-| `POST` | `/heal/block-options` | Get blocking options |
-| `GET` | `/heal/whitelist` | View allowed commands |
-| `POST` | `/heal/relay/register` | Register remote agent |
-| `GET` | `/heal/relay/agents` | List registered agents |
-| `GET` | `/heal/relay/pending/{agent_id}` | Poll pending commands for agent |
-| `POST` | `/heal/relay/result/{token}` | Submit command result |
-| `GET` | `/heal/relay/status/{token}` | Check command status |
-
-### Quiz / XP / Badges
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/quiz/generate` | Generate quiz question from incident context |
-| `POST` | `/quiz/answer` | Submit answer — awards XP |
-| `POST` | `/quiz/schedule` | Schedule future quiz |
-| `GET` | `/quiz/due/{developer_id}` | Get due quizzes |
-| `POST` | `/streak/check` | Check and update streak |
-| `GET` | `/badges/events` | Badge trigger events |
-| `GET` | `/badges/all` | All badges |
-
-### Leaderboard
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/leaderboard` | Get leaderboard |
-| `POST` | `/leaderboard/update` | Update score |
-| `GET` | `/leaderboard/export/csv` | Export as CSV |
-
-### Session & Export
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/session/share` | Generate shareable session link |
-| `GET` | `/session/restore/{token}` | Restore shared session |
-| `GET` | `/session-export` | Export current session |
-| `POST` | `/session-export/generate` | Generate export |
-| `POST` | `/session-export/copy-link` | Copy session link |
-| `POST` | `/export/pdf` | Export findings as PDF |
-| `GET` | `/export/pdf/preview` | Preview PDF export |
-
-### Frontend Helpers
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/root-cause-chain` | Root cause chain data |
-| `GET` | `/recommendation` | Recommendations |
-| `GET` | `/developer-growth` | Growth metrics |
-| `GET` | `/log-analysis` | Log analysis summary |
-| `POST` | `/log-analysis/redact` | PII redaction |
-| `GET` | `/alerts` | Current alerts |
-| `POST` | `/recommendation/{rec_id}/execute` | Execute recommendation |
-
-### Demo
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/demo/scenarios` | List demo scenarios |
-| `POST` | `/demo/run/{scenario_id}` | Run demo scenario |
+| `logoracle.backendUrl` | `http://localhost:8001` | Backend URL |
+| `logoracle.apiKey` | `""` | API key (X-API-Key header) |
+| `logoracle.mode` | `tech` | `tech` or `plain` English output |
+| `logoracle.autoAnalyzeOnSave` | `true` | Auto-scan on file save |
+| `logoracle.watchLogPaths` | `[]` | Log paths to monitor |
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-                    ┌─────────────────┐
-                    │   GROQ Cloud    │
-                    │  LLaMA 3.1-8B  │
-                    └────────┬────────┘
-                             │
-          ┌──────────────────┼──────────────────┐
-          │                  │                  │
-   ┌──────▼──────┐  ┌────────▼───────┐  ┌──────▼──────┐
-   │  FastAPI    │  │  PostgreSQL    │  │   Redis     │
-   │  :8001      │  │  (XP/badges)  │  │  (rate lim) │
-   └──────┬──────┘  └────────────────┘  └─────────────┘
-          │              Vault (secrets)
-          │
-   ┌──────▼──────────────────────────────────────┐
-   │                  nginx                      │
-   └──────┬──────────────────────────────────────┘
-          │
-   ┌──────┼──────────────────┐
-   │      │                  │
-┌──▼───┐ ┌▼──────────────┐ ┌▼──────────────┐
-│ Web  │ │  VS Code Ext  │ │ Terminal TUI  │
-│:3000 │ │    .vsix      │ │  Python CLI   │
-└──────┘ └───────────────┘ └───────────────┘
+Developer
+  Terminal TUI              VS Code Extension
+      |                           |
+      v                           v
+  FastAPI Backend (port 8001)
+  37+ endpoints · SSE streaming · API key + Keycloak auth
+
+  Log Agent | Code Agent | Security Agent | Perf Agent | Self-Heal
+
+      |
+  PostgreSQL + Redis + HashiCorp Vault
+      |
+  Prometheus (:9090) + Grafana (:3001) + Keycloak (:8080)
 ```
 
-### Data Flows
-
-**Log Analysis:**
+**Log Analysis flow:**
 ```
 Raw logs → parser → brute-force detector → root-cause chain
                  → SSE stream → TUI findings panel
-                   (findings trigger at 20-line buffer threshold)
 ```
 
-**Code Intelligence:**
+**Code Intelligence flow:**
 ```
 Source file → tree-sitter AST (Pass 1)
             → GROQ LLaMA 3.1-8B semantic (Pass 2)
@@ -299,92 +152,166 @@ Source file → tree-sitter AST (Pass 1)
             → ranked findings JSON
 ```
 
-**Chat:**
+**Self-Heal Relay flow:**
 ```
-User msg → /chat/sync → RAG module → cosine similarity search
-                      → GROQ LLaMA 3.1-8B → response
-                      (per-user session_id, shared GROQ client)
-```
-
-**Self-Heal Relay:**
-```
-Backend → /heal/relay/register → agent polls /heal/relay/pending/{id}
-       → command dispatched → agent executes (whitelist check)
-       → result posted to /heal/relay/result/{token}
+Backend → relay/register → agent polls relay/pending/{id}
+       → command dispatched (whitelist check)
+       → result posted to relay/result/{token}
 ```
 
 ---
 
-## 🔒 Security
+## 🔒 Security Stack
 
-- **Secrets:** HashiCorp Vault (KV-v2) — dev fallback to `.env`
-- **Passwords:** Argon2id hashing
-- **Data at rest:** AES-256-GCM encryption
-- **Rate limiting:** Redis-backed (slowapi) on all endpoints
-- **Auth:** API key middleware — SSE endpoints exempt (browser `EventSource` limitation)
-- **PII redaction:** IPs, emails, usernames, paths auto-stripped from all log analysis
-- **Heal relay:** Double-whitelist — command must pass both backend and agent whitelist
-- **Honeytokens:** Trap credentials that alert on access
-- **Audit logging:** All actions logged
-- **TLS:** nginx termination (production: Let's Encrypt via `tls_setup.sh`)
-- **Backups:** AES-encrypted, 7-day retention, `backup-cron` service
+| Layer | Technology |
+|---|---|
+| Password hashing | Argon2id |
+| Data encryption | AES-256-GCM |
+| Secrets management | HashiCorp Vault (KV-v2) |
+| Authentication | API Key + Keycloak OAuth2/OIDC |
+| Rate limiting | slowapi + Redis |
+| Audit logging | Per-request audit trail |
+| Honeytokens | Trap-based intrusion detection |
+| Container security | 5-container Docker, zero npm vulns |
+| TLS | nginx termination (Let's Encrypt via `tls_setup.sh`) |
+| Backups | AES-encrypted, 7-day retention |
 
 ---
 
-## 🚀 Demo
+## 📊 Observability
 
-### Attack Simulation
+LogOracle monitors itself.
+
+| Tool | Purpose | Port |
+|---|---|---|
+| Prometheus | Metrics scraping every 15s | 9090 |
+| Grafana | 8-panel live dashboard | 3001 |
+| Keycloak | Auth / SSO / RBAC | 8080 |
+
+**Metrics tracked:**
+- Request count + latency (p95) by endpoint
+- Analysis pipeline duration
+- Findings detected by severity and category
+- Active agents count
+- GROQ token usage
+
+---
+
+## 🚀 Quick Start
+
+**Requirements:** Python 3.10+, Docker + Docker Compose, GROQ API key (free at [groq.com](https://groq.com))
+
+### 1. Clone and configure
+
+```bash
+git clone https://github.com/suchitchopade3110-arch/LogOracle.git
+cd LogOracle/logoracle-backend
+cp .env.example .env
+# Set GROQ_API_KEY and API_KEY in .env
+
+# Important: unset shell-exported GROQ_API_KEY if set
+# Shell exports override .env and cause silent auth failures
+unset GROQ_API_KEY
+```
+
+### 2. Start infrastructure
+
+```bash
+# Keycloak (auth)
+cd infra/keycloak && docker compose up -d
+
+# Prometheus + Grafana (monitoring)
+cd ../monitoring && docker compose up -d
+```
+
+### 3. Start backend
+
+```bash
+cd ../../logoracle-backend
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8001
+```
+
+### 4. Launch terminal agent
+
+```bash
+cd ..
+source .venv/bin/activate
+pip install textual httpx psutil python-dotenv
+export LOGORACLE_API_KEY=your-api-key
+python logoracle_cli.py --watch /var/log/auth.log
+```
+
+### 5. Install VS Code extension
+
+```
+VS Code → Extensions → ··· → Install from VSIX
+Select: logoracle-vscode/logoracle-0.1.0.vsix
+Set logoracle.apiKey in VS Code settings
+```
+
+---
+
+## 🧪 Demo: Brute Force Detection
 
 ```bash
 # Inject 30 brute-force log lines to trigger findings panel
 for i in $(seq 1 30); do
-  echo "$(date) Failed password for root from 192.168.1.$i port 22 ssh2" >> /var/log/auth.log
+  echo "$(date) Failed password for root from 192.168.1.$i port 22 ssh2" >> /tmp/demo.log
   sleep 0.1
 done
+
+# Watch LogOracle detect it in real time
+python logoracle_cli.py --watch /tmp/demo.log
 ```
 
-> ⚠️ Findings panel requires 20-line buffer threshold — inject at least 30 lines.
+> Findings panel triggers after 20-line buffer threshold — inject at least 30 lines.
 
-### Demo Sequence
-
+**Demo sequence:**
 ```
-1. Start backend:   uvicorn main:app --host 0.0.0.0 --port 8001
-2. Start agent:     python logoracle_cli.py --perf --api --agent-id demo-01
-3. Run attack sim:  bash inject_demo_logs.sh
-4. Watch:           findings panel populates → chatbot explains → XP awarded
-5. Show:            code intel scan, heal relay preview, quiz question
+1. Start backend      uvicorn main:app --host 0.0.0.0 --port 8001
+2. Start TUI agent    python logoracle_cli.py --watch /tmp/demo.log
+3. Run attack sim     bash inject_demo_logs.sh
+4. Watch              findings panel populates → chat explains → XP awarded
+5. Show               code intel scan in VS Code → heal relay preview
 ```
 
 ---
 
-## ⚙️ Environment Variables
+## 🔌 Key API Endpoints (37+ total · port 8001)
 
-```bash
-# Required
-GROQ_API_KEY=gsk_...           # Groq API key
-DATABASE_URL=postgresql://...  # PostgreSQL connection string
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` | Health check |
+| `GET` | `/stream/agents` | Agent status SSE stream |
+| `GET` | `/stream/logs` | Live log SSE stream |
+| `POST` | `/ingest/logs` | Ingest raw log lines |
+| `POST` | `/analyze/log` | Log analysis + root-cause chain |
+| `POST` | `/analyze/code` | 3-pass code intelligence |
+| `POST` | `/analyze/hallucination` | Hallucinated dependency detection |
+| `POST` | `/analyze/correlate` | Cross-signal correlation |
+| `POST` | `/chat/sync` | AI chat (JSON, no SSE) |
+| `POST` | `/heal/preview` | Preview fix command |
+| `POST` | `/heal/approve` | Approve and execute fix |
+| `POST` | `/quiz/generate` | Generate quiz from incident |
+| `POST` | `/quiz/answer` | Submit answer, award XP |
+| `GET` | `/leaderboard` | Developer leaderboard |
+| `GET` | `/metrics/` | Prometheus metrics |
 
-# Optional
-API_KEY=                       # Backend API key (empty = no auth in dev)
-ALLOWED_ORIGINS=*              # CORS (restrict in production)
-REDIS_HOST=localhost
-REDIS_PORT=6379
-VAULT_ADDR=http://127.0.0.1:8200
-VAULT_TOKEN=...
-VAULT_REQUIRED=false           # Set true after vault_seed.sh
-```
-
-> ⚠️ If `GROQ_API_KEY` is exported in your shell, it overrides `.env`. Run `unset GROQ_API_KEY` before starting uvicorn.
+> SSE endpoints (`/stream/*`) are exempt from API key auth — browsers cannot set custom headers on `EventSource`.
 
 ---
 
-## 🏭 Production Checklist
+## 🏆 Industry Gaps Covered
 
-- [ ] Run `vault_seed.sh` → flip `VAULT_REQUIRED=true`
-- [ ] Run `tls_setup.sh` → replace self-signed certs (Let's Encrypt)
-- [ ] Verify `backup-cron` service running in `docker-compose.yml`
-- [ ] Restrict `ALLOWED_ORIGINS` to your domain
-- [ ] Rotate `API_KEY` and `VAULT_TOKEN`
+| Gap | How LogOracle Solves It |
+|---|---|
+| Alert fatigue → root cause | Autonomous causal chain: failed logins → IP → user → compromise |
+| AI supply-chain threats | Hallucinated dependency detection — industry first |
+| Safe auto-remediation | Self-heal relay with double-whitelist + preview step |
+| Tool sprawl | Terminal + VS Code — no browser tab needed |
+| Incident → learning | Quiz/XP system turns every incident into a learning moment |
 
 ---
 
@@ -392,28 +319,72 @@ VAULT_REQUIRED=false           # Set true after vault_seed.sh
 
 | Layer | Technology |
 |---|---|
-| Backend | FastAPI (Python 3.11) |
-| Frontend | Next.js 14 (TypeScript) |
+| Backend | FastAPI (Python 3.10) |
 | Terminal UI | Textual (Python) |
 | VS Code Extension | TypeScript (.vsix) |
 | LLM | GROQ · LLaMA 3.1-8B-instant |
-| AST Parsing | tree-sitter (virtualenv required) |
+| AST Parsing | tree-sitter (venv required) |
 | Database | PostgreSQL |
 | Cache / Rate Limit | Redis + slowapi |
 | Secrets | HashiCorp Vault (KV-v2) |
 | Encryption | Argon2id · AES-256-GCM |
 | Reverse Proxy | nginx |
-| Container | Docker Compose (5 containers) |
+| Monitoring | Prometheus + Grafana |
+| Auth | Keycloak (OAuth2/OIDC) |
 | Security Reference | OWASP · MITRE ATT&CK |
+
+---
+
+## ⚙️ Environment Variables
+
+```bash
+# Required
+GROQ_API_KEY=gsk_...
+DB_USER=logoracle
+DB_PASS=logoracle123
+DB_NAME=logoracle
+DB_HOST=localhost
+DB_PORT=5432
+
+# Optional
+API_KEY=                    # empty = no auth in dev
+REDIS_HOST=localhost
+REDIS_PORT=6379
+VAULT_ADDR=http://127.0.0.1:8200
+VAULT_TOKEN=...
+VAULT_REQUIRED=false        # flip true after vault_seed.sh
+KEYCLOAK_URL=http://localhost:8080
+KEYCLOAK_REALM=logoracle
+KEYCLOAK_CLIENT_ID=logoracle-api
+```
+
+---
+
+## 🏭 Production Checklist
+
+- [ ] Run `vault_seed.sh` and flip `VAULT_REQUIRED=true`
+- [ ] Run `tls_setup.sh` for real TLS (Let's Encrypt)
+- [ ] Verify `backup-cron` service in `docker-compose.yml`
+- [ ] Restrict `ALLOWED_ORIGINS` to your domain
+- [ ] Rotate `API_KEY` and `VAULT_TOKEN`
+- [ ] Set `logoracle.apiKey` in VS Code settings
+
+---
+
+## 👥 Team
+
+Built at **Summer Code Hackathon 2026** by a 5-person team.
+
+| Role | Focus |
+|---|---|
+| Backend & Integration | FastAPI, agents, infrastructure, demo |
+| LLM & Quiz | GROQ integration, XP/badge system |
+| Log Parsing | AST/OWASP passes, distro analysis |
+| Chatbot & RAG | Conversational AI, embeddings |
+| Extension & TUI | VS Code extension, Terminal agent |
 
 ---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE)
-
----
-
-## 🔗 Built With
-
-[Groq](https://groq.com) · [FastAPI](https://fastapi.tiangolo.com) · [Next.js](https://nextjs.org) · [tree-sitter](https://tree-sitter.github.io) · [Textual](https://textual.textualize.io) · [HashiCorp Vault](https://vaultproject.io)
+MIT — see [LICENSE](LICENSE)

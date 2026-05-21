@@ -3,6 +3,8 @@ from enum import Enum
 from dataclasses import dataclass, field
 from typing import List, Optional
 import asyncio
+import time
+from monitoring.metrics import ANALYSIS_COUNT, ANALYSIS_DURATION, FINDINGS_DETECTED
 
 class Severity(str, Enum):
     CRITICAL = "CRITICAL"
@@ -61,6 +63,7 @@ class Orchestrator:
         Fire all agents concurrently. Collect findings.
         TODO: replace stubs with real agent calls.
         """
+        _start = time.time()
         results = await asyncio.gather(
             self._run_log_agent(log_text),
             self._run_security_agent(log_text),
@@ -73,6 +76,16 @@ class Orchestrator:
                 findings.extend(r)
         self.state.health = self.classify_severity(findings)
         self.state.findings = findings
+
+        # ── Metrics ──────────────────────────────────────
+        ANALYSIS_COUNT.labels(status="success").inc()
+        ANALYSIS_DURATION.observe(time.time() - _start)
+        for f in findings:
+            FINDINGS_DETECTED.labels(
+                severity=f.severity.value if hasattr(f.severity, "value") else str(f.severity),
+                category=f.agent.value if hasattr(f.agent, "value") else str(f.agent)
+            ).inc()
+
         return findings
 
     async def _run_log_agent(self, log_text: str) -> List[Finding]:
