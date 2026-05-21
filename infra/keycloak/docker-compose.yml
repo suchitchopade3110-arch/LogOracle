@@ -1,0 +1,16 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: logoracle-keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+      KC_DB: dev-file
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_ENABLED: true
+    command: start-dev
+    ports:
+      - "8080:8080"
+networks:
+  default:
+    name: logoracle-keycloak-net

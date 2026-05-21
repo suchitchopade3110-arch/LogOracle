@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from auth.dependencies import get_current_user
 from pydantic import BaseModel
 from agents.orchestrator import Orchestrator
 from agents.correlation_engine import CorrelationEngine
@@ -26,7 +27,7 @@ class CodeRequest(BaseModel):
 
 
 @router.post("/log")
-async def analyze_log(req: LogRequest):
+async def analyze_log(req: LogRequest, user: dict = Depends(get_current_user)):
     findings = await orchestrator.run_all_agents(req.log_text, session_id="default")
     chain = correlation.build_chain(findings)
     return {
@@ -37,7 +38,7 @@ async def analyze_log(req: LogRequest):
 
 
 @router.post("/correlate")
-async def analyze_correlate(req: CorrelateRequest):
+async def analyze_correlate(req: CorrelateRequest, user: dict = Depends(get_current_user)):
     all_findings = []
     for log in req.logs:
         findings = await orchestrator.run_all_agents(log["content"], session_id=log["name"])
@@ -47,7 +48,7 @@ async def analyze_correlate(req: CorrelateRequest):
 
 
 @router.post("/code")
-async def analyze_code(req: CodeRequest):
+async def analyze_code(req: CodeRequest, user: dict = Depends(get_current_user)):
     from analysis.ast_engine.ast_engine import run_ast_pass, run_owasp_pass
     from llm.passes.semantic_pass import run_semantic_pass
 
@@ -73,7 +74,7 @@ async def analyze_code(req: CodeRequest):
 
 
 @router.post("/intent")
-async def analyze_intent(req: dict):
+async def analyze_intent(req: dict, user: dict = Depends(get_current_user)):
     from llm.passes.intent_gap import detect_intent_gap
     result = await detect_intent_gap(
         code_diff=req.get("code_diff", ""),

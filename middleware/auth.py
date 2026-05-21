@@ -28,6 +28,8 @@ EXEMPT_PATHS = {
     "/export/pdf/preview",  # public preview
     "/badges/all",          # public badge list
     "/leaderboard",         # public leaderboard
+    "/metrics/",            # Prometheus scraping
+    "/metrics",             # Prometheus scraping
 }
 
 EXEMPT_PREFIXES = (
