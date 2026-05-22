@@ -239,6 +239,23 @@ async def analyze_log(log_text: str) -> dict[str, Any]:
         return {"error": trim_text(str(exc), 220)}
 
 
+
+async def run_agentic_loop(log_text: str, queue: asyncio.Queue) -> None:
+    """Call /agent/run/sync and push each step into the UI queue."""
+    try:
+        async with httpx.AsyncClient(timeout=60, headers=build_headers()) as client:
+            response = await client.post(
+                f"{BASE_URL}/agent/run/sync",
+                json={"log_text": log_text},
+            )
+            response.raise_for_status()
+            data = response.json()
+            for step in data.get("steps", []):
+                await queue.put({"kind": "agent_step", **step})
+    except Exception as exc:
+        await queue.put({"kind": "agent_step", "step": 0, "name": "ERROR",
+                         "status": "error", "detail": str(exc)[:120], "ts": 0})
+
 async def auto_chat(finding_msg: str) -> str:
     payload = {
         "message": f"Explain this CRITICAL finding and suggest a concrete fix: {finding_msg}",
@@ -378,6 +395,22 @@ class FindingsWidget(DataTable):
             self.move_cursor(row=self.row_count - 1)
 
 
+class AgentWidget(RichLog):
+    """Streams agentic loop steps live."""
+    STEP_ICONS = {
+        "INGEST": "INGEST", "TRIAGE": "TRIAGE", "ROOT_CAUSE": "ROOT_CAUSE",
+        "FIX_PLAN": "FIX_PLAN", "HEAL": "HEAL", "VERIFY": "VERIFY", "COMPLETE": "COMPLETE",
+    }
+    STATUS_COLORS = {"running": "yellow", "done": "green", "error": "red"}
+
+    def push_step(self, step: dict) -> None:
+        icon  = self.STEP_ICONS.get(step.get("name", ""), ">>")
+        color = self.STATUS_COLORS.get(step.get("status", ""), "white")
+        name  = step.get("name", "?")
+        detail = (step.get("detail") or "")[:120]
+        self.write(f"[{color}][{icon}] [{name}] {detail}[/{color}]")
+
+
 class LogOracleApp(App[None]):
     CSS = """
     Screen {
@@ -484,8 +517,13 @@ class LogOracleApp(App[None]):
                         max_lines=MAX_UI_LOG_LINES,
                     )
                 with Container(id="right-bottom"):
-                    yield Label("  ▸ FINDINGS", id="findings-label")
-                    yield FindingsWidget(id="findings-table")
+                    with Horizontal():
+                        with Vertical(id="findings-col"):
+                            yield Label("  >> FINDINGS", id="findings-label")
+                            yield FindingsWidget(id="findings-table")
+                        with Vertical(id="agent-col"):
+                            yield Label("  >> AGENT STEPS", id="agent-label")
+                            yield AgentWidget(id="agent-view", wrap=True, highlight=False, markup=True, max_lines=50)
         with Container(id="chat-panel"):
             yield Label("  ▸ CHAT  [t to hide]", id="chat-label")
             yield Input(placeholder="Ask LogOracle...", id="chat-input")
@@ -510,6 +548,8 @@ class LogOracleApp(App[None]):
                 if item.get("kind") == "finding":
                     _findings.append(item)
                     findings_table.sync_rows()
+                if item.get("kind") == "agent_step":
+                    self.query_one("#agent-view", AgentWidget).push_step(item)
                 else:
                     log_view.write(style_log_line(item.get("text", "")))
         except asyncio.QueueEmpty:
@@ -638,6 +678,8 @@ async def run_agent(
 
             enqueue_log(log_queue, f"[AUTO] Analyzing {len(batch)} lines{chunk_suffix}...")
             data = await analyze_log("\n".join(batch))
+            # Agentic loop — run concurrently, push steps to UI
+            asyncio.ensure_future(run_agentic_loop("\n".join(batch), log_queue))
             if "error" in data:
                 enqueue_log(log_queue, f"[AUTO] Analysis error{chunk_suffix}: {data['error']}")
                 continue
@@ -684,6 +726,31 @@ async def run_agent(
                     reply = await auto_chat(message)
                     if reply:
                         enqueue_log(log_queue, f"[CHATBOT] {reply}")
+                    # Auto-generate quiz from finding
+                    try:
+                        import httpx as _hx
+                        async with _hx.AsyncClient(timeout=15) as _qc:
+                            _qr = await _qc.post(
+                                f"{BASE_URL}/quiz/generate",
+                                headers=build_headers(),
+                                json={
+                                    "bug_type": agent,
+                                    "message": message,
+                                    "code_snippet": "# Log analysis finding",
+                                    "fix": normalized.get("fix", ""),
+                                    "severity": severity,
+                                    "difficulty": "medium"
+                                }
+                            )
+                            _qd = _qr.json()
+                            if _qd.get("status") == "ok":
+                                q = _qd.get("question", {})
+                                enqueue_log(log_queue, f"[QUIZ] {q.get('question', '')}")
+                                for i, opt in enumerate(q.get('options', [])):
+                                    enqueue_log(log_queue, f"  {chr(65+i)}) {opt[:80]}")
+                                enqueue_log(log_queue, f"[QUIZ] +10 XP if you answer correctly! Press t to ask Oracle.")
+                    except Exception as _qe:
+                        pass
                 elif severity in {"HIGH", "WARNING", "MEDIUM"}:
                     _stats["warnings"] += 1
 
