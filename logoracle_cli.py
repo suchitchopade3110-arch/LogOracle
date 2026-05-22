@@ -646,6 +646,7 @@ async def run_agent(
 
             # Show auto-heal results
             heal_results = data.get("auto_healed", [])
+            print(f"[DEBUG] heal_results: {heal_results}")
             for heal in heal_results:
                 if heal.get("status") == "healed":
                     enqueue_log(log_queue, f"[AUTO-HEALED] {heal.get('command')} (IP: {heal.get('source_ip')})")
