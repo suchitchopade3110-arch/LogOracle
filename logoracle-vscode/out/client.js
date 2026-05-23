@@ -60,6 +60,13 @@ class LogOracleClient {
     async analyzeHallucination(code, language) {
         return this._post("/analyze/hallucination", { code, language });
     }
+    async chatSync(payload, sessionId) {
+        return fetch(`${this.baseUrl}/chat/sync`, {
+            method: "POST",
+            headers: this.authHeaders,
+            body: JSON.stringify({ ...payload, session_id: sessionId }),
+        });
+    }
     async chat(payload, sessionId) {
         return fetch(`${this.baseUrl}/chat/sync?session_id=${sessionId}`, {
             method: "POST",

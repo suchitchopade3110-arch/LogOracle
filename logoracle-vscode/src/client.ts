@@ -31,6 +31,14 @@ export class LogOracleClient {
         return this._post("/analyze/hallucination", { code, language });
     }
 
+    async chatSync(payload: object, sessionId: string): Promise<Response> {
+        return fetch(`${this.baseUrl}/chat/sync`, {
+            method: "POST",
+            headers: this.authHeaders,
+            body: JSON.stringify({ ...payload, session_id: sessionId }),
+        });
+    }
+
     async chat(payload: object, sessionId: string): Promise<Response> {
         return fetch(`${this.baseUrl}/chat/sync?session_id=${sessionId}`, {
             method: "POST",

@@ -42,30 +42,11 @@ export class ChatPanel {
         };
 
         try {
-            const res = await this.client.chat(payload, this._sessionId);
-            const reader = res.body!.getReader();
-            const dec    = new TextDecoder();
-            let   buf    = "";
-
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                buf += dec.decode(value, { stream: true });
-                const lines = buf.split("\n");
-                buf = lines.pop()!;
-
-                for (const line of lines) {
-                    if (!line.startsWith("data: ")) continue;
-                    try {
-                        const d = JSON.parse(line.slice(6));
-                        if (d.type === "token") {
-                            this._panel.webview.postMessage({ type: "token", token: d.token });
-                        } else if (d.type === "done") {
-                            this._panel.webview.postMessage({ type: "done", intent: d.intent });
-                        }
-                    } catch {}
-                }
-            }
+            const res = await this.client.chatSync(payload, this._sessionId);
+            const data: any = await res.json();
+            const reply = data.reply || data.response || data.message || JSON.stringify(data);
+            this._panel.webview.postMessage({ type: "token", token: reply });
+            this._panel.webview.postMessage({ type: "done", intent: "" });
         } catch (e: any) {
             this._panel.webview.postMessage({ type: "error", message: e.message });
         }
