@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="logo.png" alt="LogOracle" width="180"/>
+</div>
+
 # 🔮 LogOracle
 
 > **First AI debugging platform with hallucinated dependency protection.**
@@ -30,6 +34,7 @@ No more digging through 10,000 log lines at 3am. No more "works on my machine." 
 | Root-cause causal chaining | ✅ Full chain | ❌ Single alert |
 | Supply-chain hallucination detection | ✅ Built-in | ❌ Not supported |
 | 3-pass code intelligence (AST + LLM + OWASP) | ✅ All three | ❌ Partial |
+| Agentic AI loop (6-step autonomous reasoning) | ✅ Built-in | ❌ Not supported |
 | Self-heal relay (remote command execution) | ✅ Whitelisted | ❌ Not supported |
 | Developer growth + quiz/XP system | ✅ Built-in | ❌ Not supported |
 | Works in VS Code and terminal | ✅ Both surfaces | ❌ One surface |
@@ -38,9 +43,9 @@ No more digging through 10,000 log lines at 3am. No more "works on my machine." 
 
 ---
 
-## 🤖 The Five Agents
+## 🤖 The Six Agents
 
-The moment LogOracle starts, five agents activate in the background — no user action required.
+The moment LogOracle starts, six agents activate in the background — no user action required.
 
 | Agent | What It Does |
 |---|---|
@@ -49,6 +54,7 @@ The moment LogOracle starts, five agents activate in the background — no user 
 | **Security & Supply-Chain** | Detects hallucinated dependencies, typosquatted packages, and OWASP-classified vulnerabilities |
 | **Performance** | Monitors CPU/RAM/disk, surfaces degradation patterns before they become incidents |
 | **Self-Heal** | Previews, approves, and relays fix commands to remote agents via a double-whitelisted relay system |
+| **Agentic Loop** | 6-step autonomous reasoning: Ingest → Triage → Root Cause → Fix Plan → Heal → Verify |
 
 ---
 
@@ -128,7 +134,7 @@ Developer
       |                           |
       v                           v
   FastAPI Backend (port 8001)
-  37+ endpoints · SSE streaming · API key + Keycloak auth
+  39+ endpoints · SSE streaming · API key + Keycloak auth
 
   Log Agent | Code Agent | Security Agent | Perf Agent | Self-Heal
 
@@ -279,7 +285,37 @@ python logoracle_cli.py --watch /tmp/demo.log
 
 ---
 
-## 🔌 Key API Endpoints (37+ total · port 8001)
+
+## 🤖 Agentic AI Loop
+
+LogOracle ships a fully autonomous 6-step agentic loop that fires on every incident. Powered by GROQ LLaMA 3.1-8B. Every decision streamed live to Terminal TUI.
+
+```
+Log Stream → INGEST → TRIAGE → ROOT CAUSE → FIX PLAN → [Human Approval Gate] → HEAL → VERIFY → GREEN
+```
+
+| Step | What happens |
+|---|---|
+| **INGEST** | Parses log stream, counts events, detects platform |
+| **TRIAGE** | Fires all agents concurrently, classifies health RED/ORANGE/GREEN |
+| **ROOT CAUSE** | LLM identifies root cause + impact + priority |
+| **FIX PLAN** | LLM generates 3 concrete shell commands / config changes |
+| **HEAL** | Applies auto-fixable remediation, queues rest for human review |
+| **VERIFY** | LLM generates verification checks. Final health recalculated. |
+
+Design principles: **Human-in-the-loop** · **Zero-trust** · **Transparent** · **Deterministic fallback**
+
+```bash
+# Agentic loop (JSON)
+curl -X POST http://localhost:8001/agent/run/sync \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: your-key" \
+  -d '{"log_text": "Failed password for root from 192.168.1.5 port 22"}'
+```
+
+---
+
+## 🔌 Key API Endpoints (39+ total · port 8001)
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -297,6 +333,9 @@ python logoracle_cli.py --watch /tmp/demo.log
 | `POST` | `/quiz/generate` | Generate quiz from incident |
 | `POST` | `/quiz/answer` | Submit answer, award XP |
 | `GET` | `/leaderboard` | Developer leaderboard |
+| `POST` | `/agent/run` | **Agentic loop — SSE stream (6 steps live)** |
+| `POST` | `/agent/run/sync` | **Agentic loop — JSON (all steps)** |
+| `GET` | `/agents/status` | Agent health status |
 | `GET` | `/metrics/` | Prometheus metrics |
 
 > SSE endpoints (`/stream/*`) are exempt from API key auth — browsers cannot set custom headers on `EventSource`.
@@ -408,13 +447,13 @@ ngrok http 8001
 
 Built at **Summer Code Hackathon 2026** by a 5-person team.
 
-| Role | Focus |
+| Name | Role |
 |---|---|
-| Backend & Integration | FastAPI, agents, infrastructure, demo |
-| LLM & Quiz | GROQ integration, XP/badge system |
-| Log Parsing | AST/OWASP passes, distro analysis |
-| Chatbot & RAG | Conversational AI, embeddings |
-| Extension & TUI | VS Code extension, Terminal agent |
+| **Suchit** | Backend, Integration, Demo |
+| **Thaariha** | Chatbot & RAG |
+| **Subhiksha** | LLM & Quiz/XP system |
+| **Shruthi** | Log Parsing, AST/OWASP, Distros |
+| **TharunBL** | Frontend (Next.js 14) |
 
 ---
 
