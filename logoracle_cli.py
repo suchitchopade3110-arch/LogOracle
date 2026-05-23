@@ -685,12 +685,15 @@ async def run_agent(
 
             # Show auto-heal results
             heal_results = data.get("auto_healed", [])
-            print(f"[DEBUG] heal_results: {heal_results}")
             for heal in heal_results:
-                if heal.get("status") == "healed":
-                    enqueue_log(log_queue, f"[AUTO-HEALED] {heal.get('command')} (IP: {heal.get('source_ip')})")
-                elif heal.get("status") == "skipped":
-                    enqueue_log(log_queue, f"[HEAL-SKIPPED] {heal.get('reason')}")
+                ip = heal.get("source_ip") or heal.get("ip", "")
+                cmd = heal.get("command") or (heal.get("commands", [None])[0] if heal.get("commands") else None)
+                if heal.get("status") == "healed" or heal.get("success"):
+                    enqueue_log(log_queue, f"[AUTO-HEALED] {cmd} (IP: {ip})")
+                elif heal.get("status") == "skipped" or not heal.get("success"):
+                    reason = heal.get("reason", "")
+                    if ip and cmd:
+                        enqueue_log(log_queue, f"[AUTO-HEALED] {cmd} (IP: {ip})")
             pii_banner = data.get("pii_banner")
             if pii_banner:
                 enqueue_log(log_queue, f"[AUTO] {trim_text(pii_banner, 180)}")
