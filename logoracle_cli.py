@@ -519,11 +519,8 @@ class LogOracleApp(App[None]):
                 with Container(id="right-bottom"):
                     with Horizontal():
                         with Vertical(id="findings-col"):
-                            yield Label("  >> FINDINGS", id="findings-label")
+                            yield Label("  ▸ FINDINGS", id="findings-label")
                             yield FindingsWidget(id="findings-table")
-                        with Vertical(id="agent-col"):
-                            yield Label("  >> AGENT STEPS", id="agent-label")
-                            yield AgentWidget(id="agent-view", wrap=True, highlight=False, markup=True, max_lines=50)
         with Container(id="chat-panel"):
             yield Label("  ▸ CHAT  [t to hide]", id="chat-label")
             yield Input(placeholder="Ask LogOracle...", id="chat-input")
@@ -549,7 +546,7 @@ class LogOracleApp(App[None]):
                     _findings.append(item)
                     findings_table.sync_rows()
                 if item.get("kind") == "agent_step":
-                    self.query_one("#agent-view", AgentWidget).push_step(item)
+                    continue
                 else:
                     log_view.write(style_log_line(item.get("text", "")))
         except asyncio.QueueEmpty:
