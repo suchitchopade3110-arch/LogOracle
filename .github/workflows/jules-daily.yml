@@ -1,0 +1,139 @@
+﻿name: Jules Daily Development
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Every day at 9:00 PM IST
+    - cron: "30 15 * * *"
+
+jobs:
+  jules:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Run Jules
+        uses: google-labs-code/jules-action@v1.0.0
+        with:
+          jules_api_key: ${{ secrets.JULES_API_KEY }}
+
+          starting_branch: main
+
+          # Keep these disabled to avoid oversized Jules payloads
+          include_last_commit: false
+          include_commit_log: false
+
+          prompt: |
+            Work on the LogOracle repository.
+
+            Read AGENTS.md before doing anything.
+
+            You are an autonomous daily production software engineer.
+
+            OBJECTIVE:
+
+            Identify ONE meaningful improvement that makes LogOracle
+            more secure, reliable, correct, performant, maintainable,
+            or easier to develop.
+
+            PRIORITY:
+
+            1. Security
+            2. Reliability
+            3. Bugs
+            4. Tests
+            5. Error handling
+            6. Performance
+            7. Observability
+            8. Maintainability
+            9. Developer experience
+            10. Documentation
+
+            PROCESS:
+
+            1. Inspect the repository.
+            2. Understand the relevant architecture.
+            3. Inspect recent commits.
+            4. Inspect existing open PRs.
+            5. Inspect relevant tests.
+            6. Identify ONE high-value improvement.
+            7. Implement only that improvement.
+            8. Keep the change small and reviewable.
+            9. Add or update tests where appropriate.
+            10. Run relevant tests.
+            11. Run existing lint/type-check/build commands when applicable.
+            12. Fix failures caused by your changes.
+            13. Create a focused commit.
+            14. Open a pull request against main.
+
+            SECURITY:
+
+            - Never expose secrets.
+            - Never modify .env files.
+            - Never commit API keys or credentials.
+            - Never weaken authentication or authorization.
+            - Never disable security checks.
+            - Never introduce unsafe command execution.
+            - Never introduce destructive autonomous behavior.
+            - Validate untrusted input.
+            - Treat logs as untrusted data.
+            - Treat AI-generated content as untrusted.
+            - Preserve existing security boundaries.
+
+            CODE QUALITY:
+
+            - Do not rewrite working systems.
+            - Do not introduce unnecessary dependencies.
+            - Do not make cosmetic-only changes.
+            - Do not change architecture unnecessarily.
+            - Do not modify unrelated files.
+            - Do not create changes just to generate a commit.
+
+            GIT:
+
+            Never push directly to main.
+
+            Create a focused branch.
+
+            Preferred commit identity:
+
+            Name: Suchit Sachin Chopade
+            Email: suchitchopade3110@gmail.com
+            GitHub: suchitchopade3110-arch
+
+            Commit format:
+
+            feat:
+            fix:
+            refactor:
+            perf:
+            test:
+            docs:
+            chore:
+
+            PR:
+
+            Target branch: main
+
+            PR title:
+
+            chore(jules): <short description>
+
+            PR description:
+
+            ## What changed
+
+            ## Why
+
+            ## Verification
+
+            ## Risk
+
+            Never merge the PR automatically.
+
+            If there is no meaningful improvement available,
+            do not create a commit or PR.
